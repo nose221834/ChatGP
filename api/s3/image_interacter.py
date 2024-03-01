@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from aws_handler import get_presigned_url
+from s3.aws_handler import get_presigned_url
 
 router = APIRouter()
 

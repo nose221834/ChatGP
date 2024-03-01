@@ -1,10 +1,14 @@
 import boto3
+from dotenv import load_dotenv
 
 BUCKET = "hackason-s3"
+
+load_dotenv()
 
 client = boto3.client(
     's3',
 )
+
 def get_presigned_url(key):
     return client.generate_presigned_url(
         ClientMethod = 'get_object',
