@@ -25,3 +25,5 @@ services:
       KEYCLOAK_ADMIN_PASSWORD: admin # Admin password
     ports:
       - 8080:8080
+    stdin_open: true
+    tty: true
