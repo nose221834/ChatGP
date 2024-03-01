@@ -4,4 +4,4 @@ WORKDIR /api
 
 COPY ./ /api
 
-RUN install --no-cache-dir --upgrade -r /api/requirements.txt 
+RUN pip install --no-cache-dir --upgrade -r /api/requirements.txt 
