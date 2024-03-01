@@ -2,10 +2,10 @@ import os
 from typing import Union
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from s3 import image_interacter
 
 app = FastAPI()
-
+app.include_router(image_interacter.router)
 
 origins = [
      os.getenv("ACSESS_ALLOW_URL"),  # Next.jsアプリケーションのオリジン
