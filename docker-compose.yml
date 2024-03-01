@@ -1,0 +1,29 @@
+version: "3"
+services:
+  # Next.jsの環境
+  view:
+    container_name: "view"
+    build:
+      context: ./view
+      dockerfile: view.Dockerfile
+    volumes:
+      - ./view:/view
+      - ./view/node_modules:/view/node_modules
+    command: sh -c "yarn && yarn dev"
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    tty: true
+
+  # 認証基盤の環境
+  keycloak:
+    container_name: "keycloak"
+    image: quay.io/keycloak/keycloak:21.1.1
+    command: start-dev
+    environment:
+      KEYCLOAK_ADMIN: admin # Admin username
+      KEYCLOAK_ADMIN_PASSWORD: admin # Admin password
+    ports:
+      - 8080:8080
+    stdin_open: true
+    tty: true
