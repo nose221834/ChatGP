@@ -9,7 +9,7 @@ services:
     volumes:
       - ./view:/view
       - ./view/node_modules:/view/node_modules
-   command: sh -c "yarn && yarn dev"
+    command: sh -c "yarn && yarn dev"
     ports:
       - "3000:3000"
     stdin_open: true
@@ -29,7 +29,7 @@ services:
     tty: true
 
   #フロントとバックの通信(FastAPI)の環境
-    api:
+  api:
     container_name: FastAPI
     build:
       context: ./api
