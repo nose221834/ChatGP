@@ -84,9 +84,12 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
     プロジェクトの説明、セットアップ手順、使用方法などを記載するドキュメント
 
 
-- tests/ ディレクトリ:
-  
-    テストファイル（test_api.py, test_models.pyなど）
+- api_test/ :
+    本番環境ではない時に使用するAPI
+  - test_car_data.py
+     chat_gpt/car_data.pyの代わりに使用,Next.jsの動作確認に使用.
+  - test_img_binary.py
+    test_car_data.pyで使用.画像のバイナリー
 
 - .env:
   
