@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from s3 import image_interacter
 from chat_gpt import car_data
-from api_test import test_car_data
+from api_test import test_car_data,test_translation
 import  api_routes
 
 app = FastAPI()
@@ -33,7 +33,7 @@ app.include_router(api_test.router)
 を使用してください.
 """
 #ChatGPTで車の情報を生成
-app.include_router(car_data.router)
+#app.include_router(car_data.router)
 
 
 """
@@ -41,5 +41,6 @@ app.include_router(car_data.router)
 上記のAPIはコメントアウトしてください.
 """
 #APiの料金を抑えるためのtestAPI
-#app.include_router(test_car_data.router)
+app.include_router(test_car_data.router)
+app.include_router(test_translation.router)
 

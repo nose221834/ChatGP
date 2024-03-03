@@ -68,6 +68,8 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
     データの検証、形式の変換、エラーハンドリング関数などを含む
   - auth.py
     HTTPヘッダーの検証を行う
+  - translation.py
+    DeepLを使用して翻訳を行う.
 
 - exceptions.py:
   
@@ -88,6 +90,6 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
     本番環境ではない時に使用するAPI
   - test_car_data.py
      chat_gpt/car_data.pyの代わりに使用,Next.jsの動作確認に使用.
-  - test_img_binary.py
-    test_car_data.pyで使用する画像(バイナリー)
+  - test_translation.py
+     DeepLの動作確認用API
 
