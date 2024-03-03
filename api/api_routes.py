@@ -4,6 +4,7 @@ from typing import Union
 #ルーターの作成
 router = APIRouter()
 
+
 #テスト用APIのルーター２つ
 @router.get("/")
 def read_root():
