@@ -7,6 +7,6 @@ router = APIRouter()
 
 @router.get("/{player}")
 def make_car(player: str,text: str):
-    car_img_binary = image_generate_chatgpt(text)
+    url_car_img = image_generate_chatgpt(text)
 
-    return Response(content=car_img_binary, media_type="image/png")
+    return {"url_car_img": url_car_img}
