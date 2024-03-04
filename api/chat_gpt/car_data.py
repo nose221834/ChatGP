@@ -16,7 +16,7 @@ async def make_car(player: str,text: str):
     tokens = tokenizer.tokenize(text_en)
     
     if len(tokens)<=30:
-        url_car_img, text_car_status = await asyncio.gather(
+        url_car_img, [luk,name,text_car_status] = await asyncio.gather(
             image_generate_chatgpt(text_en),
             status_generate_chatgpt(text_en)
         )
@@ -24,8 +24,7 @@ async def make_car(player: str,text: str):
         url_car_img = ''
         text_car_status =''
     
-    tokens = tokenizer.tokenize(text_car_status)
     #text_en = translation(text_car_status,'JA','EN-US')
 
 
-    return {"url_car_img": url_car_img,"text_car_status": text_car_status,"tokens": len(tokens)}
+    return {"url_car_img": url_car_img,"name": name,"luk": luk,"text_car_status": text_car_status}
