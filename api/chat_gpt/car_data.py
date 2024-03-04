@@ -24,7 +24,7 @@ async def make_car(player: str,text: str):
         url_car_img = ''
         text_car_status =''
     
-    #text_en = translation(text_car_status,'JA','EN-US')
+    text_jp = translation(text_car_status,'EN','JA')
 
 
-    return {"url_car_img": url_car_img,"name": name,"luk": luk,"text_car_status": text_car_status}
+    return {"url_car_img": url_car_img,"name": name,"luk": luk,"text_car_status": text_jp}
