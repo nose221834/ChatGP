@@ -3,7 +3,7 @@ from openai import OpenAI
 client = OpenAI()
 
 #dall-e-2は使い物にならないので本番はdall-e-3を使用
-def image_generate_chatgpt(text:str):
+async def image_generate_chatgpt(text:str):
     
     #modelはdell-e2
     response =  client.images.generate(
