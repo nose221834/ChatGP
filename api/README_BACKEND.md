@@ -89,9 +89,5 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
   - test_car_data.py
      chat_gpt/car_data.pyの代わりに使用,Next.jsの動作確認に使用.
   - test_img_binary.py
-    test_car_data.pyで使用.画像のバイナリー
+    test_car_data.pyで使用する画像(バイナリー)
 
-- .env:
-  
-    アプリケーションの設定を管理
-    環境変数やデフォルト設定（データベースの接続情報、APIキーなど）を含む

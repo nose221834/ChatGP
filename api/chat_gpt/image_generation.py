@@ -1,10 +1,4 @@
 from openai import OpenAI
-from dotenv import load_dotenv
-import requests
-
-
-
-load_dotenv('.env')
 
 client = OpenAI()
 
@@ -16,20 +10,20 @@ def image_generate_chatgpt(text:str):
                         model   = "dall-e-2",   # モデル  
                         prompt  = text,         # 画像生成に用いる説明文章         
                         n       = 1,            # 何枚の画像を生成するか  
-                        size="1024x1024",
+                        size="512x512",
                         quality="standard",
                     )
     
     image_url = response.data[0].url
 
     # 画像をローカルに保存
-    car_img_binary = requests.get(image_url).content
+    #car_img_binary = requests.get(image_url).content
     
     #car_img_binaryはバイナリー
-    #with open("test_img_binary.png", "wb") as f:
+    #with open("test_img.png", "wb") as f:
     #    f.write(car_img_binary)
     
-    return car_img_binary
+    return image_url 
 
 
 

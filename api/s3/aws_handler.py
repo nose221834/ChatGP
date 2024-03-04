@@ -1,8 +1,6 @@
 import boto3
-from dotenv import load_dotenv
 import os
 
-load_dotenv('.env')
 
 # 環境変数を取得
 BUCKET_NAME = os.getenv('BUCKET')
