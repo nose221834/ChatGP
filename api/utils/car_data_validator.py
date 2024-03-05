@@ -23,6 +23,7 @@ def validation_element_car_data(result:list,error_count:int):
 
     except:
         if error_count >= 4:
+            print(result)
             raise HTTPException(
                 status_code=status.HTTP_408_REQUEST_TIMEOUT,
                 detail="ChatGPT output does not follow the format",
