@@ -1,39 +1,40 @@
 import random
+from fastapi import  HTTPException,status
 
-def validate_luk(luk: str) -> int:
+def validation_element_car_data(result:list,error_count:int):
+
     """
-        車のLUKの値を検証する関数
+        ChatGPTが出力した車のステータスがフォーマットに則っているか確認
+        3回失敗したらエラーを出力
         Args:
-            luk (str): LUKの値
+            result (list): 
         Returns:
-            int: LUKの値
+            bool: resulは正常/異常(0/1)
         Raises:
-            ValueError: LUKがint型または'LUK'でない場合
-        Behavior:
-            LUKが0-6の文字型の数字の場合、int型に変換して返す
-            LUKが"LUK"の場合、ランダムなLUKの値を返す
+            HTTP_502_BAD_GATEWAY: ChatGPTが LUK|NAME|TEXT のフォーマットに従っていない.
     """
-    if luk == "LUK":
-        luk_rand = random.randint(0, 6)
-        print("luk is", luk, "So, it's updated to", luk_rand)
-        return luk_rand
-    else:
-        try:
-            luk = int(luk)
-            if 0 <= luk <= 6:
-                print("luk is", luk)
-                return luk
+    try:
+
+        #lukが数値になっているか？　ChatGPTの出力(str)をintに変換
+        result[0] = int(result[0])
+
+        if len(result) != 3 :  
+            if error_count >= 4:
+                raise HTTPException(
+                    status_code=status.HTTP_502_BAD_GATEWAY,
+                    detail="ChatGPT output does not follow the format",
+                )
             else:
-                raise ValueError("LUK is out of range")
-        except ValueError:
-            raise ValueError("LUK is not int type")
-
-
-def validation_element_car_data(result,error_count):
-    if len(result) != 3:  
+                return True
+        else:
+            return False 
+    
+    except:
         if error_count >= 4:
-            raise ValueError("The number of elements in the car data output by ChatGPT is not 3.")
+            raise HTTPException(
+                status_code=status.HTTP_502_BAD_GATEWAY,
+                detail="ChatGPT output does not follow the format",
+            )
         else:
             return True
-    else:
-        return False 
+
