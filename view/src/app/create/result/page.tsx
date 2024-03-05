@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const image = localStorage.getItem("UserCar");
+  const router = useRouter();
   if (image) {
     return (
       <div>
@@ -11,6 +12,6 @@ export default function Home() {
       </div>
     );
   } else {
-    useRouter().push("/create");
+    router.push("/create");
   }
 }
