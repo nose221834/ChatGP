@@ -23,7 +23,7 @@ def test_make_car(player: str,text: str, api_key: str = Security(validate_api_ke
 
 
 @router.get("/test/car/status")
-async def test_make_car_status(text: str):
+async def test_make_car_status(text: str, api_key: str = Security(validate_api_key)):
 
 
     text_en = translation(text,'JA','EN-US')
