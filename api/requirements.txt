@@ -4,3 +4,6 @@ boto3
 openai
 deepl
 transformers
+rembg
+pillow
+torch
