@@ -23,7 +23,7 @@ async def make_car(player: str,text: str, api_key: str = Security(validate_api_k
         )
     else:
         url_car_img = ''
-        text_car_status =''
+        text_car_status = ''
     
     text_jp = translation(text_car_status,'EN','JA')
 

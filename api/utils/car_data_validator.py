@@ -27,3 +27,13 @@ def validate_luk(luk: str) -> int:
                 raise ValueError("LUK is out of range")
         except ValueError:
             raise ValueError("LUK is not int type")
+
+
+def validation_element_car_data(result,error_count):
+    if len(result) != 3:  
+        if error_count >= 4:
+            raise ValueError("The number of elements in the car data output by ChatGPT is not 3.")
+        else:
+            return True
+    else:
+        return False 
