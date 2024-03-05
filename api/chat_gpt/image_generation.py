@@ -24,13 +24,13 @@ async def image_generate_chatgpt(text:str):
     # URLから画像(バイナリ)を取得
     car_img_binary = requests.get(image_url).content
     
-    image = Image.open(BytesIO(car_img_binary))
-    removebg_image = remove(image)
+    image = Image.open(BytesIO(car_img_binary)) # 画像(バイナリ)をImageに変換
+    removebg_image = remove(image) # 背景を透過した画像に変換
     buffered = BytesIO()
-    removebg_image.save(buffered, format="PNG")
-    binary_image = buffered.getvalue()
+    removebg_image.save(buffered, format="PNG") 
+    binary_image = buffered.getvalue() # 画像(バイナリ)を取得
     
-    return b64encode(binary_image) 
+    return b64encode(binary_image) # 画像(バイナリ)をbase64に変換して返す
 
 
 
