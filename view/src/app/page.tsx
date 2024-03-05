@@ -1,9 +1,8 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  return (
-    <div>
-      <Button>Click me</Button>
-    </div>
-  );
+  useRouter().push("/create");
 }
