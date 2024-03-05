@@ -14,6 +14,9 @@ type Input = {
 export default function Home() {
   const router = useRouter();
 
+  const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
+  const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
+
   const {
     register,
     handleSubmit,
@@ -26,11 +29,21 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     try {
-      const response = await fetch(`http://localhost:9004/1?text=${data.text}`);
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-      localStorage.setItem("UserCar", url);
-      router.push("/create/result");
+      if (apiId && apiKey) {
+        const response = await fetch(
+          `http://localhost:9004/1/car/data?text=${data.text}`,
+          {
+            headers: {
+              [apiId]: apiKey,
+            },
+          }
+        );
+        const responseJson = await response.json();
+        const dataUrl = await responseJson.url_car_img;
+        const url = URL.createObjectURL(dataUrl);
+        localStorage.setItem("UserCar", url);
+        router.push("/create/result");
+      }
     } catch (error) {
       console.error("Error:", error);
     }

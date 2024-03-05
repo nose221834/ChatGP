@@ -16,6 +16,8 @@ services:
     tty: true
     environment:
       - NEXT_PUBLIC_API_URL=http://localhost:9004
+    env_file:
+      - ./view.env
 
   #フロントとバックの通信(FastAPI)の環境
   api:
@@ -31,4 +33,4 @@ services:
     environment:
       - ACSESS_ALLOW_URL=http://localhost:3000
     env_file:
-      - api.env
+      - ./api.env
