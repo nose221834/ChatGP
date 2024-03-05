@@ -10,7 +10,6 @@ async def status_generate_chatgpt(text:str):
 
 
     while(validation_element_car_data(text_split,number_of_generation)):
-
         res = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[
