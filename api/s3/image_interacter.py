@@ -3,7 +3,7 @@ from s3.aws_handler import get_presigned_url
 
 router = APIRouter()
 
-@router.get("/gpt/get_url")
+# @router.get("/gpt/get_url")
 def get_url():
     # [Sample] Get Image from GPT
     # [Sample] Save Image to S3

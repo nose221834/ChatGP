@@ -1,7 +1,8 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Security
 from fastapi.responses import Response
 from transformers import GPT2Tokenizer
 from chat_gpt.image_generation import image_generate_chatgpt
+from utils.auth import validate_api_key
 from chat_gpt.status_generation import status_generate_chatgpt
 from utils.translation import translation
 import asyncio
@@ -10,7 +11,7 @@ tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 router = APIRouter()
 
 @router.get("/{player}/car/data")
-async def make_car(player: str,text: str):
+async def make_car(player: str,text: str, api_key: str = Security(validate_api_key)):
 
     text_en = translation(text,'JA','EN-US')
     tokens = tokenizer.tokenize(text_en)

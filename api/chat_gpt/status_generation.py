@@ -1,5 +1,5 @@
 from openai import OpenAI
-
+from utils.car_data_validator import validate_luk
 client = OpenAI()
 
 
@@ -17,7 +17,7 @@ async def status_generate_chatgpt(text:str):
     )
     response = res.choices[0].message.content
     text_split = response.split('|')
-    luk = text_split[0]
+    luk = validate_luk(text_split[0])
     name = text_split[1]
     text_car_status = text_split[2]
     return [luk,name,text_car_status]
