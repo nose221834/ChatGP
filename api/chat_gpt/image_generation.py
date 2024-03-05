@@ -1,4 +1,9 @@
 from openai import OpenAI
+import requests
+from PIL import Image
+from io import BytesIO
+from rembg import remove
+from base64 import b64encode
 
 client = OpenAI()
 
@@ -24,13 +29,15 @@ async def image_generate_chatgpt(text:str):
     
     image_url = response.data[0].url
 
-    # 画像をローカルに保存
-    #car_img_binary = requests.get(image_url).content
+    # URLから画像(バイナリ)を取得
+    car_img_binary = requests.get(image_url).content
     
-    #car_img_binaryはバイナリー
-    #with open("test_img.png", "wb") as f:
-    #    f.write(car_img_binary)
+    image = Image.open(BytesIO(car_img_binary)) # 画像(バイナリ)をImageに変換
+    removebg_image = remove(image) # 背景を透過した画像に変換
+    buffered = BytesIO()
+    removebg_image.save(buffered, format="PNG") 
+    binary_image = buffered.getvalue() # 画像(バイナリ)を取得
     
-    return image_url 
+    return b64encode(binary_image) # 画像(バイナリ)をbase64に変換して返す
 
 
