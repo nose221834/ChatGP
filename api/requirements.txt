@@ -4,3 +4,5 @@ boto3
 openai
 deepl
 transformers
+requests
+types-requests
