@@ -9,7 +9,7 @@ def validation_element_car_data(result:list,error_count:int):
         Args:
             result (list): 
         Returns:
-            bool: resulは正常/異常(0/1)
+            bool: returnは正常/異常(0/1)
         Raises:
             HTTP_502_BAD_GATEWAY: ChatGPTが LUK|NAME|TEXT のフォーマットに従っていない.
     """
@@ -18,21 +18,13 @@ def validation_element_car_data(result:list,error_count:int):
         #lukが数値になっているか？　ChatGPTの出力(str)をintに変換
         result[0] = int(result[0])
 
-        if len(result) != 3 :  
-            if error_count >= 4:
-                raise HTTPException(
-                    status_code=status.HTTP_502_BAD_GATEWAY,
-                    detail="ChatGPT output does not follow the format",
-                )
-            else:
-                return True
-        else:
-            return False 
-    
+        assert len(result) == 3 
+        return False
+
     except:
         if error_count >= 4:
             raise HTTPException(
-                status_code=status.HTTP_502_BAD_GATEWAY,
+                status_code=status.HTTP_408_REQUEST_TIMEOUT,
                 detail="ChatGPT output does not follow the format",
             )
         else:
