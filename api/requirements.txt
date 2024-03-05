@@ -6,4 +6,4 @@ deepl
 transformers
 rembg
 pillow
-torch
+flax

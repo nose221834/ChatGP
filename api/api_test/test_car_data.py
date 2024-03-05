@@ -16,7 +16,7 @@ router = APIRouter()
 @router.get("/{player}/car/data")
 def test_make_car(player: str,text: str, api_key: str = Security(validate_api_key)):
 
-    img_bin_path = "api/api_test/gpt_car.bin"
+    img_bin_path = "api_test/gpt_car.bin"
     img = Image.open(img_bin_path)
     output = remove(img)
     buffered = BytesIO()
