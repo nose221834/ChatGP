@@ -26,3 +26,5 @@
 - docker-compose.yml:
   複数のコンテナを定義し、実行するための設定
 
+- api.env:
+    apiコンテナ内の設定を管理

@@ -11,11 +11,9 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
 ```
 
 ## Usage
-プロジェクトの実行方法や使用方法
+API使用方法
 
-```bash
 
-```
 
 ## File Structure
 
@@ -47,10 +45,15 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
       ユーザーの入力に基づいて画像を生成するロジック
       画像生成サービスとの連携を担当
 
-  - car_parameters.py:
+  - car_data.py:
 
-      ユーザーの入力に基づいて車のパラメータを生成するロジック
+      ユーザーの入力に基づいて車の設定を生成するロジック
       必要な計算やデータの形式を扱う
+
+  - status_generation.py
+
+      ユーザーの入力に基づいて車のステータスを生成するロジック
+      文章生成サービスとの連携を担当
 
 
 - s3
@@ -68,6 +71,8 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
     データの検証、形式の変換、エラーハンドリング関数などを含む
   - auth.py
     HTTPヘッダーの検証を行う
+  - translation.py
+    DeepLを使用して翻訳を行う.
 
 - exceptions.py:
   
@@ -84,11 +89,10 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
     プロジェクトの説明、セットアップ手順、使用方法などを記載するドキュメント
 
 
-- tests/ ディレクトリ:
-  
-    テストファイル（test_api.py, test_models.pyなど）
+- api_test/ :
+    本番環境ではない時に使用するAPI
+  - test_car_data.py
+     chat_gpt/car_data.pyの代わりに使用,Next.jsの動作確認に使用.
+  - test_translation.py
+     DeepLの動作確認用API
 
-- .env:
-  
-    アプリケーションの設定を管理
-    環境変数やデフォルト設定（データベースの接続情報、APIキーなど）を含む
