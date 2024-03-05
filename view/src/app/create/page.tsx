@@ -16,6 +16,15 @@ export default function Home() {
 
   const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
   const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  if (!apiId || !apiKey || !apiUrl) {
+    return (
+      <div>
+        <h1>環境変数がありません</h1>
+      </div>
+    );
+  }
 
   const {
     register,
@@ -29,21 +38,16 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<Input> = async (data) => {
     try {
-      if (apiId && apiKey) {
-        const response = await fetch(
-          `http://localhost:9004/1/car/data?text=${data.text}`,
-          {
-            headers: {
-              [apiId]: apiKey,
-            },
-          }
-        );
-        const responseJson = await response.json();
-        const dataUrl = await responseJson.url_car_img;
-        const url = URL.createObjectURL(dataUrl);
-        localStorage.setItem("UserCar", url);
-        router.push("/create/result");
-      }
+      const response = await fetch(`${apiUrl}/1/car/data?text=${data.text}`, {
+        headers: {
+          [apiId]: apiKey,
+        },
+      });
+      const responseJson = await response.json();
+      const dataUrl = await responseJson.url_car_img;
+      const url = URL.createObjectURL(dataUrl);
+      localStorage.setItem("UserCar", url);
+      router.push("/create/result");
     } catch (error) {
       console.error("Error:", error);
     }
