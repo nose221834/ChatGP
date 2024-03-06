@@ -109,8 +109,8 @@ export default function Home() {
             </Card>
           </div>
         </div>
-        <div className="flex h-4/5 w-1/2 p-4 flex-col justify-around items-center">
-          <div className=" text-3xl tracking-wider text-center w-11/12 p-4 items-center bg-secondarycolor text-basecolor rounded-xl ">
+        <div className="flex h-full w-1/2 p-4 flex-col justify-around items-center">
+          <div className="text-3xl tracking-wider text-center w-11/12 p-4 items-center bg-secondarycolor text-basecolor rounded-xl border-4 border-accentcolor">
             <div className=" p-4">
               <p>これからChatGPに出場する車を</p>
               <p>ChatGPTに作成してもらおう！</p>
