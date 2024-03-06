@@ -7,6 +7,12 @@ import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
+import {
+  GPT_RESPONSE_CAR_IMAGE,
+  GPT_RESPONSE_CAR_NAME,
+  GPT_RESPONSE_CAR_LUK,
+  GPT_RESPONSE_CAR_INSTRUCTION,
+} from "@/lib/const";
 
 type Input = {
   text: string;
@@ -61,17 +67,31 @@ export default function Home() {
         },
       });
       const responseJson = await response.json();
-      const dataBase64 = await responseJson.car_img;
-      const blob = await toBlob(dataBase64);
-      if (blob) {
-        const url = URL.createObjectURL(blob);
-        localStorage.setItem("UserCar", url);
-        router.push("/create/result");
-      }
+      await getResponseFromGpt(responseJson);
+      router.push("/create/result");
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
+  const getResponseFromGpt = async (responseJson) => {
+    const carName = responseJson[GPT_RESPONSE_CAR_NAME];
+    const carLuk = responseJson[GPT_RESPONSE_CAR_LUK];
+    const carInstruction = responseJson[GPT_RESPONSE_CAR_INSTRUCTION];
+    const dataBase64 = responseJson[GPT_RESPONSE_CAR_IMAGE];
+    const blob = await toBlob(dataBase64);
+    localStorage.setItem(GPT_RESPONSE_CAR_NAME, carName);
+    localStorage.setItem(GPT_RESPONSE_CAR_LUK, carLuk);
+    localStorage.setItem(GPT_RESPONSE_CAR_INSTRUCTION, carInstruction);
+
+    if (blob) {
+      const url = URL.createObjectURL(blob);
+      localStorage.setItem(GPT_RESPONSE_CAR_IMAGE, url);
+    }
+    router.push("/create/result");
+
+  };
+
   return (
     <main>
       {submit && (
