@@ -36,18 +36,36 @@ export default function Home() {
     },
   });
 
-  const onSubmit: SubmitHandler<Input> = async (data) => {
+  const toBlob = async (base64: string) => {
+    try {
+      const bin = atob(base64);
+      const buffer = new Uint8Array(bin.length).map((_, i) =>
+        bin.charCodeAt(i)
+      );
+      const blob = new Blob([buffer], { type: "image/png" });
+      return blob;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  };
+
+  const onSubmit: SubmitHandler<Input> = async (data: Input) => {
     try {
       const response = await fetch(`${apiUrl}/1/car/data?text=${data.text}`, {
         headers: {
           [apiId]: apiKey,
         },
       });
+      console.log(response);
       const responseJson = await response.json();
-      const dataUrl = await responseJson.url_car_img;
-      const url = URL.createObjectURL(dataUrl);
-      localStorage.setItem("UserCar", url);
-      router.push("/create/result");
+      const dataBase64 = await responseJson.url_car_img;
+      const blob = await toBlob(dataBase64);
+      if (blob) {
+        const url = URL.createObjectURL(blob);
+        localStorage.setItem("UserCar", url);
+        router.push("/create/result");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
