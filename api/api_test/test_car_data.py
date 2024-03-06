@@ -3,9 +3,6 @@ from chat_gpt.status_generation import status_generate_chatgpt
 from utils.translation import translation
 from utils.auth import validate_api_key
 from transformers import GPT2Tokenizer
-from PIL import Image
-from rembg import remove
-from io import BytesIO
 from base64 import b64encode
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
