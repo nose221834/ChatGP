@@ -16,22 +16,6 @@ router = APIRouter()
 
 client = OpenAI()
 
-
-@router.get("/{player}/car/data")
-def test_make_car_no_rembg(player: str,text: str, api_key: str = Security(validate_api_key)):
-
-
-    with open("api_test/gpt_car.bin","rb") as f:
-       binary_data = f.read()
-    
-    name = 'Feline Fury'
-    luk = '4'
-    text_car_status = '洗練されたエクステリア、居心地の良いインテリア、そしてエンターテイメント用の内蔵レーザーポインターなどの先進機能で、この車は猫愛好家のために完璧にデザインされている。すべてのドライブがキャットウォークのように感じられること請け合いだ。ニャーベラス！'
-    
-    return {"car_img": b64encode(binary_data),"name": name,"luk": luk,"text_car_status": text_car_status}
-
-
-
 @router.get("/{player}/car/data")
 async def make_car(player: str,text: str, api_key: str = Security(validate_api_key)):
 
