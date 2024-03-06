@@ -6,7 +6,6 @@ from transformers import GPT2Tokenizer
 from base64 import b64encode
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
-
 router = APIRouter()
 
 
