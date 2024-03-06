@@ -1,7 +1,6 @@
 from fastapi import APIRouter, Security
 from fastapi.responses import Response
 from chat_gpt.image_generation import image_generate_chatgpt
-from chat_gpt.image_generation import image_generate_chatgpt_no_rembg
 from utils.auth import validate_api_key
 from chat_gpt.status_generation import status_generate_chatgpt
 from utils.translation import translation
