@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 
 type Input = {
   text: string;
@@ -13,6 +14,7 @@ type Input = {
 
 export default function Home() {
   const router = useRouter();
+  const [submit, setSubmit] = useState<boolean>(false);
 
   const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
   const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
@@ -52,14 +54,14 @@ export default function Home() {
 
   const onSubmit: SubmitHandler<Input> = async (data: Input) => {
     try {
+      setSubmit(true);
       const response = await fetch(`${apiUrl}/1/car/data?text=${data.text}`, {
         headers: {
           [apiId]: apiKey,
         },
       });
-      console.log(response);
       const responseJson = await response.json();
-      const dataBase64 = await responseJson.url_car_img;
+      const dataBase64 = await responseJson.car_img;
       const blob = await toBlob(dataBase64);
       if (blob) {
         const url = URL.createObjectURL(blob);
@@ -72,6 +74,17 @@ export default function Home() {
   };
   return (
     <main>
+      {submit && (
+        <div className="flex flex-col absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          <Image
+            src="/loading.png"
+            alt="loading"
+            width={256}
+            height={256}
+            priority
+          />
+        </div>
+      )}
       <div className="flex flex-wrap justify-around items-center h-screen bg-basecolor">
         <div className="h-4/5 w-1/2 p-4">
           <div className="flex flex-col justify-around items-center h-full w-full bg-primarycolor rounded-xl">
