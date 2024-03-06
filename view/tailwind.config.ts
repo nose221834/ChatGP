@@ -13,6 +13,12 @@ const config = {
   ],
   prefix: "",
   theme: {
+    colors: {
+      basecolor: "#FDF0D1",
+      primarycolor: "#AC7D88",
+      secondarycolor: "#85586F",
+      accentcolor: "#643843",
+    },
     container: {
       center: true,
       padding: "2rem",
