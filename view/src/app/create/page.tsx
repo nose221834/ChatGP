@@ -75,14 +75,19 @@ export default function Home() {
   return (
     <main>
       {submit && (
-        <div className="flex flex-col absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <div className="flex flex-col items-center bg-basecolor absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-4 border-accentcolor rounded-xl">
           <Image
             src="/loading.png"
             alt="loading"
-            width={256}
-            height={256}
+            width={196}
+            height={196}
             priority
+            className="animate-spin"
           />
+          <div className=" flex flex-col items-center bg-primarycolor text-xl text-basecolor p-4 rounded-md ">
+            <p>ChatGPTの生成は時間がかかります！</p>
+            <p>少々お待ちください。</p>
+          </div>
         </div>
       )}
       <div className="flex flex-wrap justify-around items-center h-screen bg-basecolor">
