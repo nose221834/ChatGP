@@ -90,7 +90,7 @@ export default function Home() {
           <div className="flex flex-col justify-around items-center h-full w-full bg-primarycolor rounded-xl">
             <Image
               src="/announcer.webp"
-              alt="annauncer"
+              alt="announcer"
               width={256}
               height={256}
               priority
