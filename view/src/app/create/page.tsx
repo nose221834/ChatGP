@@ -8,10 +8,10 @@ import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import {
-  GPT_RESPONSE_CAR_IMAGE,
-  GPT_RESPONSE_CAR_NAME,
-  GPT_RESPONSE_CAR_LUK,
-  GPT_RESPONSE_CAR_INSTRUCTION,
+  PLAYER_CAR_IMAGE,
+  PLAYER_CAR_NAME,
+  PLAYER_CAR_LUCK,
+  PLAYER_CAR_INSTRUCTION,
 } from "@/lib/const";
 
 type Input = {
@@ -72,24 +72,25 @@ export default function Home() {
     } catch (error) {
       console.error("Error:", error);
     }
+
   };
 
-  const getResponseFromGpt = async (responseJson) => {
-    const carName = responseJson[GPT_RESPONSE_CAR_NAME];
-    const carLuk = responseJson[GPT_RESPONSE_CAR_LUK];
-    const carInstruction = responseJson[GPT_RESPONSE_CAR_INSTRUCTION];
-    const dataBase64 = responseJson[GPT_RESPONSE_CAR_IMAGE];
+  const getResponseFromGpt = async responseJson => {
+    const carName = responseJson[PLAYER_CAR_NAME];
+    const carLuk = responseJson[PLAYER_CAR_LUCK];
+    const carInstruction = responseJson[PLAYER_CAR_INSTRUCTION];
+    const dataBase64 = responseJson[PLAYER_CAR_IMAGE];
+    localStorage.setItem(PLAYER_CAR_NAME, carName);
+    localStorage.setItem(PLAYER_CAR_LUCK, carLuk);
+    localStorage.setItem(PLAYER_CAR_INSTRUCTION, carInstruction);
+    console.log("CAR NAME:", carName);
+    console.log("CAR LUCK:", carLuk);
+    console.log("CAR INSTRUCTION:", carInstruction);
     const blob = await toBlob(dataBase64);
-    localStorage.setItem(GPT_RESPONSE_CAR_NAME, carName);
-    localStorage.setItem(GPT_RESPONSE_CAR_LUK, carLuk);
-    localStorage.setItem(GPT_RESPONSE_CAR_INSTRUCTION, carInstruction);
-
     if (blob) {
       const url = URL.createObjectURL(blob);
-      localStorage.setItem(GPT_RESPONSE_CAR_IMAGE, url);
+      localStorage.setItem("UserCar", url);
     }
-    router.push("/create/result");
-
   };
 
   return (
