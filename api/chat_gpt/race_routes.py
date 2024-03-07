@@ -3,7 +3,7 @@ from fastapi.responses import Response
 from utils.auth import validate_api_key
 
 from utils.translation import translation
-from chat_gpt.car_data_validator import validate_token_count
+from chat_gpt.chat_gpt_validator import validate_token_count
 from chat_gpt.race_progresstion import race_moderator_chatgpt
 
 router = APIRouter()
