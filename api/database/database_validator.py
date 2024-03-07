@@ -15,7 +15,7 @@ def connect_database(path) -> Connection:
             conn (Connection): SQLiteConnection オブジェクト
 
         Raises:
-            HTTP_404_NOT_Found: 指定したデータベースが存在しない
+            HTTP_404_NOT_Found: 指定したデータベースが存在しない or 指定されたidのデータがデータベースに存在しない
 
     """
     if not os.path.isfile(path):

@@ -35,9 +35,10 @@ app.include_router(api_test.router)
 """
 #ChatGPTで車の情報を生成
 # app.include_router(car_data.router)
-# # app.include_router(no_rembg.router)
+# app.include_router(no_rembg.router)
 app.include_router(database_routes.router)
 app.include_router(race_routes.router)
+
 
 
 """
