@@ -18,6 +18,13 @@ type Input = {
   text: string;
 };
 
+type ResponseJson = {
+  [PLAYER_CAR_IMAGE]: string;
+  [PLAYER_CAR_NAME]: string;
+  [PLAYER_CAR_LUCK]: string;
+  [PLAYER_CAR_INSTRUCTION]: string;
+};
+
 export default function Home() {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
@@ -66,7 +73,7 @@ export default function Home() {
           [apiId]: apiKey,
         },
       });
-      const responseJson = await response.json();
+      const responseJson: ResponseJson = await response.json();
       await getResponseFromGpt(responseJson);
       router.push("/create/result");
     } catch (error) {
@@ -75,7 +82,7 @@ export default function Home() {
 
   };
 
-  const getResponseFromGpt = async responseJson => {
+  const getResponseFromGpt =  async (responseJson: ResponseJson) => {
     const carName = responseJson[PLAYER_CAR_NAME];
     const carLuk = responseJson[PLAYER_CAR_LUCK];
     const carInstruction = responseJson[PLAYER_CAR_INSTRUCTION];
