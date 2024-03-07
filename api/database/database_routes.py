@@ -1,18 +1,17 @@
 
-from database.database_operation import get_data
+from database.database_operation import get_data,count_record
 from utils.auth import validate_api_key
 from fastapi import APIRouter, Security
 from PIL import Image
 from base64 import b64encode
-
+import random
 router = APIRouter()
 
 @router.get("/data/enemy")
-def get_enemy_car(car_id: int, api_key: str = Security(validate_api_key)):
+def get_enemy_car( api_key: str = Security(validate_api_key)):
     """
         敵キャラクターの情報を取得
         Args:
-            text (int): 敵キャラクター(車)のid
 
         Returns:
             enemy_car_image (bytes):入力されたidに対応した車の画像バイナリー
@@ -29,6 +28,12 @@ def get_enemy_car(car_id: int, api_key: str = Security(validate_api_key)):
     db='database/.db'
     table = 'enemy_car_data'
     key = 'car_id'
+
+    #レコードの数
+    total_records = count_record(db,table,key)
+
+    #ランダムに車を選択
+    car_id = random.randint(1, total_records)
 
     #データベースから敵の車データを取得
     [list_car_data] = get_data(db,table,key,car_id)
