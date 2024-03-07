@@ -3,8 +3,8 @@ from fastapi.responses import Response
 from utils.auth import validate_api_key
 
 from utils.translation import translation
-from utils.car_data_validator import validate_token_count
-from chat_gpt.race_progresstion import rece_moderator_chatgpt
+from chat_gpt.car_data_validator import validate_token_count
+from chat_gpt.race_progresstion import race_moderator_chatgpt
 
 router = APIRouter()
 
@@ -16,7 +16,7 @@ def make_car(player: str,first_car_name:str,second_car_name:str,third_car_name:s
     text_en = translation(event,'JA','EN-US')
     
     if validate_token_count(text_en,30):
-        result_text,first,second,third,fourth = rece_moderator_chatgpt(first_car_name,second_car_name,third_car_name,fourth_car_name,player_car_name,
+        result_text,first,second,third,fourth = race_moderator_chatgpt(first_car_name,second_car_name,third_car_name,fourth_car_name,player_car_name,
                 first_car_introduction,second_car_introduction,third_car_introduction,fourth_car_introduction,text_en)
 
     result_text_jp = translation(result_text,'EN','JA')

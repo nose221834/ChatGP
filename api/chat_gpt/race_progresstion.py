@@ -1,5 +1,5 @@
 from openai import OpenAI
-from utils.car_data_validator import validate_car_data
+from chat_gpt.car_data_validator import validate_chat_gpt_output_count
 client = OpenAI()
 
 def shaping_prompts_rece_moderator(first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str,player_car_name:str,
@@ -52,30 +52,33 @@ car_introduction:{third_car_introduction}
 
     return prompt_system,prompt_user
 
-def rece_moderator_chatgpt(first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str,player_car_name:str,
+def race_moderator_chatgpt(first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str,player_car_name:str,
                             first_car_introduction:str,second_car_introduction:str,third_car_introduction:str,fourth_car_introduction:str,
                             event:str):
 
     text_split:list = []
+    number_of_generation:int = 0
+    item_count_in_format = 11
 
-    prompt_system,prompt_user = shaping_prompts_rece_moderator(first_car_name,second_car_name,third_car_name,fourth_car_name,player_car_name,
-                                                    first_car_introduction,second_car_introduction,third_car_introduction,fourth_car_introduction,
-                                                    event)
+    while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation))): 
+        prompt_system,prompt_user = shaping_prompts_rece_moderator(first_car_name,second_car_name,third_car_name,fourth_car_name,player_car_name,
+                                                        first_car_introduction,second_car_introduction,third_car_introduction,fourth_car_introduction,
+                                                        event)
 
-    res = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system",
-            "content":prompt_system},  
-            {"role": "user", "content": prompt_user}               
-        ],
-    temperature=1,
-    max_tokens = 300
-    )
-    response = res.choices[0].message.content
-    text_split = response.split('|')
-    #text_split=['LUK',1,2]
-    #text_split=[0,1,2,3]
+        res = client.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[
+            {"role": "system",
+                "content":prompt_system},  
+                {"role": "user", "content": prompt_user}               
+            ],
+        temperature=1,
+        max_tokens = 200
+        )
+        response = res.choices[0].message.content
+        text_split = response.split('|')
+        #text_split=[i for i in range(8)]
+        number_of_generation += 1
 
     first = text_split[2].replace('\n','')
     second = text_split[4].replace('\n','')

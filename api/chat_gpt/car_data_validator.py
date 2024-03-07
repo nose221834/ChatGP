@@ -2,13 +2,41 @@ import random
 from fastapi import  HTTPException,status
 from transformers import GPT2Tokenizer
 
-def validate_car_data(result:list,error_count:int) -> bool:
+def validate_chat_gpt_output_count(result:list,item_count_in_format:int,error_count:int) -> bool:
 
     """
-        ChatGPTが出力した車のステータスがフォーマットに則っているか確認
+        ChatGPTが出力した項目の数がフォーマットに則っているか確認する
         3回失敗したらエラーを出力
         Args:
-            result (list): ChatGPTの出力を分割して格納したリスト.len(result)=3
+            result (list): ChatGPTの出力を項目事に分割して格納したリスト
+            item_count_in_format (int): フォーマットで指定した出力項目の数
+            error_count (int): フォーマットに従わない出力が行われた回数
+        Returns:
+            bool: returnは正常/異常(1/0)
+        Raises:
+            HTTP_408_REQUEST_TIMEOUT: ChatGPTの出力がフォーマットに則っていない
+    """
+    
+    if len(result) == item_count_in_format:
+        return True
+
+    else:
+        print(result)
+        if error_count >= 4:
+            raise HTTPException(
+                status_code=status.HTTP_408_REQUEST_TIMEOUT,
+                detail="ChatGPT output does not follow the format",
+            )
+        else:
+            return False
+
+def validate_luk_is_number(result:list,error_count:int) -> bool:
+
+    """
+        ChatGPTが出力した車のlukが数字になっているか確認
+        3回失敗したらエラーを出力
+        Args:
+            result (list): ChatGPTの出力を分割して格納したリスト.
             error_count (int): フォーマットに従わない出力が行われた回数
         Returns:
             bool: returnは正常/異常(1/0)
@@ -16,11 +44,9 @@ def validate_car_data(result:list,error_count:int) -> bool:
             HTTP_408_REQUEST_TIMEOUT: ChatGPTが LUK(int)|NAME(str)|TEXT(str) のフォーマットに従っていない.
     """
     try:
-
         #lukが数値になっているか？　ChatGPTの出力(str)をintに変換
         result[0] = int(result[0])
-
-        assert len(result) == 3 
+        
         return True
 
     except:
@@ -32,6 +58,7 @@ def validate_car_data(result:list,error_count:int) -> bool:
             )
         else:
             return False
+
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
