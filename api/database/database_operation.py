@@ -1,9 +1,9 @@
 import sqlite3
-
+from database.database_validator import connect_database,check_effectiveness
 
 def add_data(db:str,command:str):
 
-    conn = sqlite3.connect(db)
+    conn = connect_database(db)
     c = conn.cursor()
     
     c.execute(command)
@@ -14,6 +14,20 @@ def add_data(db:str,command:str):
     # コネクションを閉じる
     conn.close()
 
+
+def get_data(db:str,table:str,key:str,id:int) -> list:
+    conn = connect_database(db)
+    c = conn.cursor()
+
+    check_effectiveness([table,key])
+
+    query = f"SELECT * FROM {table} WHERE {key} = ?"
+    c.execute(query, (id,))
+
+    results_list = c.fetchall()
+
+    conn.close()
+    return results_list
 
 
 if __name__ == '__main__':
