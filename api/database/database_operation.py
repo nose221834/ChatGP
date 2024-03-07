@@ -1,5 +1,6 @@
 import sqlite3
 from database.database_validator import connect_database,check_effectiveness
+from fastapi import  HTTPException,status
 
 def add_data(db:str,command:str):
 
@@ -25,6 +26,10 @@ def get_data(db:str,table:str,key:str,id:int) -> list:
     c.execute(query, (id,))
 
     results_list = c.fetchall()
+
+    if len(results_list)==0:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Data that meet the specified conditions do not exist.") 
+        
 
     conn.close()
     return results_list
