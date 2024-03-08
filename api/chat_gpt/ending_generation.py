@@ -79,8 +79,9 @@ def ending_generate_chatgpt(race_moderate:RaceModeratorModel,text_rust_event:str
         )
         response = res.choices[0].message.content
         text_split = response.split('|')
-        #text_split=['LUK',1,2]
-        #text_split=[0,1,2,3]
+
+        #text_split=["a","b","c","d"]
+
         number_of_generation += 1
 
     text_ending = text_split[2].replace('\n','')

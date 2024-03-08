@@ -52,12 +52,8 @@ car_introduction:{race_moderate.third_car_introduction}
 |event|Actions of {race_moderate.player_car_name}:{race_moderate.event}"""
 
     return prompt_system,prompt_user
-"""
 
-race_moderate.first_car_name,race_moderate.second_car_name,race_moderate.third_car_name,race_moderate.fourth_car_name,race_moderate.player_car_name,
-race_moderate.first_car_introduction,race_moderate.second_car_introduction,race_moderate.third_car_introduction,race_moderate.fourth_car_introduction
 
-"""
 def race_moderator_chatgpt(race_moderate:RaceModeratorModel):
 
     text_split:list = []

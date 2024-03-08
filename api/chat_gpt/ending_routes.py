@@ -25,7 +25,7 @@ def output_game_ending(ending_model:GameEndingModel,api_key: str = Security(vali
         
         ending_text = ending_generate_chatgpt(ending_model,text_result,first,second,third,fourth)
 
-    print(ending_text)
+    
     ending_text_jp = translation(ending_text ,'EN','JA')
 
 
