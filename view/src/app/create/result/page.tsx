@@ -43,9 +43,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      // <div>
-      //   <img src={image}></img>
-      // </div>
     );
   } else {
     router.push("/create");
