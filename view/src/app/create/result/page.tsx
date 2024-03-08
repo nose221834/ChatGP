@@ -18,10 +18,10 @@ export default function Home() {
   let carLuck = localStorage.getItem(PLAYER_CAR_LUCK);
   const carInstruction = localStorage.getItem(PLAYER_CAR_INSTRUCTION);
   let carFortune;
-  if(carLuck){
+  if (carLuck) {
     // carLuck to int
     carLuck = parseInt(carLuck);
-    if(1 <= carLuck && carLuck <= 6){
+    if (1 <= carLuck && carLuck <= 6) {
       carFortune = PLAYER_CAR_FORTUNE[carLuck];
     }
   }
@@ -43,12 +43,13 @@ export default function Home() {
           </div>
 
           <div className="h-4/5 w-1/2 p-4">
-            <div className="flex flex-col justify-around items-center h-full w-full bg-primarycolor rounded-xl border-4 border-accentcolor">
+            <div className=" overflow-hidden flex flex-col justify-around items-center h-full w-full bg-primarycolor rounded-xl border-4 border-accentcolor">
               <Image
                 src={carImage}
                 width={700}
                 height={700}
                 alt={PLAYER_CAR_IMAGE}
+                className="object-center object-cover"
               />
             </div>
           </div>
