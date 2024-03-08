@@ -20,4 +20,4 @@ class RaceInfoKeys:
     first_place: str = "first_place"
     second_place: str = "second_place"
     third_place: str = "third_place"
-    fourth_prace: str = "fourth_prace"
+    fourth_place: str = "fourth_prace"
