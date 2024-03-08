@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { PLAYER_CAR_IMAGE } from "@/lib/const";
 
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
@@ -28,7 +27,7 @@ export default function Home() {
             </div>
             <Card className="text-4xl tracking-wider text-center w-11/12 border-4 border-accentcolor p-8">
               <p>俺は、{localStorage.getItem(PLAYER_CAR_NAME)}</p>
-              <p>今日は、{PLAYER_CAR_FORTUNE[6]}</p>
+              <p>今日は、{PLAYER_CAR_FORTUNE[localStorage.getItem(PLAYER_CAR_LUCK)]}</p>
             </Card>
           </div>
 
