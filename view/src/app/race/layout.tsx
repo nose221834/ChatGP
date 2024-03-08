@@ -7,17 +7,15 @@ export default function RaceLayout({
 }>) {
   return (
     <div>
-      <div className="bg-basecolor absolute top-0 left-0 border-4 border-accentcolor rounded-xl">
-        <Image
-          src="/announcer.webp"
-          alt="announcer"
-          width={192}
-          height={192}
-          priority
-        />
-      </div>
+      <Image
+        className="absolute top-0 left-0 border-4 border-accentcolor rounded-xl z-50"
+        src="/announcer.webp"
+        alt="announcer"
+        width={192}
+        height={192}
+        priority
+      />
       {children}
     </div>
-    
   );
 }

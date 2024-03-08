@@ -1,12 +1,4 @@
-export type ResponceProps = {
-  text: string;
-};
-
-export type ProgProps = {
-  order: number;
-  scene: number;
-  click: () => void;
-};
+import { ProgProps } from "./type";
 
 export function Progress({ order, scene, click }: ProgProps) {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {

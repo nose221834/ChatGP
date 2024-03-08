@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Interactive, InteProps, SubmitProps } from "./Interactive";
-import { Progress, ProgProps } from "./Progress";
+import { Interactive } from "./Interactive";
+import { Progress } from "./Progress";
 import { useRouter } from "next/navigation";
+import { SubmitProps, InteProps, ResponceProps, ProgProps } from "./type";
 
 export default function Home() {
   const router = useRouter();
