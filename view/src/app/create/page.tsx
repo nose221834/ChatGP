@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
+import { getCarDataFromGpt } from "@/lib/create/actions";
 import {
   PLAYER_CAR_IMAGE,
   PLAYER_CAR_NAME,
@@ -68,12 +69,9 @@ export default function Home() {
   const onSubmit: SubmitHandler<Input> = async (data: Input) => {
     try {
       setSubmit(true);
-      const response = await fetch(`${apiUrl}/1/car/data?text=${data.text}`, {
-        headers: {
-          [apiId]: apiKey,
-        },
-      });
-      const responseJson: ResponseJson = await response.json();
+      const responseJson: 0 | false = await getCarDataFromGpt(data);
+      console.log("responseJson:", responseJson);
+      if(!responseJson) return Error;
       await getResponseFromGpt(responseJson);
       router.push("/create/result");
     } catch (error) {
