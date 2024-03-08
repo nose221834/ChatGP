@@ -2,7 +2,7 @@ version: "3"
 services:
   cloudflare:
     image: "cloudflare/cloudflared:latest"
-    container_name: "nutfes-finansu-web"
+    container_name: "cloudflare"
     volumes: ["./web/prod:/home/nonroot/.cloudflared"]
     command: tunnel run
 
@@ -11,11 +11,11 @@ services:
     container_name: "view"
     build:
       context: ./view
-      dockerfile: view.Dockerfile
+      dockerfile: view.prod.Dockerfile
     volumes:
       - ./view:/view
       - ./view/node_modules:/view/node_modules
-    command: sh -c "yarn && yarn dev"
+    command: sh -c "yarn start"
     ports:
       - "3000:3000"
     stdin_open: true
