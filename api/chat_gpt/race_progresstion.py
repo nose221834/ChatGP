@@ -1,5 +1,5 @@
 from openai import OpenAI
-from chat_gpt.car_data_validator import validate_chat_gpt_output_count
+from chat_gpt.chat_gpt_validator import validate_chat_gpt_output_count
 client = OpenAI()
 
 def shaping_prompts_rece_moderator(first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str,player_car_name:str,

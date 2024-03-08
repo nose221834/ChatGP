@@ -45,7 +45,7 @@ def validate_luk_is_number(result:list,error_count:int) -> bool:
     """
     try:
         #lukが数値になっているか？　ChatGPTの出力(str)をintに変換
-        result[0] = int(result[0])
+        result[0] = int(result[2])
         
         return True
 
