@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from s3 import image_interacter
 from chat_gpt import car_data
-from chat_gpt import race_routes
+from chat_gpt import race_routes , ending_routes
 from api_test import test_car_data,test_translation, no_rembg
 import  api_routes
 from database import database_routes
@@ -38,6 +38,7 @@ app.include_router(api_test.router)
 # app.include_router(no_rembg.router)
 app.include_router(database_routes.router)
 app.include_router(race_routes.router)
+app.include_router(ending_routes.router)
 
 
 
