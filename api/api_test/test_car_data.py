@@ -4,6 +4,7 @@ from utils.translation import translation
 from utils.auth import validate_api_key
 from transformers import GPT2Tokenizer
 from base64 import b64encode
+from config import PlayerCarKeys
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 router = APIRouter()
@@ -18,7 +19,10 @@ def test_make_car(player: str,text: str, api_key: str = Security(validate_api_ke
     luk = '4'
     text_car_status = '洗練されたエクステリア、居心地の良いインテリア、そしてエンターテイメント用の内蔵レーザーポインターなどの先進機能で、この車は猫愛好家のために完璧にデザインされている。すべてのドライブがキャットウォークのように感じられること請け合いだ。ニャーベラス！'
     
-    return {"player_car_image": b64encode(binary_data),"player_car_name": name,"player_car_luck": luk,"player_car_instruction": text_car_status}
+    return {PlayerCarKeys.image: b64encode(binary_data),
+            PlayerCarKeys.name: name,
+            PlayerCarKeys.luck: luk,
+            PlayerCarKeys.instruction: text_car_status}
 
 
 @router.get("/test/car/status")
