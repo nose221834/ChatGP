@@ -18,5 +18,6 @@ export default function RaceLayout({
       </div>
       {children}
     </div>
+    
   );
 }
