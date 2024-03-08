@@ -95,7 +95,7 @@ export default function Home() {
     const blob = await toBlob(dataBase64);
     if (blob) {
       const url = URL.createObjectURL(blob);
-      localStorage.setItem("UserCar", url);
+      localStorage.setItem(PLAYER_CAR_IMAGE, url);
     }
   };
 
