@@ -38,11 +38,12 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
     #データベースから敵の車データを取得
     [list_car_data] = get_data(db,table,key,car_id)
 
+    enemy_car_luck = int(list_car_data[3])
     #pathから画像を取得
     img = Image.open(list_car_data[1])
 
     #バイナリーに変換
     img_binary = img.tobytes()
 
-    return {"enemy_car_image": b64encode(img_binary),"enemy_car_name":list_car_data[2],"enemy_car_luck": list_car_data[3],"enemy_car_introduction": list_car_data[4]}
+    return {"enemy_car_image": b64encode(img_binary),"enemy_car_name":list_car_data[2],"enemy_car_luck": enemy_car_luck,"enemy_car_introduction": list_car_data[4]}
 
