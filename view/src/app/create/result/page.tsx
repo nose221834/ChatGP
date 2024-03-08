@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { PLAYER_CAR_IMAGE } from "@/lib/const";
 
 import Image from "next/image";
 import { Card } from "@/components/ui/card";

@@ -5,7 +5,7 @@ from utils.translation import translation
 from utils.auth import validate_api_key
 from transformers import GPT2Tokenizer
 from base64 import b64encode
-from utils.car_data_validator import validate_token_count
+from chat_gpt.chat_gpt_validator import validate_token_count
 from openai import OpenAI
 import asyncio
 import requests

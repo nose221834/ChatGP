@@ -79,10 +79,9 @@ export default function Home() {
     } catch (error) {
       console.error("Error:", error);
     }
-
   };
 
-  const getResponseFromGpt =  async (responseJson: ResponseJson) => {
+  const getResponseFromGpt = async (responseJson: ResponseJson) => {
     const carName = responseJson[PLAYER_CAR_NAME];
     const carLuk = responseJson[PLAYER_CAR_LUCK];
     const carInstruction = responseJson[PLAYER_CAR_INSTRUCTION];
