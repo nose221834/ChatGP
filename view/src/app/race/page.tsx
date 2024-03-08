@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Interactive, InteProps, SubmitProps } from "./Interactive";
 import { Progress, ProgProps } from "./Progress";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 export default function Home() {

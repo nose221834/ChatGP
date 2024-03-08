@@ -1,8 +1,6 @@
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 export type SubmitProps = {
   text: string;
@@ -16,14 +14,6 @@ export type InteProps = {
 };
 
 export function Interactive({ path, order, scene, submit }: InteProps) {
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   if (scene >= 3) {
-  //     router.push("/race/ending");
-  //   }
-  // }, [scene]);
-
   const {
     register,
     handleSubmit,
