@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 
 type Input = {
   text: string;
@@ -15,6 +15,16 @@ type Input = {
 export default function Home() {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Input>({
+    defaultValues: {
+      text: "例：宇宙船に乗ってる猫",
+    },
+  });
 
   const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
   const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
@@ -27,16 +37,6 @@ export default function Home() {
       </div>
     );
   }
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Input>({
-    defaultValues: {
-      text: "例：宇宙船に乗ってる猫",
-    },
-  });
 
   const toBlob = async (base64: string) => {
     try {

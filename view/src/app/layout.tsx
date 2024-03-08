@@ -1,11 +1,9 @@
 import "@/app/globals.css";
-import { DotGothic16 as FontSans } from "next/font/google";
+import { Inter as FontSans } from "next/font/google";
 
-// Press Start 2P
 import { cn } from "@/lib/utils";
 
-export const fontSans = FontSans({
-  weight: "400",
+const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
