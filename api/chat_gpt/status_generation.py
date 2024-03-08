@@ -28,7 +28,7 @@ async def status_generate_chatgpt(user_input:str):
     system_prompt,user_prompt = shaping_prompts_status_generate(user_input)
 
     while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation) 
-            and validate_luk_is_number(text_split,number_of_generation))):
+            and validate_luk_is_number(text_split[2],number_of_generation))):
 
         res = client.chat.completions.create(
         model="gpt-3.5-turbo",
@@ -45,7 +45,7 @@ async def status_generate_chatgpt(user_input:str):
         #text_split=[0,1,2,3]
         number_of_generation += 1
 
-    luk = text_split[2].replace('\n','')
+    luk = int(text_split[2])
     name = text_split[4].replace('\n','')
     text_car_status = text_split[6].replace('\n','')
     return [luk,name,text_car_status]
