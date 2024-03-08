@@ -1,5 +1,5 @@
 from openai import OpenAI
-from utils.car_data_validator import validate_car_data
+from chat_gpt.car_data_validator import validate_chat_gpt_output_count,validate_luk_is_number
 client = OpenAI()
 
 
@@ -7,9 +7,10 @@ async def status_generate_chatgpt(text:str):
 
     number_of_generation:int = 0
     text_split:list = []
+    item_count_in_format = 3
+    while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation) 
+            and validate_luk_is_number(text_split,number_of_generation))):
 
-
-    while(not(validate_car_data(text_split,number_of_generation))):
         res = client.chat.completions.create(
         model="gpt-3.5-turbo",
         messages=[

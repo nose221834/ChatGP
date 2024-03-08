@@ -12,13 +12,13 @@ router = APIRouter()
 @router.get("/{player}/car/data")
 def test_make_car(player: str,text: str, api_key: str = Security(validate_api_key)):
 
-    with open("api_test/test_media/removed_gpt_car.bin","rb") as f:
+    with open("api_test/removed_gpt_car.bin","rb") as f:
         binary_data = f.read()
     name = 'Feline Fury'
     luk = '4'
     text_car_status = '洗練されたエクステリア、居心地の良いインテリア、そしてエンターテイメント用の内蔵レーザーポインターなどの先進機能で、この車は猫愛好家のために完璧にデザインされている。すべてのドライブがキャットウォークのように感じられること請け合いだ。ニャーベラス！'
     
-    return {"player_car_image": b64encode(binary_data),"player_car_name": name,"player_car_luck": luk,"player_car_instruction": text_car_status}
+    return {"car_img": b64encode(binary_data),"name": name,"luk": luk,"text_car_status": text_car_status}
 
 
 @router.get("/test/car/status")
