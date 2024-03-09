@@ -14,3 +14,5 @@ export const PLAYER_CAR_FORTUNE = {
 // Enemy Car Constants
 export const ENEMY_CAR_IMAGE = "enemy_car_image";
 export const ENEMY_CAR_NAME = "enemy_car_name";
+export const ENEMY_CAR_LUCK = "enemy_car_luck";
+export const ENEMY_CAR_INSTRUCTION = "enemy_car_instruction";

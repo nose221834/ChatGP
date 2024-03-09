@@ -6,6 +6,7 @@ from chat_gpt.status_generation import status_generate_chatgpt
 from utils.translation import translation
 from chat_gpt.chat_gpt_validator import validate_token_count
 import asyncio
+from config import PlayerCarKeys
 
 router = APIRouter()
 
@@ -25,4 +26,7 @@ async def make_car(player: str,text: str, api_key: str = Security(validate_api_k
     text_jp = translation(text_car_status,'EN','JA')
 
 
-    return {"car_img": url_car_img,"name": name,"luk": luk,"text_car_status": text_jp}
+    return {PlayerCarKeys.image: url_car_img,
+            PlayerCarKeys.name: name,
+            PlayerCarKeys.luck: luk,
+            PlayerCarKeys.instruction: text_jp}
