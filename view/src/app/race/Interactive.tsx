@@ -31,7 +31,7 @@ export function Interactive({ path, order, scene, submit }: InteProps) {
       <div className="flex flex-col justify-around items-center z-10 p-4 w-3/5 h-1/2">
         <div className="flex flex-col justify-around items-center  h-full w-full p-4">
           <div className="  font-extrabold text-4xl tracking-wider text-center w-11/12  p-8">
-            <p className="text-blue-50">{messages[scene]}</p>
+            <p className=" text-shadow-edge">dfopijbsdubfdubnn</p>
           </div>
         </div>
       </div>
