@@ -4,18 +4,15 @@ from utils.translation import translation
 from chat_gpt.chat_gpt_validator import validate_token_count
 from chat_gpt.race_progression import race_moderator_chatgpt
 from chat_gpt.ending_generation import ending_generate_chatgpt
-from models import RaceModeratorModel
+from models import GameEndingModel
 from config import RaceInfoKeys
 
 router = APIRouter()
 
-class GameEndingModel(RaceModeratorModel):
-    player_car_profile:str
-    player_luck:int
+
 
 @router.post("/{player}/race/ending")
 def output_game_ending(ending_model:GameEndingModel,api_key: str = Security(validate_api_key)):
-    
     text_en = "The goal is in sight!" + translation(ending_model.event,'JA','EN-US')
     ending_model.event = text_en
 
@@ -27,7 +24,7 @@ def output_game_ending(ending_model:GameEndingModel,api_key: str = Security(vali
 
     
     ending_text_jp = translation(ending_text ,'EN','JA')
-
+    print(ending_model.player_car_introduction)
 
     return {RaceInfoKeys.generated_text: ending_text_jp,
             RaceInfoKeys.first_place: first,

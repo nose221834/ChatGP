@@ -1,5 +1,5 @@
 from openai import OpenAI
-from models import RaceModeratorModel
+from models import GameEndingModel
 from chat_gpt.chat_gpt_validator import validate_chat_gpt_output_count
 import random
 
@@ -20,7 +20,8 @@ def determine_player_luck(player_luck:int):
 
     return player_destiny
 
-def shaping_prompts_ending_generate(text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str,player_car_name:str,player_car_profile:str,player_luck:int):
+def shaping_prompts_ending_generate(text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,
+                                        fourth_car_name:str,player_car_name:str,player_car_introduction:str,player_luck:int):
 
     player_destiny = determine_player_luck(player_luck)
 
@@ -32,7 +33,7 @@ I'll provide you with the names of the four cars that participated, profile of {
 Please write a story of about 200 words describing {player_car_name} just before reaching the finish line and the moment of reaching the finish line, and then write another story of about 200 words about {player_car_name}s achievements after the race.
 ###profile of {player_car_name}###
 car_name:{player_car_name}
-introduction:{player_car_profile}
+introduction:{player_car_introduction}
 
 ###input format###
 **finishing position**
@@ -58,13 +59,13 @@ introduction:{player_car_profile}
 
     return prompt_system,prompt_user
 
-def ending_generate_chatgpt(race_moderate:RaceModeratorModel,text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str):
+def ending_generate_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str):
 
     number_of_generation:int = 0
     text_split:list = []
     item_count_in_format = 3
     
-    system_prompt,user_prompt = shaping_prompts_ending_generate(text_rust_event,first_car_name,second_car_name,third_car_name,fourth_car_name,race_moderate.player_car_name,race_moderate.player_car_profile,race_moderate.player_luck)
+    system_prompt,user_prompt = shaping_prompts_ending_generate(text_rust_event,first_car_name,second_car_name,third_car_name,fourth_car_name,race_moderate.player_car_name,race_moderate.player_car_introduction,race_moderate.player_luck)
 
     while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation))):
 
@@ -85,5 +86,6 @@ def ending_generate_chatgpt(race_moderate:RaceModeratorModel,text_rust_event:str
         number_of_generation += 1
 
     text_ending = text_split[2].replace('\n','')
+    print(race_moderate.player_car_introduction)
     return text_ending
 
