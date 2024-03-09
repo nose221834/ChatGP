@@ -6,6 +6,7 @@ from transformers import GPT2Tokenizer
 from base64 import b64encode
 from config import PlayerCarKeys
 from models import InputTextModel
+from utils.revere_image import reverse_image
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 router = APIRouter()
@@ -16,6 +17,7 @@ def test_make_car(input_text_model:InputTextModel = Depends(),api_key: str = Sec
 
     with open("api_test/test_media/removed_gpt_car.bin","rb") as f:
         binary_data = f.read()
+    binary_data = reverse_image(binary_data)
     name = 'Feline Fury'
     luk = 4
     text_car_status = '洗練されたエクステリア、居心地の良いインテリア、そしてエンターテイメント用の内蔵レーザーポインターなどの先進機能で、この車は猫愛好家のために完璧にデザインされている。すべてのドライブがキャットウォークのように感じられること請け合いだ。ニャーベラス！'
