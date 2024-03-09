@@ -39,6 +39,11 @@ export default function Home() {
   if(!carImage) router.push("/create");
   if(!carName) router.push("/create");
   if(!carFortune) router.push("/create");
+
+  const moveToRace = () => {
+    router.push("/race");
+  }
+
   return (
     <main>
       <div className="flex flex-wrap justigy-around items-center h-screen bg-basecolor">
@@ -67,9 +72,8 @@ export default function Home() {
             </div>
             <div className="flex justify-end p-4 w-full">
               <Button className="w-44 h-16 text-3xl bg-accentcolor border-basecolor hover:bg-primarycolor border-4"
-                onClick={() => {
-                  router.push("/race");
-                }}>Next
+                onClick={moveToRace}>
+                  Next
               </Button>
             </div>
           </Card>
