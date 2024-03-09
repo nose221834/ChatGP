@@ -3,8 +3,8 @@ from utils.auth import validate_api_key
 from models import RaceModeratorModel
 from utils.translation import translation
 from chat_gpt.chat_gpt_validator import validate_token_count
-from chat_gpt.race_progression import race_moderator_chatgpt
-
+from chat_gpt.race_progresstion import race_moderator_chatgpt
+from config import RaceInfoKeys
 router = APIRouter()
 
 @router.post("/{player}/race")
@@ -18,4 +18,8 @@ def output_race_progress(race_moderate:RaceModeratorModel,api_key: str = Securit
     result_text_jp = translation(result_text,'EN','JA')
 
 
-    return {"result_text": result_text_jp,"first": first,"second": second,"third": third,"fourth":fourth}
+    return {RaceInfoKeys.generated_text: result_text_jp,
+            RaceInfoKeys.first_place: first,
+            RaceInfoKeys.second_place: second,
+            RaceInfoKeys.third_place: third,
+            RaceInfoKeys.fourth_place:fourth}

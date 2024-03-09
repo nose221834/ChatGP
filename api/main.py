@@ -6,7 +6,6 @@ from s3 import image_interacter
 from chat_gpt import car_data
 from chat_gpt import race_routes , ending_routes
 from api_test import test_car_data,test_translation, no_rembg
-import  api_routes
 from database import database_routes
 app = FastAPI()
 
@@ -24,7 +23,7 @@ app.add_middleware(
 )
 
 app.include_router(image_interacter.router)
-app.include_router(api_routes.router)
+
 
 
 """
