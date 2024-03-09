@@ -17,3 +17,23 @@ export const ENEMY_CAR_IMAGE = "enemy_car_image";
 export const ENEMY_CAR_NAME = "enemy_car_name";
 export const ENEMY_CAR_LUCK = "enemy_car_luck";
 export const ENEMY_CAR_INSTRUCTION = "enemy_car_instruction";
+// Race Info Constants
+export const GENERATED_TEXT = "generated_text";
+
+export const FIRST_PLACE = "first_place";
+export const SECOND_PLACE = "second_place";
+export const THIRD_PLACE = "third_place";
+export const FOURTH_PLACE = "fourth_prace";
+
+export const FIRST_CAR_NAME = "first_car_name";
+export const SECOND_CAR_NAME = "second_car_name";
+export const THIRD_CAR_NAME = "third_car_name";
+export const FOURTH_CAR_NAME = "fourth_car_name";
+
+export const FIRST_CAR_INSTRUCTION = "first_car_instruction";
+export const SECOND_CAR_INSTRUCTION = "second_car_instruction";
+export const THIRD_CAR_INSTRUCTION = "third_car_instruction";
+export const FOURTH_CAR_INSTRUCTION = "fourth_car_instruction";
+
+export const RACE_EVENT = "event";
+export const PLAYER_LUCK = "player_luck";
