@@ -26,8 +26,8 @@ export default function Home() {
     setResponce(false);
   }
 
-  console.log(scene);
-  console.log(responce);
+  // console.log(scene);
+  // console.log(responce);
 
   if (!responce) {
     return (
