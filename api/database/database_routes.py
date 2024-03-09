@@ -19,7 +19,7 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
             enemy_car_image (bytes):入力されたidに対応した車の画像バイナリー
             enemy_car_name (str):車の名前
             enemy_car_luck (int):車の運勢
-            enemy_car_introduction (str): 車の解説
+            enemy_car_instruction (str): 車の解説
 
         Raises:
             HTTP_404_NOT_Found: 指定したデータベースが存在しない
