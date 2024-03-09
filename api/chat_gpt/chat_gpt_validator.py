@@ -46,8 +46,7 @@ def validate_luk_is_number(output_chatgpt:int,error_count:int) -> bool:
     try:
         #lukが数値になっているか？　ChatGPTの出力(str)をintに変換
 
-        
-        assert isinstance(output_chatgpt,int)
+        _ = int(output_chatgpt)
         
         return True
 
