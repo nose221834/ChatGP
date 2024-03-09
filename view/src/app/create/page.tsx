@@ -31,6 +31,16 @@ export default function Home() {
   const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PlayerCarInput>({
+    defaultValues: {
+      text: "例：宇宙船に乗ってる猫",
+    },
+  });
+  
   if (!apiId || !apiKey || !apiUrl) {
     return (
       <div>
@@ -39,9 +49,8 @@ export default function Home() {
     );
   }
 
-  const onSubmit: SubmitHandler<PlayerCarInput> = async (
-    data: PlayerCarInput
-  ) => {
+
+  const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
     try {
       setSubmit(true);
       const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(
