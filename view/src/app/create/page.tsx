@@ -6,16 +6,17 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
-import { validatePlayerCarRes } from "@/lib/validator/carDatavalidator";
+import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
 
 import {
   PLAYER_CAR
 } from "@/lib/const";
 
-export default function Home() {
+export default function Home
+  () {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
 
@@ -32,7 +33,7 @@ export default function Home() {
       text: "例：宇宙船に乗ってる猫",
     },
   });
-  
+
   if (!apiId || !apiKey || !apiUrl) {
     return (
       <div>
