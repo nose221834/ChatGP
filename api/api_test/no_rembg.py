@@ -9,6 +9,7 @@ from chat_gpt.chat_gpt_validator import validate_token_count
 from openai import OpenAI
 import asyncio
 import requests
+from config import PlayerCarKeys
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
@@ -31,7 +32,10 @@ async def make_car(player: str,text: str, api_key: str = Security(validate_api_k
     text_jp = translation(text_car_status,'EN','JA')
 
 
-    return {"url_car_img": url_car_img,"name": name,"luk": luk,"text_car_status": text_jp}
+    return {PlayerCarKeys.image: url_car_img,
+            PlayerCarKeys.name: name,
+            PlayerCarKeys.luck: luk,
+            PlayerCarKeys.instruction: text_jp}
 
 def shaping_prompts_car_img(text:str):
 
