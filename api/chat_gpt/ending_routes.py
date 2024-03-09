@@ -24,7 +24,7 @@ def output_game_ending(ending_model:GameEndingModel,api_key: str = Security(vali
 
     
     ending_text_jp = translation(ending_text ,'EN','JA')
-    print(ending_model.player_car_introduction)
+    print(ending_model.player_car_instruction)
 
     return {RaceInfoKeys.generated_text: ending_text_jp,
             RaceInfoKeys.first_place: first,
