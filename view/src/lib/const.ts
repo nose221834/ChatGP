@@ -1,4 +1,5 @@
 // Player Car Constants
+export const PLAYER_CAR = "player_car";
 export const PLAYER_CAR_IMAGE = "player_car_image";
 export const PLAYER_CAR_NAME = "player_car_name";
 export const PLAYER_CAR_LUCK = "player_car_luck";

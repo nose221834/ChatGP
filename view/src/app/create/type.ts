@@ -12,6 +12,6 @@ export type PlayerCarInput = {
 export type PlayerCarRes = {
   [PLAYER_CAR_IMAGE]: string;
   [PLAYER_CAR_NAME]: string;
-  [PLAYER_CAR_LUCK]: string;
+  [PLAYER_CAR_LUCK]: number;
   [PLAYER_CAR_INSTRUCTION]: string;
 };
