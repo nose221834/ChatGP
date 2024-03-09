@@ -11,7 +11,7 @@ tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 router = APIRouter()
 
 
-@router.get("/car/data")
+@router.get("/car/create")
 def test_make_car(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
 
     with open("api_test/test_media/removed_gpt_car.bin","rb") as f:
@@ -26,7 +26,7 @@ def test_make_car(input_text_model:InputTextModel = Depends(),api_key: str = Sec
             PlayerCarKeys.instruction: text_car_status}
 
 
-@router.get("/test/car/status")
+@router.get("/test/car/create/status")
 async def test_make_car_status(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
 
 

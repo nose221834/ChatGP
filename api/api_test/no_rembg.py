@@ -17,7 +17,7 @@ router = APIRouter()
 
 client = OpenAI()
 
-@router.get("/car/data")
+@router.get("/car/create")
 async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
 
     text_user_input = translation(input_text_model.text_user_input,'JA','EN-US')

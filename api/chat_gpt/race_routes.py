@@ -7,7 +7,7 @@ from chat_gpt.race_progression import race_moderator_chatgpt
 from config import RaceInfoKeys
 router = APIRouter()
 
-@router.post("/race")
+@router.post("/race/middle_part")
 def output_race_progress(race_moderate:RaceModeratorModel,api_key: str = Security(validate_api_key)):
 
     race_moderate.event = translation(race_moderate.event,'JA','EN-US')
