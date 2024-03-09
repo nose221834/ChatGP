@@ -5,8 +5,9 @@ import { Interactive } from "./Interactive";
 import { Progress } from "./Progress";
 import { useRouter } from "next/navigation";
 import { SubmitProps, InteProps, ResponceProps, ProgProps } from "./type";
-import { RaceData } from "@/app/race/type";
+import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt } from "@/lib/race/action";
+import { getEndDataFromGpt } from "@/lib/race/action";
 
 export default function Home() {
   const router = useRouter();
@@ -35,8 +36,31 @@ export default function Home() {
     return true;
   };
 
+  const testGetEndDataFromGpt = async (event: string) => {
+    // Sample RaceData
+    const sampleRaceData: RaceEndData = {
+      "first_car_name": "string",
+      "second_car_name": "string",
+      "third_car_name": "string",
+      "fourth_car_name": "string",
+      "player_car_name": "string",
+      "first_car_instruction": "string",
+      "second_car_instruction": "string",
+      "third_car_instruction": "string",
+      "fourth_car_instruction": "string",
+      "event": event,
+      "player_car_instruction": "string",
+      "player_luck": 1,
+    };
+    console.log("sampleRaceData", JSON.stringify(sampleRaceData));
+    const responseJson = await getEndDataFromGpt(sampleRaceData);
+    console.log("responseJson:", responseJson);
+    return true;
+  };
+
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
+      testGetEndDataFromGpt(data.text);
       console.log("data:", data.text)
       router.push("/race/ending");
     } else {

@@ -28,5 +28,21 @@ export const getRaceDataFromGpt = async (data: RaceData) =>{
 }
 
 export const getEndDataFromGpt = async (data: RaceEndData) =>{
-
+  if (!apiId || !apiKey || !apiUrl) return false;
+  const endPoint = `${apiUrl}/race/ending`;
+  console.log("Endpoint:", endPoint);
+  const responseJson: RaceInfoRes = await fetch(endPoint, {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      [apiId]: apiKey,
+    },
+    body: JSON.stringify(data),
+  })
+    .then((res) => res.json())
+    .catch((err) => {
+      console.error("Error:", err);
+      return false;
+    });
+  return responseJson;
 }
