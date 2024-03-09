@@ -6,11 +6,12 @@ import { getEnemyCar } from "@/app/getEnemyCar";
 export default function Home() {
   const router = useRouter()
   const moveToCreate = () => {
+    localStorage.clear();
     getEnemyCar();
     router.push("/create");
   }
   return (
-    <button 
+    <button
       onClick={moveToCreate}>
       button
     </button>
