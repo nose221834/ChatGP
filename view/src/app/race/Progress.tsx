@@ -1,10 +1,24 @@
 import { ProgProps } from "./type";
 import Image from "next/image";
+import { PLAYER_CAR, RACE_RESPONSE_DATA } from "@/lib/const";
+import { useRouter } from "next/navigation";
 
 export function Progress({ order, scene, click }: ProgProps) {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     click();
   };
+
+  const router = useRouter();
+
+  const userDataString = localStorage.getItem(PLAYER_CAR);
+  const responseData = localStorage.getItem(RACE_RESPONSE_DATA);
+  if (!userDataString || !responseData)
+    return (
+      <div>
+        <p>想定していないエラーが発生しています。</p>
+        <p>リロードしてください。</p>
+      </div>
+    );
 
   return (
     <div className="flex flex-col items-center justify-between w-screen h-screen overflow-hidden bg-basecolor">

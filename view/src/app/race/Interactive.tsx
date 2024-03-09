@@ -15,7 +15,7 @@ export function Interactive({ order, scene, submit }: InteProps) {
     formState: { errors },
   } = useForm<SubmitProps>({
     defaultValues: {
-      text: "なんかかいてね",
+      event: "なんかかいてね",
     },
   });
 
@@ -43,9 +43,9 @@ export function Interactive({ order, scene, submit }: InteProps) {
             <Textarea
               className="text-center text-2xl border-2 border-accentcolor"
               rows={1}
-              {...register("text", { required: true, maxLength: 20 })}
+              {...register("event", { required: true, maxLength: 20 })}
             ></Textarea>
-            {errors.text && (
+            {errors.event && (
               <div className="p-4">
                 <div className=" bg-basecolor border-secondarycolor border-4 text-2xl text-center text-accentcolor font-bold p-2 rounded-xl">
                   20文字以内で入力してください
