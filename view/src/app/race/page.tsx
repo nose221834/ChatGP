@@ -15,7 +15,7 @@ export default function Home() {
 
   function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
-      router.push("/race/ending");
+      router.push("/ending");
     } else {
       setResponce(true);
     }
