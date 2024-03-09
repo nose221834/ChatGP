@@ -29,7 +29,7 @@ def connect_database(path) -> Connection:
         conn = sqlite3.connect(path)
         return conn
 
-def check_effectiveness(check_list:list) -> None:
+def check_input_query(check_list:list) -> None:
 
     """
         データベースのリクエストをチェック
@@ -41,12 +41,12 @@ def check_effectiveness(check_list:list) -> None:
 
     """
 
-    print(check_list)
+    print("input query"+str(check_list))
     try:
         for text in check_list:
             assert str(text).isidentifier()
     except:
-        print("text:"+str(text))
+        print("error text:"+str(text))
         raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="Illegal input",

@@ -86,6 +86,6 @@ def ending_generate_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,fi
         number_of_generation += 1
 
     text_ending = text_split[2].replace('\n','')
-    print(race_moderate.player_car_introduction)
+
     return text_ending
 
