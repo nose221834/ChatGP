@@ -16,7 +16,7 @@ def test_make_car(player: str,text: str, api_key: str = Security(validate_api_ke
     with open("api_test/test_media/removed_gpt_car.bin","rb") as f:
         binary_data = f.read()
     name = 'Feline Fury'
-    luk = '4'
+    luk = 4
     text_car_status = '洗練されたエクステリア、居心地の良いインテリア、そしてエンターテイメント用の内蔵レーザーポインターなどの先進機能で、この車は猫愛好家のために完璧にデザインされている。すべてのドライブがキャットウォークのように感じられること請け合いだ。ニャーベラス！'
     
     return {PlayerCarKeys.image: b64encode(binary_data),

@@ -30,7 +30,7 @@ def validate_chat_gpt_output_count(result:list,item_count_in_format:int,error_co
         else:
             return False
 
-def validate_luk_is_number(result:list,error_count:int) -> bool:
+def validate_luk_is_number(output_chatgpt:int,error_count:int) -> bool:
 
     """
         ChatGPTが出力した車のlukが数字になっているか確認
@@ -45,12 +45,13 @@ def validate_luk_is_number(result:list,error_count:int) -> bool:
     """
     try:
         #lukが数値になっているか？　ChatGPTの出力(str)をintに変換
-        result[0] = int(result[2])
+
+        _ = int(output_chatgpt)
         
         return True
 
     except:
-        print(result)
+        print(output_chatgpt)
         if error_count >= 4:
             raise HTTPException(
                 status_code=status.HTTP_408_REQUEST_TIMEOUT,

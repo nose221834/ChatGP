@@ -40,6 +40,7 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
     #データベースから敵の車データを取得
     [list_car_data] = get_data(db,table,key,car_id)
 
+    enemy_car_luck = int(list_car_data[3])
     #pathから画像を取得
     img = Image.open(list_car_data[1])
 
@@ -50,4 +51,5 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
             EnemyCarKeys.name:list_car_data[2],
             EnemyCarKeys.luck: list_car_data[3],
             EnemyCarKeys.instruction: list_car_data[4]}
+
 
