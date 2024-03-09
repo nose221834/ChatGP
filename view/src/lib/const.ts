@@ -3,7 +3,7 @@ export const PLAYER_CAR_IMAGE = "player_car_image";
 export const PLAYER_CAR_NAME = "player_car_name";
 export const PLAYER_CAR_LUCK = "player_car_luck";
 export const PLAYER_CAR_INSTRUCTION = "player_car_instruction";
-export const PLAYER_CAR_FORTUNE = {
+export const PLAYER_CAR_FORTUNE: { [key: number]: string } = {
   1: "何をやってもうまくいかない気がする...",
   2: "心が落ち着かないな...",
   3: "少し疲れ気味だ...",

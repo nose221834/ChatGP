@@ -15,14 +15,14 @@ import {
 export default function Home() {
   const carImage = localStorage.getItem(PLAYER_CAR_IMAGE);
   const carName = localStorage.getItem(PLAYER_CAR_NAME);
-  let carLuck = localStorage.getItem(PLAYER_CAR_LUCK);
+  const carLuck = localStorage.getItem(PLAYER_CAR_LUCK);
   const carInstruction = localStorage.getItem(PLAYER_CAR_INSTRUCTION);
   let carFortune;
+  let carLuckNum:number;
   if (carLuck) {
-    // carLuck to int
-    carLuck = parseInt(carLuck);
-    if (1 <= carLuck && carLuck <= 6) {
-      carFortune = PLAYER_CAR_FORTUNE[carLuck];
+    carLuckNum = Number(carLuck);
+    if(1 <= carLuckNum && carLuckNum <= 6){
+      carFortune = PLAYER_CAR_FORTUNE[carLuckNum];
     }
   }
   const router = useRouter();
