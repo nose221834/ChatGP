@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+const plugin = require("tailwindcss/plugin");
+
 const { fontFamily } = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
@@ -86,7 +88,37 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    plugin(function ({ addUtilities }: { addUtilities: Function }) {
+      const newUtilities = {
+        ".text-shadow": {
+          textShadow: "0px 2px 3px darkgrey",
+        },
+        ".text-shadow-md": {
+          textShadow: "0px 3px 3px darkgrey",
+        },
+        ".text-shadow-lg": {
+          textShadow: "0px 5px 3px darkgrey",
+        },
+        ".text-shadow-xl": {
+          textShadow: "0px 7px 3px darkgrey",
+        },
+        ".text-shadow-2xl": {
+          textShadow: "0px 10px 3px darkgrey",
+        },
+        ".text-shadow-none": {
+          textShadow: "none",
+        },
+        ".text-shadow-edge": {
+          textShadow:
+            "1px 1px #d00,1px 1px #d00,0 1px #d00,-1px 1px #d00,-1px 0 #d00,-1px -1px #d00,0 -1px #d00,1px -1px #d00",
+        },
+      };
+      addUtilities(newUtilities);
+    }),
+
+    require("tailwindcss-animate"),
+  ],
 } satisfies Config;
 
 export default config;
