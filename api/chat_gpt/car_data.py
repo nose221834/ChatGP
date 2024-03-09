@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 @router.get("/car/create")
-async def make_car(input_text_model:InputTextModel, api_key: str = Security(validate_api_key)):
+async def make_car(input_text_model:InputTextModel = Depends(), api_key: str = Security(validate_api_key)):
 
     text_en = translation(input_text_model.text_user_input,'JA','EN-US')
     
