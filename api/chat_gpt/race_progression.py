@@ -14,16 +14,16 @@ Predict the outcome of the event and any changes in the standings and output the
 
 ###car_data###
 car_name:{ending_model.second_car_name}
-introduction:{ending_model.second_car_introduction}
+instruction:{ending_model.second_car_instruction}
 
 car_name:{ending_model.fourth_car_name}
-car_introduction:{ending_model.fourth_car_introduction}
+car_instruction:{ending_model.fourth_car_instruction}
 
 car_name:{ending_model.first_car_name}
-car_introduction:{ending_model.first_car_introduction}
+car_instruction:{ending_model.first_car_instruction}
 
 car_name:{ending_model.third_car_name}
-car_introduction:{ending_model.third_car_introduction}
+car_instruction:{ending_model.third_car_instruction}
 
 ###input format###
 **race position**
