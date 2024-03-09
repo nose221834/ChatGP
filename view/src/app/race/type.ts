@@ -38,6 +38,7 @@ export type ResponseProps = {
 export type ProgProps = {
   order: number;
   scene: number;
+  cars: string[];
   click: () => void;
 };
 

@@ -16,10 +16,16 @@ import {
   PLAYER_CAR_FORTUNE,
   RACE_EVENT,
   RACE_RESPONSE_DATA,
+  ENEMY_CAR,
 } from "@/lib/const";
 import { PlayerCarRes } from "@/app/create/type";
 
 export default function Home() {
+  const router = useRouter();
+
+  const [scene, setScene] = useState<number>(0);
+  const [response, setResponse] = useState<boolean>(false);
+
   // Sample RaceData
   const sampleRaceData: RaceData = {
     first_car_name: "string",
@@ -41,12 +47,6 @@ export default function Home() {
     console.log("responseJson:", responseJson);
     return true;
   };
-
-  const router = useRouter();
-  // 場面を切り替えるためのState
-  const [scene, setScene] = useState<number>(0);
-  // InteractiveとProgressを切り替えるState
-  const [response, setResponse] = useState<boolean>(false);
 
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
@@ -85,6 +85,15 @@ export default function Home() {
     setResponse(false);
   }
 
+  const enemyCar0 = localStorage.getItem(`${ENEMY_CAR}_0`);
+  const enemyCar1 = localStorage.getItem(`${ENEMY_CAR}_1`);
+  const enemyCar2 = localStorage.getItem(`${ENEMY_CAR}_2`);
+
+  if (!enemyCar0 || !enemyCar1 || !enemyCar2)
+    return <div>予期しないエラーが発生しました。</div>;
+
+  const enemyCars = [enemyCar0, enemyCar1, enemyCar2];
+
   console.log(response, "response");
   if (!response) {
     return (
@@ -95,7 +104,7 @@ export default function Home() {
   } else
     return (
       <main>
-        <Progress order={1} scene={scene} click={nextScene} />
+        <Progress order={1} scene={scene} cars={enemyCars} click={nextScene} />
       </main>
     );
 }
