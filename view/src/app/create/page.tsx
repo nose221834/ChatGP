@@ -6,16 +6,19 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
-import { validatePlayerCarRes } from "@/lib/validator/carDatavalidator";
+import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
+import { getEnemyCar } from "@/app/create/getEnemyCar";
 
 import {
   PLAYER_CAR
 } from "@/lib/const";
 
-export default function Home() {
+export default function
+  () {
+  getEnemyCar(); // Enemy Car Dataを3台分取得する
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
 
