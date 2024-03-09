@@ -23,14 +23,6 @@ export default function Home() {
   const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  if (!apiId || !apiKey || !apiUrl) {
-    return (
-      <div>
-        <h1>環境変数がありません</h1>
-      </div>
-    );
-  }
-
   const {
     register,
     handleSubmit,
@@ -40,6 +32,15 @@ export default function Home() {
       text: "例：宇宙船に乗ってる猫",
     },
   });
+  
+  if (!apiId || !apiKey || !apiUrl) {
+    return (
+      <div>
+        <h1>環境変数がありません</h1>
+      </div>
+    );
+  }
+
 
   const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
     try {
