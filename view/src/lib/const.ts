@@ -13,6 +13,7 @@ export const PLAYER_CAR_FORTUNE: { [key: number]: string } = {
   6: "負ける気がしない!",
 };
 // Enemy Car Constants
+export const ENEMY_CAR = "enemy_car";
 export const ENEMY_CAR_IMAGE = "enemy_car_image";
 export const ENEMY_CAR_NAME = "enemy_car_name";
 export const ENEMY_CAR_LUCK = "enemy_car_luck";
@@ -30,10 +31,12 @@ export const SECOND_CAR_NAME = "second_car_name";
 export const THIRD_CAR_NAME = "third_car_name";
 export const FOURTH_CAR_NAME = "fourth_car_name";
 
-export const FIRST_CAR_INSTRUCTION = "first_car_introduction";
-export const SECOND_CAR_INSTRUCTION = "second_car_introduction";
-export const THIRD_CAR_INSTRUCTION = "third_car_introduction";
-export const FOURTH_CAR_INSTRUCTION = "fourth_car_introduction";
+export const FIRST_CAR_INSTRUCTION = "first_car_instruction";
+export const SECOND_CAR_INSTRUCTION = "second_car_instruction";
+export const THIRD_CAR_INSTRUCTION = "third_car_instruction";
+export const FOURTH_CAR_INSTRUCTION = "fourth_car_instruction";
 
 export const RACE_EVENT = "event";
 export const PLAYER_LUCK = "player_luck";
+
+export const RACE_RESPONSE_DATA = "responceData";
