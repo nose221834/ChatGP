@@ -15,7 +15,7 @@ import {
   PLAYER_CAR
 } from "@/lib/const";
 
-export default function
+export default function Home
   () {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
