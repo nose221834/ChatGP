@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
 import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
-import { getEnemyCar } from "@/app/create/getEnemyCar";
 
 import {
   PLAYER_CAR
@@ -18,7 +17,6 @@ import {
 
 export default function
   () {
-  getEnemyCar(); // Enemy Car Dataを3台分取得する
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
 
@@ -35,7 +33,7 @@ export default function
       text: "例：宇宙船に乗ってる猫",
     },
   });
-  
+
   if (!apiId || !apiKey || !apiUrl) {
     return (
       <div>
