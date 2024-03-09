@@ -71,14 +71,14 @@ export default function Home() {
 
   const getResponseFromGpt = async (responseJson: PlayerCarRes) => {
     const carName = responseJson[PLAYER_CAR_NAME];
-    const carLuk = responseJson[PLAYER_CAR_LUCK];
+    const carLuck = responseJson[PLAYER_CAR_LUCK];
     const carInstruction = responseJson[PLAYER_CAR_INSTRUCTION];
     const dataBase64 = responseJson[PLAYER_CAR_IMAGE];
     localStorage.setItem(PLAYER_CAR_NAME, carName);
-    localStorage.setItem(PLAYER_CAR_LUCK, carLuk);
+    localStorage.setItem(PLAYER_CAR_LUCK, carLuck.toString());
     localStorage.setItem(PLAYER_CAR_INSTRUCTION, carInstruction);
     console.log("CAR NAME:", carName);
-    console.log("CAR LUCK:", carLuk);
+    console.log("CAR LUCK:", carLuck);
     console.log("CAR INSTRUCTION:", carInstruction);
     const blob = await toBlob(dataBase64);
     if (blob) {
