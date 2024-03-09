@@ -6,30 +6,23 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
-import { validatePlayerCarRes } from "@/lib/validator/carDatavalidator";
+import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
 
 import {
   PLAYER_CAR
 } from "@/lib/const";
 
-export default function Home() {
+export default function Home
+  () {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
 
   const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
   const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-  if (!apiId || !apiKey || !apiUrl) {
-    return (
-      <div>
-        <h1>環境変数がありません</h1>
-      </div>
-    );
-  }
 
   const {
     register,
@@ -40,6 +33,15 @@ export default function Home() {
       text: "例：宇宙船に乗ってる猫",
     },
   });
+
+  if (!apiId || !apiKey || !apiUrl) {
+    return (
+      <div>
+        <h1>環境変数がありません</h1>
+      </div>
+    );
+  }
+
 
   const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
     try {
