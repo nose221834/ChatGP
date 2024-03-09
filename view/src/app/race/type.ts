@@ -31,7 +31,7 @@ export type InteProps = {
   submit: SubmitHandler<SubmitProps>;
 };
 
-export type ResponceProps = {
+export type ResponseProps = {
   text: string;
 };
 

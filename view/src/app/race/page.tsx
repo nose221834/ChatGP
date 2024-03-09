@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Interactive } from "./Interactive";
 import { Progress } from "./Progress";
 import { useRouter } from "next/navigation";
-import { SubmitProps, InteProps, ResponceProps, ProgProps } from "./type";
+import { SubmitProps, InteProps, ResponseProps, ProgProps } from "./type";
 import { RaceData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
 import {
@@ -51,9 +51,9 @@ export default function Home() {
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
       console.log("scene + 1 >= 3");
-      const previousResponce = localStorage.getItem(RACE_RESPONSE_DATA);
-      if (previousResponce) {
-        const previousJson = JSON.parse(previousResponce) as RaceData;
+      const previousResponse = localStorage.getItem(RACE_RESPONSE_DATA);
+      if (previousResponse) {
+        const previousJson = JSON.parse(previousResponse) as RaceData;
         const sendJson = {
           ...previousJson,
           [RACE_EVENT]: data.event,
@@ -64,10 +64,10 @@ export default function Home() {
       }
     } else {
       console.log("router.push()");
-      const previousResponce = localStorage.getItem(RACE_RESPONSE_DATA);
-      if (previousResponce) {
-        console.log(previousResponce, "previousResponce");
-        const previousJson = JSON.parse(previousResponce) as RaceData;
+      const previousResponse = localStorage.getItem(RACE_RESPONSE_DATA);
+      if (previousResponse) {
+        console.log(previousResponse, "previousResponse");
+        const previousJson = JSON.parse(previousResponse) as RaceData;
         const sendJson = {
           ...previousJson,
           [RACE_EVENT]: data.event,

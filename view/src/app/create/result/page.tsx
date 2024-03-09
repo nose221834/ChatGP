@@ -64,7 +64,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className="flex flex-wrap justigy-around items-center h-screen bg-basecolor">
+      <div className="flex flex-wrap justify-around items-center h-screen bg-basecolor">
         <div className="flex h-full w-1/2 p-4 flex-col justify-around items-center">
           <div className="text-3xl tracking-wider text-center w-11/12 p-4 items-center bg-secondarycolor text-basecolor rounded-xl border-4 border-accentcolor">
             <div className="p-4 text-left">

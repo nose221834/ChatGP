@@ -5,7 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { SubmitProps, InteProps, ResponceProps, ProgProps } from "./type";
+import { SubmitProps, InteProps, ResponseProps, ProgProps } from "./type";
 import { Messages } from "./messages";
 
 export function Interactive({ order, scene, submit }: InteProps) {
