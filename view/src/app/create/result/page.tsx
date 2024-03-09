@@ -43,23 +43,25 @@ export default function Home() {
             </Card>
           </div>
 
-          <Card className="flex flex-col justify-around items-center h-4/5 w-1/2 p-4 border-4 bg-primarycolor border-accentcolor">
-            <div className="overflow-hidden flex flex-col justify-around items-center h-full w-full bg-transparent border-transparent">
-              <Image
-                src={carImage}
-                width={2000}
-                height={2000}
-                alt={PLAYER_CAR_IMAGE}
-                className="object-center object-cover"
-              />
-            </div>
-            <div className="flex justify-end p-4 w-full">
-              <Button className="w-44 h-16 text-3xl bg-accentcolor border-basecolor hover:bg-primarycolor border-4"
-                onClick={() => {
-                  alert('Button clicked');
-                }}>Next</Button>
-            </div>
-          </Card>
+          <div className="flex h-full w-1/2 p-4 flex-col justify-around items-center">
+            <Card className="flex flex-col justify-around items-center h-4/5 w-full p-4 border-4 bg-primarycolor border-accentcolor">
+              <div className="overflow-hidden flex flex-col justify-around items-center h-full w-full bg-transparent border-transparent">
+                <Image
+                  src={carImage}
+                  width={2000}
+                  height={2000}
+                  alt={PLAYER_CAR_IMAGE}
+                  className="object-center object-cover"
+                />
+              </div>
+              <div className="flex justify-end p-4 w-full">
+                <Button className="w-44 h-16 text-3xl bg-accentcolor border-basecolor hover:bg-primarycolor border-4"
+                  onClick={() => {
+                    alert('Button clicked');
+                  }}>Next</Button>
+              </div>
+            </Card>
+          </div>
         </div>
       </main>
     );
