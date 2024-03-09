@@ -23,16 +23,16 @@ export default function Home() {
   const testGetRaceInfoFromGpt = async (event: string) => {
     // Sample RaceData
     const sampleRaceData: RaceData = {
-      first_car_name: "string",
-      second_car_name: "string",
-      third_car_name: "string",
-      fourth_car_name: "string",
-      player_car_name: "string",
-      first_car_introduction: "string",
-      second_car_introduction: "string",
-      third_car_introduction: "string",
-      fourth_car_introduction: "string",
-      event: event,
+      "first_car_name": "string",
+      "second_car_name": "string",
+      "third_car_name": "string",
+      "fourth_car_name": "string",
+      "player_car_name": "string",
+      "first_car_instruction": "string",
+      "second_car_instruction": "string",
+      "third_car_instruction": "string",
+      "fourth_car_instruction": "string",
+      "event": event
     };
     console.log("sampleRaceData", JSON.stringify(sampleRaceData));
     const responseJson = await getRaceDataFromGpt(sampleRaceData);
