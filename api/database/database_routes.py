@@ -9,7 +9,7 @@ from config import EnemyCarKeys
 
 router = APIRouter()
 
-@router.get("/data/enemy")
+@router.get("/create/enemy")
 def get_enemy_car( api_key: str = Security(validate_api_key)):
     """
         敵キャラクターの情報を取得

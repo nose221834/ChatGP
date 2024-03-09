@@ -21,7 +21,7 @@ def validate_chat_gpt_output_count(result:list,item_count_in_format:int,error_co
         return True
 
     else:
-        print(result)
+        print("Number of items output:"+str(len(result))+"Output_text" + str(result))
         if error_count >= 4:
             raise HTTPException(
                 status_code=status.HTTP_408_REQUEST_TIMEOUT,
@@ -51,7 +51,7 @@ def validate_luk_is_number(output_chatgpt:int,error_count:int) -> bool:
         return True
 
     except:
-        print(output_chatgpt)
+        print("generated luck value" + str(output_chatgpt))
         if error_count >= 4:
             raise HTTPException(
                 status_code=status.HTTP_408_REQUEST_TIMEOUT,
@@ -81,7 +81,7 @@ def validate_token_count(text:str,token_num:int) -> bool:
     if len(tokens) <= token_num:
         return True
     else:
-        print("text:"+text)
+        print("text_user_input:"+text)
         print("token_num:"+str(token_num))
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

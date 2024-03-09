@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional
-from fastapi import  HTTPException,status
+from fastapi import  HTTPException,status,Query
 class RaceModeratorModel(BaseModel):
     first_car_name:str
     second_car_name:str
@@ -37,3 +37,8 @@ class GameEndingModel(RaceModeratorModel):
 
         # player_carの紹介文を取得
         self.player_car_introduction = car_introductions.get(self.player_car_name, "Player's car is not listed.")
+
+class InputTextModel(BaseModel):
+        text_user_input: str = Query(..., description="ユーザーの入力")
+        def __init__(self, **data):
+            super().__init__(**data)

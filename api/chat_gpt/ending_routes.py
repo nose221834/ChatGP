@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 
-@router.post("/{player}/race/ending")
+@router.post("/race/ending")
 def output_game_ending(ending_model:GameEndingModel,api_key: str = Security(validate_api_key)):
     text_en = "The goal is in sight!" + translation(ending_model.event,'JA','EN-US')
     ending_model.event = text_en
