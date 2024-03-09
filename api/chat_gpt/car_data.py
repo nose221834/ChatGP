@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Security
+from fastapi import APIRouter, Security,Depends
 from fastapi.responses import Response
 from chat_gpt.image_generation import image_generate_chatgpt
 from utils.auth import validate_api_key
@@ -7,14 +7,15 @@ from utils.translation import translation
 from chat_gpt.chat_gpt_validator import validate_token_count
 import asyncio
 from config import PlayerCarKeys
+from models import InputTextModel
 
 router = APIRouter()
 
 
-@router.get("/{player}/car/data")
-async def make_car(player: str,text: str, api_key: str = Security(validate_api_key)):
+@router.get("/car/create")
+async def make_car(input_text_model:InputTextModel = Depends(), api_key: str = Security(validate_api_key)):
 
-    text_en = translation(text,'JA','EN-US')
+    text_en = translation(input_text_model.text_user_input,'JA','EN-US')
     
     if validate_token_count(text_en,30):
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(

@@ -1,5 +1,5 @@
 import sqlite3
-from database.database_validator import connect_database,check_effectiveness
+from database.database_validator import connect_database,check_input_query
 from fastapi import  HTTPException,status
 
 def add_data(db:str,command:str):
@@ -20,7 +20,7 @@ def get_data(db:str,table:str,key:str,id:int) -> list:
     conn = connect_database(db)
     c = conn.cursor()
 
-    check_effectiveness([table,key])
+    check_input_query([table,key])
 
     query = f"SELECT * FROM {table} WHERE {key} = ?"
     c.execute(query, (id,))
@@ -38,7 +38,7 @@ def count_record(db:str,table:str,key:str) -> int:
     conn = connect_database(db)
     c = conn.cursor()
 
-    check_effectiveness([table,key])
+    check_input_query([table,key])
 
     query = f"SELECT COUNT({key}) FROM {table}"
     c.execute(query)

@@ -9,7 +9,7 @@ from config import EnemyCarKeys
 
 router = APIRouter()
 
-@router.get("/data/enemy")
+@router.get("/create/enemy")
 def get_enemy_car( api_key: str = Security(validate_api_key)):
     """
         敵キャラクターの情報を取得
@@ -40,14 +40,18 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
     #データベースから敵の車データを取得
     [list_car_data] = get_data(db,table,key,car_id)
 
+    enemy_car_luck = int(list_car_data[3])
     #pathから画像を取得
     img = Image.open(list_car_data[1])
 
     #バイナリーに変換
     img_binary = img.tobytes()
 
+    luck = int(list_car_data[3])
+
     return {EnemyCarKeys.image: b64encode(img_binary),
             EnemyCarKeys.name:list_car_data[2],
-            EnemyCarKeys.luck: list_car_data[3],
+            EnemyCarKeys.luck:luck,
             EnemyCarKeys.instruction: list_car_data[4]}
+
 
