@@ -4,7 +4,7 @@ import { DotGothic16 as FontSans } from "next/font/google";
 // Press Start 2P
 import { cn } from "@/lib/utils";
 
-export const fontSans = FontSans({
+const fontSans = FontSans({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-sans",
@@ -18,12 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
+      <body className={cn("min-h-screen bg-background font-sans antialiased")}>
         {children}
       </body>
     </html>

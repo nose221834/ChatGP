@@ -1,3 +1,5 @@
+"use client";
+
 import { ProgProps } from "./type";
 import Image from "next/image";
 import { PLAYER_CAR, RACE_RESPONSE_DATA } from "@/lib/const";

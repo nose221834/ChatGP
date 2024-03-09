@@ -11,13 +11,21 @@ import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
 import { validatePlayerCarRes } from "@/lib/validator/carDatavalidator";
 
-import {
-  PLAYER_CAR
-} from "@/lib/const";
+import { PLAYER_CAR } from "@/lib/const";
 
 export default function Home() {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PlayerCarInput>({
+    defaultValues: {
+      text: "例：宇宙船に乗ってる猫",
+    },
+  });
 
   const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
   const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
@@ -31,20 +39,14 @@ export default function Home() {
     );
   }
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<PlayerCarInput>({
-    defaultValues: {
-      text: "例：宇宙船に乗ってる猫",
-    },
-  });
-
-  const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
+  const onSubmit: SubmitHandler<PlayerCarInput> = async (
+    data: PlayerCarInput
+  ) => {
     try {
       setSubmit(true);
-      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(data);
+      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(
+        data
+      );
       if (!responseJson) return Error;
       await getResponseFromGpt(responseJson);
       router.push("/create/result");
@@ -56,8 +58,7 @@ export default function Home() {
   const getResponseFromGpt = async (responseJson: PlayerCarRes) => {
     const carDataJsonWithUrl = await validatePlayerCarRes(responseJson);
     if (!carDataJsonWithUrl) return false;
-    localStorage.setItem(PLAYER_CAR,
-      JSON.stringify(carDataJsonWithUrl));
+    localStorage.setItem(PLAYER_CAR, JSON.stringify(carDataJsonWithUrl));
   };
 
   return (
