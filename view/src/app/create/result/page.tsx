@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 
 import Image from "next/image";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   PLAYER_CAR_IMAGE,
   PLAYER_CAR_NAME,
@@ -18,10 +19,10 @@ export default function Home() {
   const carLuck = localStorage.getItem(PLAYER_CAR_LUCK);
   const carInstruction = localStorage.getItem(PLAYER_CAR_INSTRUCTION);
   let carFortune;
-  let carLuckNum:number;
+  let carLuckNum: number;
   if (carLuck) {
     carLuckNum = Number(carLuck);
-    if(1 <= carLuckNum && carLuckNum <= 6){
+    if (1 <= carLuckNum && carLuckNum <= 6) {
       carFortune = PLAYER_CAR_FORTUNE[carLuckNum];
     }
   }
@@ -42,17 +43,23 @@ export default function Home() {
             </Card>
           </div>
 
-          <div className="h-4/5 w-1/2 p-4">
-            <div className=" overflow-hidden flex flex-col justify-around items-center h-full w-full bg-primarycolor rounded-xl border-4 border-accentcolor">
+          <Card className="flex flex-col justify-around items-center h-4/5 w-1/2 p-4 border-4 bg-primarycolor border-accentcolor">
+            <div className="overflow-hidden flex flex-col justify-around items-center h-full w-full bg-transparent border-transparent">
               <Image
                 src={carImage}
-                width={700}
-                height={700}
+                width={2000}
+                height={2000}
                 alt={PLAYER_CAR_IMAGE}
                 className="object-center object-cover"
               />
             </div>
-          </div>
+            <div className="flex justify-end p-4 w-full">
+              <Button className="w-44 h-16 text-3xl bg-accentcolor border-basecolor hover:bg-primarycolor border-4"
+                onClick={() => {
+                  alert('Button clicked');
+                }}>Next</Button>
+            </div>
+          </Card>
         </div>
       </main>
     );
