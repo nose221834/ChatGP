@@ -15,14 +15,14 @@ export function Messages({ scene, order }: Props) {
 
   if (scene === 0) {
     return (
-      <div className=" text-shadow-edge flex flex-col flex-nowrap items-center justify-around">
+      <div className="text-shadow-edge flex flex-col flex-nowrap items-center justify-around text-basecolor ">
         <p>これからスタートだ！</p>
         <p>あなたはどうスタートする？</p>
       </div>
     );
   } else if (scene === 1) {
     return (
-      <div className=" text-shadow-edge flex flex-col flex-nowrap items-center justify-around">
+      <div className="text-shadow-edge flex flex-col flex-nowrap items-center justify-around text-basecolor">
         <p>現在{order}位！レース中盤だ！</p>
         <p>カーブが目の前にある！</p>
         <p>あなたはどうする？</p>
@@ -30,15 +30,15 @@ export function Messages({ scene, order }: Props) {
     );
   } else if (scene === 2) {
     return (
-      <div className=" text-shadow-edge flex flex-col flex-nowrap items-center justify-around">
+      <div className="text-shadow-edge flex flex-col flex-nowrap items-center justify-around text-basecolor">
         <p>現在{order}位！レース終盤だ！</p>
-        <p>最後の直線だ！</p>
+        <p>目の前には最後の直線...</p>
         <p>あなたはどうする？</p>
       </div>
     );
   } else {
     return (
-      <div className=" text-shadow-edge flex flex-col flex-nowrap items-center justify-around">
+      <div className="text-shadow-edge flex flex-col flex-nowrap items-center justify-around text-basecolor">
         <p>予期しないエラーが発生しています。</p>
         <p>下のボタンからスタートに戻ってください</p>
         <Button onClick={handleClick}>こちらからリロードしてください。</Button>

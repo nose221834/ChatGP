@@ -111,7 +111,7 @@ const config = {
         },
         ".text-shadow-edge": {
           textShadow:
-            "1px 1px #d00,1px 1px #d00,0 1px #d00,-1px 1px #d00,-1px 0 #d00,-1px -1px #d00,0 -1px #d00,1px -1px #d00",
+            "2px 2px #131313,2px 2px #131313,0 2px #131313,-2px 2px #131313,-2px 0 #131313,-2px -2px #131313,0 -2px #131313,2px -2px #131313",
         },
       };
       addUtilities(newUtilities);
