@@ -68,8 +68,9 @@ export default function Home() {
             <div className="flex justify-end p-4 w-full">
               <Button className="w-44 h-16 text-3xl bg-accentcolor border-basecolor hover:bg-primarycolor border-4"
                 onClick={() => {
-                  alert('Button clicked');
-                }}>Next</Button>
+                  router.push("/race");
+                }}>Next
+              </Button>
             </div>
           </Card>
         </div>
