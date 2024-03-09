@@ -26,13 +26,10 @@ export default function Home() {
     setResponce(false);
   }
 
-  // console.log(scene);
-  // console.log(responce);
-
   if (!responce) {
     return (
       <main>
-        <Interactive path="aaa" order={1} scene={scene} submit={onSubmit} />
+        <Interactive order={1} scene={scene} submit={onSubmit} />
       </main>
     );
   } else

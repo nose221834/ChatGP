@@ -6,9 +6,9 @@ import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SubmitProps, InteProps, ResponceProps, ProgProps } from "./type";
-import { messages } from "./messages";
+import { Messages } from "./messages";
 
-export function Interactive({ path, order, scene, submit }: InteProps) {
+export function Interactive({ order, scene, submit }: InteProps) {
   const {
     register,
     handleSubmit,
@@ -20,17 +20,6 @@ export function Interactive({ path, order, scene, submit }: InteProps) {
   });
 
   console.log("scene", scene);
-  const message = messages(scene);
-
-  if (!message) {
-    return (
-      <div className="flex justify-around items-center">
-        <div className="">不正な値が入ってきました。リロードしてください。</div>
-      </div>
-    );
-  }
-
-  console.log(message);
 
   return (
     <div className="flex flex-col items-center justify-between w-screen h-screen overflow-hidden bg-basecolor">
@@ -44,7 +33,7 @@ export function Interactive({ path, order, scene, submit }: InteProps) {
       <div className="flex flex-col justify-around items-center z-10 p-4 w-3/5 h-1/2">
         <div className="flex flex-col justify-around items-center  h-full w-full p-4">
           <div className="  font-extrabold text-4xl tracking-wider text-center w-11/12  p-8">
-            <p className=" text-shadow-edge">{message}</p>
+            <Messages scene={scene} order={order} />
           </div>
         </div>
       </div>
