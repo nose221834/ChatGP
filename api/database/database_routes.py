@@ -47,9 +47,11 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
     #バイナリーに変換
     img_binary = img.tobytes()
 
+    luck = int(list_car_data[3])
+
     return {EnemyCarKeys.image: b64encode(img_binary),
             EnemyCarKeys.name:list_car_data[2],
-            EnemyCarKeys.luck: list_car_data[3],
+            EnemyCarKeys.luck:luck,
             EnemyCarKeys.instruction: list_car_data[4]}
 
 
