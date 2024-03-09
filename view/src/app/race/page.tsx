@@ -4,20 +4,14 @@ import { useState, useEffect } from "react";
 import { Interactive } from "./Interactive";
 import { Progress } from "./Progress";
 import { useRouter } from "next/navigation";
-import { SubmitProps, InteProps, ResponceProps, ProgProps } from "./type";
+import { SubmitProps } from "./type";
 import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
 import {
-  PLAYER_CAR,
-  PLAYER_CAR_IMAGE,
-  PLAYER_CAR_NAME,
-  PLAYER_CAR_LUCK,
-  PLAYER_CAR_INSTRUCTION,
-  PLAYER_CAR_FORTUNE,
   RACE_EVENT,
   RACE_RESPONSE_DATA,
 } from "@/lib/const";
-import { PlayerCarRes } from "@/app/create/type";
+import { generateRaceRequestBody } from "@/lib/race/generateRequestBody";
 
 export default function Home() {
   // Sample RaceData
@@ -32,14 +26,6 @@ export default function Home() {
     third_car_instruction: "string",
     fourth_car_instruction: "string",
     event: "event",
-  };
-
-  const testGetRaceInfoFromGpt = async (event: string) => {
-    // Sample RaceData
-    console.log("sampleRaceData", JSON.stringify(sampleRaceData));
-    const responseJson = await getRaceDataFromGpt(sampleRaceData);
-    console.log("responseJson:", responseJson);
-    return true;
   };
 
   const testGetEndDataFromGpt = async (event: string) => {
@@ -87,19 +73,13 @@ export default function Home() {
       }
     } else {
       console.log("router.push()");
-      const previousResponce = localStorage.getItem(RACE_RESPONSE_DATA);
-      if (previousResponce) {
-        console.log(previousResponce, "previousResponce");
-        const previousJson = JSON.parse(previousResponce) as RaceData;
-        const sendJson = {
-          ...previousJson,
-          [RACE_EVENT]: data.event,
-        };
-        const responseJson = await getRaceDataFromGpt(sendJson);
-        if (!responseJson) return <div>Error</div>;
-        localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
-        setResponse(true);
-      }
+      const requestBody: RaceData = generateRaceRequestBody(data.event);
+      console.log("requestBody", requestBody);
+      const responseJson = await getRaceDataFromGpt(requestBody);
+      console.log("responseJson:", responseJson);
+      if (!responseJson) return <div>Error</div>;
+      localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
+      setResponse(true);
     }
   }
 
