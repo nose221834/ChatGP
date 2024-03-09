@@ -10,8 +10,8 @@ tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 router = APIRouter()
 
 
-@router.get("/{player}/car/data")
-def test_make_car(player: str,text: str, api_key: str = Security(validate_api_key)):
+@router.get("/car/data")
+def test_make_car(text: str, api_key: str = Security(validate_api_key)):
 
     with open("api_test/test_media/removed_gpt_car.bin","rb") as f:
         binary_data = f.read()

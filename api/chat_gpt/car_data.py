@@ -11,8 +11,8 @@ from config import PlayerCarKeys
 router = APIRouter()
 
 
-@router.get("/{player}/car/data")
-async def make_car(player: str,text: str, api_key: str = Security(validate_api_key)):
+@router.get("/car/data")
+async def make_car(text: str, api_key: str = Security(validate_api_key)):
 
     text_en = translation(text,'JA','EN-US')
     
