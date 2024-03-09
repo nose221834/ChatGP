@@ -8,23 +8,14 @@ import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
+import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
+
 import {
   PLAYER_CAR_IMAGE,
   PLAYER_CAR_NAME,
   PLAYER_CAR_LUCK,
   PLAYER_CAR_INSTRUCTION,
 } from "@/lib/const";
-
-type Input = {
-  text: string;
-};
-
-type ResponseJson = {
-  [PLAYER_CAR_IMAGE]: string;
-  [PLAYER_CAR_NAME]: string;
-  [PLAYER_CAR_LUCK]: string;
-  [PLAYER_CAR_INSTRUCTION]: string;
-};
 
 export default function Home() {
   const router = useRouter();
@@ -46,7 +37,7 @@ export default function Home() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Input>({
+  } = useForm<PlayerCarInput>({
     defaultValues: {
       text: "例：宇宙船に乗ってる猫",
     },
@@ -66,10 +57,10 @@ export default function Home() {
     }
   };
 
-  const onSubmit: SubmitHandler<Input> = async (data: Input) => {
+  const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
     try {
       setSubmit(true);
-      const responseJson: ResponseJson | false = await getPlayerCarDataFromGpt(data);
+      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(data);
       if(!responseJson) return Error;
       await getResponseFromGpt(responseJson);
       router.push("/create/result");
@@ -78,7 +69,7 @@ export default function Home() {
     }
   };
 
-  const getResponseFromGpt = async (responseJson: ResponseJson) => {
+  const getResponseFromGpt = async (responseJson: PlayerCarRes) => {
     const carName = responseJson[PLAYER_CAR_NAME];
     const carLuk = responseJson[PLAYER_CAR_LUCK];
     const carInstruction = responseJson[PLAYER_CAR_INSTRUCTION];
