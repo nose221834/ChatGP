@@ -9,12 +9,10 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
+import { validatePlayerCarRes } from "@/lib/validator/carDatavalidator";
 
 import {
-  PLAYER_CAR_IMAGE,
-  PLAYER_CAR_NAME,
-  PLAYER_CAR_LUCK,
-  PLAYER_CAR_INSTRUCTION,
+  PLAYER_CAR
 } from "@/lib/const";
 
 export default function Home() {
@@ -43,25 +41,11 @@ export default function Home() {
     },
   });
 
-  const toBlob = async (base64: string) => {
-    try {
-      const bin = atob(base64);
-      const buffer = new Uint8Array(bin.length).map((_, i) =>
-        bin.charCodeAt(i)
-      );
-      const blob = new Blob([buffer], { type: "image/png" });
-      return blob;
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
-  };
-
   const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
     try {
       setSubmit(true);
       const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(data);
-      if(!responseJson) return Error;
+      if (!responseJson) return Error;
       await getResponseFromGpt(responseJson);
       router.push("/create/result");
     } catch (error) {
@@ -70,21 +54,10 @@ export default function Home() {
   };
 
   const getResponseFromGpt = async (responseJson: PlayerCarRes) => {
-    const carName = responseJson[PLAYER_CAR_NAME];
-    const carLuck = responseJson[PLAYER_CAR_LUCK];
-    const carInstruction = responseJson[PLAYER_CAR_INSTRUCTION];
-    const dataBase64 = responseJson[PLAYER_CAR_IMAGE];
-    localStorage.setItem(PLAYER_CAR_NAME, carName);
-    localStorage.setItem(PLAYER_CAR_LUCK, carLuck.toString());
-    localStorage.setItem(PLAYER_CAR_INSTRUCTION, carInstruction);
-    console.log("CAR NAME:", carName);
-    console.log("CAR LUCK:", carLuck);
-    console.log("CAR INSTRUCTION:", carInstruction);
-    const blob = await toBlob(dataBase64);
-    if (blob) {
-      const url = URL.createObjectURL(blob);
-      localStorage.setItem(PLAYER_CAR_IMAGE, url);
-    }
+    const carDataJsonWithUrl = await validatePlayerCarRes(responseJson);
+    if (!carDataJsonWithUrl) return false;
+    localStorage.setItem(PLAYER_CAR,
+      JSON.stringify(carDataJsonWithUrl));
   };
 
   return (

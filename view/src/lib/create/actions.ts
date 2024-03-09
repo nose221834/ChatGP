@@ -8,7 +8,7 @@ export const getPlayerCarDataFromGpt = async (data: PlayerCarInput) =>{
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     if (!apiId || !apiKey || !apiUrl) return false;
     console.log("Endpoint:", `${apiUrl}/1/car/data?text=${data.text}`)
-    const responseJson: PlayerCarRes = await fetch(`${apiUrl}/1/car/data?text=${data.text}`, {
+    const responseJson: PlayerCarRes = await fetch(`${apiUrl}/car/create?text_user_input=${data.text}`, {
       headers: {
         [apiId]: apiKey,
       },
