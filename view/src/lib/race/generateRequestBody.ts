@@ -113,12 +113,14 @@ const getResponseJson = () => {
     if (responseJson === null) {
         // 何もない場合は、仮のデータを返却する
         console.log("Generate Dummy ResponseJson");
-        return generateDummyResponseJson();
+        const dummyResponseJson = generateDummyResponseJson();
+        localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(dummyResponseJson));
+        return dummyResponseJson;
     }
     return JSON.parse(responseJson) as RaceInfoRes;
 };
 
-const generateDummyResponseJson = () => {
+export const generateDummyResponseJson = () => {
     // ダミーデータを返却
     const playerCar = localStorage.getItem(PLAYER_CAR);
     if (playerCar === null) {
