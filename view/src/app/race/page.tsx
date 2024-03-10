@@ -20,7 +20,6 @@ export default function Home() {
   const [scene, setScene] = useState<number>(0);
   // InteractiveとProgressを切り替えるState
   const [response, setResponse] = useState<boolean>(false);
-
   const [submit, setSubmit] = useState<boolean>(false);
 
   async function onSubmit(data: SubmitProps) {
@@ -81,7 +80,7 @@ export default function Home() {
             </div>
           </div>
         )}
-        <Interactive order={1} scene={scene} submit={onSubmit} />
+        <Interactive order={1} scene={scene} isSubmit={submit} submit={onSubmit} />
       </main>
     );
   } else

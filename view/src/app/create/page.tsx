@@ -121,7 +121,10 @@ export default function Home() {
                 {...register("text", { required: true, maxLength: 20 })}
               ></Textarea>
               <div className="flex p-4 justify-end">
-                <Button className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest">
+                <Button
+                  disabled={submit}
+                  className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest"
+                >
                   送信
                 </Button>
               </div>
