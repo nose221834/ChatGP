@@ -1,20 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Interactive } from "./Interactive";
 import { Progress } from "./Progress";
 import { useRouter } from "next/navigation";
 import { SubmitProps } from "./type";
 import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
+import { RACE_CAR_IMAGES, RACE_RESPONSE_DATA } from "@/lib/const";
 import {
-  RACE_EVENT,
-  RACE_RESPONSE_DATA,
-} from "@/lib/const";
-import { generateRaceRequestBody, generateRaceEndRequestBody } from "@/lib/race/generateRequestBody";
+  generateRaceRequestBody,
+  generateRaceEndRequestBody,
+} from "@/lib/race/generateRequestBody";
+import { returnOrderImage } from "@/lib/race/returnOrderImage";
 
 export default function Home() {
-
   const router = useRouter();
   // 場面を切り替えるためのState
   const [scene, setScene] = useState<number>(0);
@@ -30,7 +30,6 @@ export default function Home() {
       if (!responseJson) return <div>Error</div>;
       localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
       router.push("/race/ending");
-      // }
     } else {
       console.log("router.push()");
       const requestBody: RaceData = generateRaceRequestBody(data.event);
@@ -38,6 +37,9 @@ export default function Home() {
       const responseJson = await getRaceDataFromGpt(requestBody);
       console.log("responseJson:", responseJson);
       if (!responseJson) return <div>Error</div>;
+      const carImagesData = returnOrderImage(responseJson);
+      localStorage.setItem(RACE_CAR_IMAGES, JSON.stringify(carImagesData));
+
       localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
       setResponse(true);
     }

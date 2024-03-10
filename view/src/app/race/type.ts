@@ -76,3 +76,10 @@ export type RaceEndData = {
   [PLAYER_CAR_INSTRUCTION]: string;
   [PLAYER_LUCK]: number;
 };
+
+export type OrderedImages = {
+  [FIRST_PLACE]: string;
+  [SECOND_PLACE]: string;
+  [THIRD_PLACE]: string;
+  [FOURTH_PLACE]: string;
+}
