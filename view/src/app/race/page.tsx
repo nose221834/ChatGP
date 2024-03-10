@@ -25,6 +25,7 @@ export default function Home() {
 
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
+      setSubmit(true);
       const requestBody: RaceEndData = generateRaceEndRequestBody(data.event);
       const responseJson = await getEndDataFromGpt(requestBody);
       console.log("responseJson:", responseJson);
