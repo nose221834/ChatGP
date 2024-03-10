@@ -39,5 +39,5 @@ export const FOURTH_CAR_INSTRUCTION = "fourth_car_instruction";
 export const RACE_EVENT = "event";
 export const PLAYER_LUCK = "player_luck";
 
-export const RACE_RESPONSE_DATA = "responceData";
+export const RACE_RESPONSE_DATA = "responseData";
 export const RACE_CAR_IMAGES = "race_car_images";

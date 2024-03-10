@@ -6,17 +6,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
 import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
 
-import {
-  PLAYER_CAR
-} from "@/lib/const";
+import { PLAYER_CAR } from "@/lib/const";
 
-export default function Home
-  () {
+export default function Home() {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
 
@@ -42,11 +39,14 @@ export default function Home
     );
   }
 
-
-  const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
+  const onSubmit: SubmitHandler<PlayerCarInput> = async (
+    data: PlayerCarInput
+  ) => {
     try {
       setSubmit(true);
-      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(data);
+      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(
+        data
+      );
       if (!responseJson) return Error;
       await getResponseFromGpt(responseJson);
       router.push("/create/result");
@@ -58,8 +58,7 @@ export default function Home
   const getResponseFromGpt = async (responseJson: PlayerCarRes) => {
     const carDataJsonWithUrl = await validatePlayerCarRes(responseJson);
     if (!carDataJsonWithUrl) return false;
-    localStorage.setItem(PLAYER_CAR,
-      JSON.stringify(carDataJsonWithUrl));
+    localStorage.setItem(PLAYER_CAR, JSON.stringify(carDataJsonWithUrl));
   };
 
   return (
@@ -122,7 +121,10 @@ export default function Home
                 {...register("text", { required: true, maxLength: 20 })}
               ></Textarea>
               <div className="flex p-4 justify-end">
-                <Button className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest">
+                <Button
+                  disabled={submit}
+                  className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest"
+                >
                   送信
                 </Button>
               </div>
