@@ -7,11 +7,7 @@ import { useRouter } from "next/navigation";
 import { SubmitProps } from "./type";
 import { RaceData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
-import {
-  RACE_EVENT,
-  RACE_RESPONSE_DATA,
-  ENEMY_CAR,
-} from "@/lib/const";
+import { RACE_EVENT, RACE_RESPONSE_DATA, ENEMY_CAR } from "@/lib/const";
 import { generateRaceRequestBody } from "@/lib/race/generateRequestBody";
 
 export default function Home() {
@@ -33,12 +29,6 @@ export default function Home() {
     fourth_car_instruction: "string",
     event: "event",
   };
-
-  const router = useRouter();
-  // 場面を切り替えるためのState
-  const [scene, setScene] = useState<number>(0);
-  // InteractiveとProgressを切り替えるState
-  const [response, setResponse] = useState<boolean>(false);
 
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
