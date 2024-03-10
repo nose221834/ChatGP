@@ -20,6 +20,7 @@ const config = {
       primarycolor: "#AC7D88",
       secondarycolor: "#85586F",
       accentcolor: "#643843",
+      accentyellow: "#E6B422",
     },
     container: {
       center: true,
