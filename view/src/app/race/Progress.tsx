@@ -2,6 +2,7 @@ import { ProgProps } from "./type";
 import Image from "next/image";
 import { PLAYER_CAR, RACE_RESPONSE_DATA } from "@/lib/const";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export function Progress({ order, scene, cars, click }: ProgProps) {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -35,6 +36,16 @@ export function Progress({ order, scene, cars, click }: ProgProps) {
             <p className=" text-shadow-edge text-basecolor">
               ここにうけとった文章
             </p>
+          </div>
+          <div className="flex justify-end w-full">
+            <div>
+              <Button
+                onClick={handleClick}
+                className=" bg-accentcolor hover:bg-secondarycolor text-basecolor  h-12 text-xl text-center "
+              >
+                次のフェーズへ移動！
+              </Button>
+            </div>
           </div>
         </div>
       </div>
