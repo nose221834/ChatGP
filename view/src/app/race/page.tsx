@@ -30,7 +30,6 @@ export default function Home() {
       if (!responseJson) return <div>Error</div>;
       localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
       router.push("/race/ending");
-      // }
     } else {
       setSubmit(true);
       const requestBody: RaceData = generateRaceRequestBody(data.event);
@@ -80,7 +79,12 @@ export default function Home() {
             </div>
           </div>
         )}
-        <Interactive order={1} scene={scene} isSubmit={submit} submit={onSubmit} />
+        <Interactive
+          order={1}
+          scene={scene}
+          isSubmit={submit}
+          submit={onSubmit}
+        />
       </main>
     );
   } else

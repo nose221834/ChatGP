@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { RaceInfoRes } from "./type";
 
-export function Progress({ order, scene, cars, click }: ProgProps) {
+export function Progress({ click }: ProgProps) {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     click();
   };
