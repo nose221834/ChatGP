@@ -28,18 +28,15 @@ export type SubmitProps = {
 export type InteProps = {
   order: number;
   scene: number;
+  isSubmit: boolean;
   submit: SubmitHandler<SubmitProps>;
 };
 
-export type ResponceProps = {
+export type ResponseProps = {
   text: string;
 };
 
-export type ProgProps = {
-  order: number;
-  scene: number;
-  click: () => void;
-};
+export type ProgProps = { click: () => void };
 
 export type RaceInfoRes = {
   [GENERATED_TEXT]: string;
@@ -82,4 +79,4 @@ export type OrderedImages = {
   [SECOND_PLACE]: string;
   [THIRD_PLACE]: string;
   [FOURTH_PLACE]: string;
-}
+};

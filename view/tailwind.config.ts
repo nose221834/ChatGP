@@ -72,6 +72,13 @@ const config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "vibrate-1": "vibrate-1 0.5s linear infinite both",
+        heartbeat: "heartbeat 1.5s ease infinite both",
+        "jello-horizontal": "jello-horizontal 0.8s ease infinite  both",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -81,10 +88,66 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        "vibrate-1": {
+          "0%,to": {
+            transform: "translate(0)",
+          },
+          "20%": {
+            transform: "translate(-2px, 2px)",
+          },
+          "40%": {
+            transform: "translate(-2px, -2px)",
+          },
+          "60%": {
+            transform: "translate(2px, 2px)",
+          },
+          "80%": {
+            transform: "translate(2px, -2px)",
+          },
+        },
+        heartbeat: {
+          "0%": {
+            transform: "scale(1)",
+            "transform-origin": "center center",
+            "animation-timing-function": "ease-out",
+          },
+          "10%": {
+            transform: "scale(.91)",
+            "animation-timing-function": "ease-in",
+          },
+          "17%": {
+            transform: "scale(.98)",
+            "animation-timing-function": "ease-out",
+          },
+          "33%": {
+            transform: "scale(.87)",
+            "animation-timing-function": "ease-in",
+          },
+          "45%": {
+            transform: "scale(1)",
+            "animation-timing-function": "ease-out",
+          },
+        },
+        "jello-horizontal": {
+          "0%,to": {
+            transform: "scale3d(1, 1, 1)",
+          },
+          "30%": {
+            transform: "scale3d(1.25, .75, 1)",
+          },
+          "40%": {
+            transform: "scale3d(.75, 1.25, 1)",
+          },
+          "50%": {
+            transform: "scale3d(1.15, .85, 1)",
+          },
+          "65%": {
+            transform: "scale3d(.95, 1.05, 1)",
+          },
+          "75%": {
+            transform: "scale3d(1.05, .95, 1)",
+          },
+        },
       },
     },
   },

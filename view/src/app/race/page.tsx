@@ -13,6 +13,7 @@ import {
   generateRaceEndRequestBody,
 } from "@/lib/race/generateRequestBody";
 import { returnOrderImage } from "@/lib/race/returnOrderImage";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -20,10 +21,11 @@ export default function Home() {
   const [scene, setScene] = useState<number>(0);
   // InteractiveとProgressを切り替えるState
   const [response, setResponse] = useState<boolean>(false);
+  const [submit, setSubmit] = useState<boolean>(false);
 
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
-      console.log("scene + 1 >= 3");
+      setSubmit(true);
       const requestBody: RaceEndData = generateRaceEndRequestBody(data.event);
       const responseJson = await getEndDataFromGpt(requestBody);
       console.log("responseJson:", responseJson);
@@ -31,7 +33,7 @@ export default function Home() {
       localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
       router.push("/race/ending");
     } else {
-      console.log("router.push()");
+      setSubmit(true);
       const requestBody: RaceData = generateRaceRequestBody(data.event);
       console.log("requestBody", requestBody);
       const responseJson = await getRaceDataFromGpt(requestBody);
@@ -48,19 +50,43 @@ export default function Home() {
   function nextScene(): void {
     setScene(scene + 1);
     setResponse(false);
+    setSubmit(false);
   }
 
   console.log(response, "response");
   if (!response) {
     return (
       <main>
-        <Interactive order={1} scene={scene} submit={onSubmit} />
+        {submit && (
+          <div className="flex flex-col z-50 items-center bg-basecolor absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-4 border-accentcolor rounded-xl">
+            <Image
+              src="/loading.png"
+              alt="loading"
+              width={196}
+              height={196}
+              priority
+              className="animate-spin"
+            />
+            <div className="p-4">
+              <div className=" flex flex-col items-center bg-primarycolor text-2xl text-basecolor p-4 rounded-md border-4 border-accentcolor ">
+                <p>ChatGPTの生成は時間がかかります！</p>
+                <p>少々お待ちください。</p>
+              </div>
+            </div>
+          </div>
+        )}
+        <Interactive
+          order={1}
+          scene={scene}
+          isSubmit={submit}
+          submit={onSubmit}
+        />
       </main>
     );
   } else
     return (
       <main>
-        <Progress order={1} scene={scene} click={nextScene} />
+        <Progress click={nextScene} />
       </main>
     );
 }
