@@ -27,7 +27,7 @@ export default function Home() {
     const endigText:string =raceDataJson[GENERATED_TEXT];
   
     const moveToStart = () => {
-        router.push("/create");
+        router.push("/");
     };
     return (
       <main>
