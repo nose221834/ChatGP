@@ -47,30 +47,36 @@ export function Progress({ order, scene, cars, click }: ProgProps) {
               alt="enemy0"
               width={168}
               height={168}
+              className=" animate-jello-horizontal"
             />
           </div>
           <div className="flex flex-col justify-start w-full h-full">
-            <Image
-              src="/announcer.webp"
-              alt="enemy0"
-              width={168}
-              height={168}
-            />
+            <div className="flex justify-end w-full ">
+              <Image
+                src="/announcer.webp"
+                alt="enemy1"
+                width={168}
+                height={168}
+                className=" animate-vibrate-1"
+              />
+            </div>
           </div>
           <div className="flex flex-col justify-end w-full h-full">
             <Image
               src="/announcer.webp"
-              alt="enemy0"
+              alt="enemy2"
               width={168}
               height={168}
+              className=" animate-vibrate-1"
             />
           </div>
           <div className="flex flex-col justify-around w-full h-full">
             <Image
               src="/announcer.webp"
-              alt="enemy0"
+              alt="enemy3"
               width={168}
               height={168}
+              className=" animate-heartbeat"
             />
           </div>
         </div>
