@@ -31,7 +31,7 @@ export default function Home() {
       console.log("responseJson:", responseJson);
       if (!responseJson) return <div>Error</div>;
       localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
-      router.push("/race/ending");
+      router.push("/ending");
     } else {
       setSubmit(true);
       const requestBody: RaceData = generateRaceRequestBody(data.event);
