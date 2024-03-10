@@ -17,6 +17,7 @@ import { PlayerCarRes } from "@/app/create/type";
 
 export default function Home() {
   const router = useRouter();
+  if (typeof window === 'undefined') return false;
   let playerCar = localStorage.getItem(PLAYER_CAR);
   if (!playerCar) {
     // プレイヤーカーがない場合はcreateページに戻る
