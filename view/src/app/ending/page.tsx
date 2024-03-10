@@ -3,9 +3,13 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { RACE_RESPONSE_DATA, GENERATED_TEXT } from "@/lib/const";
+import { getPlayerRank } from "@/lib/race/getPlayerRank";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
+  const orderNum = getPlayerRank();
+  const orderImage = `/order_img/order_${orderNum}.png`;
 
   if (typeof window === "undefined") return false;
 
@@ -33,6 +37,9 @@ export default function Home() {
                 {endigText}
               </p>
             </div>
+          </div>
+          <div className="absolute bottom-0 reft-0 m-4">
+            <Image src={orderImage} alt="order" width={200} height={200} />
           </div>
           <div className="absolute bottom-0 right-0 m-4">
             <Button
