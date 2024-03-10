@@ -75,7 +75,7 @@ export function Progress({ click }: ProgProps) {
           <div className="flex flex-col justify-start w-full h-full ">
             <div className=" h-1/5"></div>
             <Image
-              src={carIMagesJson.first_place}
+              src={carIMagesJson.fourth_prace}
               alt="enemy0"
               width={168}
               height={168}
@@ -85,7 +85,7 @@ export function Progress({ click }: ProgProps) {
           <div className="flex flex-col justify-start w-full h-full">
             <div className="flex justify-end w-full ">
               <Image
-                src={carIMagesJson.second_place}
+                src={carIMagesJson.third_place}
                 alt="enemy1"
                 width={168}
                 height={168}
@@ -95,7 +95,7 @@ export function Progress({ click }: ProgProps) {
           </div>
           <div className="flex flex-col justify-end w-full h-full">
             <Image
-              src={carIMagesJson.third_place}
+              src={carIMagesJson.second_place}
               alt="enemy2"
               width={168}
               height={168}
@@ -104,7 +104,7 @@ export function Progress({ click }: ProgProps) {
           </div>
           <div className="flex flex-col justify-around w-full h-full">
             <Image
-              src={carIMagesJson.fourth_prace}
+              src={carIMagesJson.first_place}
               alt="enemy3"
               width={168}
               height={168}
