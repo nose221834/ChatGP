@@ -1,4 +1,4 @@
-import { RaceInfoRes } from "@/app/race/type";
+import { RaceInfoRes, OrderedImages } from "@/app/race/type";
 
 import {
     RACE_RESPONSE_DATA,
@@ -23,13 +23,18 @@ export const returnOrderImage = () => {
     const thirdPlace = responseJson[THIRD_PLACE];
     const fourthPlace = responseJson[FOURTH_PLACE];
     // 車の名前に対応する画像を返す(関数)
-    const firstCarImage = getCarImage(firstPlace);
-    const secondCarImage = getCarImage(secondPlace);
-    const thirdCarImage = getCarImage(thirdPlace);
-    const fourthCarImage = getCarImage(fourthPlace);
-    // 配列で画像を返す
-    const carImages = [firstCarImage, secondCarImage, thirdCarImage, fourthCarImage];
-    return carImages;
+    const firstCarImage: string = getCarImage(firstPlace);
+    const secondCarImage: string = getCarImage(secondPlace);
+    const thirdCarImage: string = getCarImage(thirdPlace);
+    const fourthCarImage: string = getCarImage(fourthPlace);
+    // OrderedImages型で画像を返す
+    const orderedImages: OrderedImages = {
+        [FIRST_PLACE]: firstCarImage,
+        [SECOND_PLACE]: secondCarImage,
+        [THIRD_PLACE]: thirdCarImage,
+        [FOURTH_PLACE]: fourthCarImage,
+    };
+    return orderedImages;
 };
 
 const getResponseJson = () => {
