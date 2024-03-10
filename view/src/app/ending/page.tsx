@@ -15,7 +15,7 @@ export default function Home() {
 
     
 
-    
+
     let raceResponseData = localStorage.getItem(RACE_RESPONSE_DATA);
     if (!raceResponseData) {
       // プレイヤーカーがない場合はcreateページに戻る
@@ -36,7 +36,7 @@ export default function Home() {
           <div className="absolute inset-0 bg-accentcolor bg-opacity-20">
             <div className="flex items-center justify-center h-screen">
               <div className="max-w-4xl overflow-auto p-4">
-                <p className="whitespace-normal text-accentcolor text-2xl font-bold">
+                <p className="whitespace-normal text-accentyellow text-2xl font-bold">
                   {endigText}
                 </p>
               </div>
