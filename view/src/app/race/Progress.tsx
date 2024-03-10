@@ -89,7 +89,7 @@ export function Progress({ click }: ProgProps) {
           </div>
           <div className="flex flex-col justify-around w-full h-full">
             <Image
-              src={carIMagesJson.fourth_place}
+              src={carIMagesJson.fourth_prace}
               alt="enemy3"
               width={168}
               height={168}
