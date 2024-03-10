@@ -36,12 +36,7 @@ export type ResponseProps = {
   text: string;
 };
 
-export type ProgProps = {
-  order: number;
-  scene: number;
-  cars: string[];
-  click: () => void;
-};
+export type ProgProps = { click: () => void };
 
 export type RaceInfoRes = {
   [GENERATED_TEXT]: string;
@@ -77,4 +72,11 @@ export type RaceEndData = {
   [RACE_EVENT]: string;
   [PLAYER_CAR_INSTRUCTION]: string;
   [PLAYER_LUCK]: number;
+};
+
+export type OrderedImages = {
+  [FIRST_PLACE]: string;
+  [SECOND_PLACE]: string;
+  [THIRD_PLACE]: string;
+  [FOURTH_PLACE]: string;
 };

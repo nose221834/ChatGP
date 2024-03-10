@@ -1,18 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Interactive } from "./Interactive";
 import { Progress } from "./Progress";
 import { useRouter } from "next/navigation";
 import { SubmitProps } from "./type";
 import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
-import { ENEMY_CAR, RACE_RESPONSE_DATA } from "@/lib/const";
-import Image from "next/image";
+import { RACE_CAR_IMAGES, RACE_RESPONSE_DATA } from "@/lib/const";
 import {
   generateRaceRequestBody,
   generateRaceEndRequestBody,
 } from "@/lib/race/generateRequestBody";
+import { returnOrderImage } from "@/lib/race/returnOrderImage";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -37,6 +38,9 @@ export default function Home() {
       const responseJson = await getRaceDataFromGpt(requestBody);
       console.log("responseJson:", responseJson);
       if (!responseJson) return <div>Error</div>;
+      const carImagesData = returnOrderImage(responseJson);
+      localStorage.setItem(RACE_CAR_IMAGES, JSON.stringify(carImagesData));
+
       localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
       setResponse(true);
     }
@@ -47,15 +51,6 @@ export default function Home() {
     setResponse(false);
     setSubmit(false);
   }
-
-  const enemyCar0 = localStorage.getItem(`${ENEMY_CAR}_0`);
-  const enemyCar1 = localStorage.getItem(`${ENEMY_CAR}_1`);
-  const enemyCar2 = localStorage.getItem(`${ENEMY_CAR}_2`);
-
-  if (!enemyCar0 || !enemyCar1 || !enemyCar2)
-    return <div>予期しないエラーが発生しました。</div>;
-
-  const enemyCars = [enemyCar0, enemyCar1, enemyCar2];
 
   console.log(response, "response");
   if (!response) {
@@ -90,7 +85,7 @@ export default function Home() {
   } else
     return (
       <main>
-        <Progress order={1} scene={scene} cars={enemyCars} click={nextScene} />
+        <Progress click={nextScene} />
       </main>
     );
 }

@@ -24,7 +24,7 @@ export const GENERATED_TEXT = "generated_text";
 export const FIRST_PLACE = "first_place";
 export const SECOND_PLACE = "second_place";
 export const THIRD_PLACE = "third_place";
-export const FOURTH_PLACE = "fourth_prace";
+export const FOURTH_PLACE = "fourth_place";
 
 export const FIRST_CAR_NAME = "first_car_name";
 export const SECOND_CAR_NAME = "second_car_name";
@@ -40,3 +40,4 @@ export const RACE_EVENT = "event";
 export const PLAYER_LUCK = "player_luck";
 
 export const RACE_RESPONSE_DATA = "responseData";
+export const RACE_CAR_IMAGES = "race_car_images";
