@@ -1,37 +1,41 @@
-from fastapi import APIRouter, Security
+from fastapi import APIRouter, Security,Depends
 from fastapi.responses import Response
 from chat_gpt.status_generation import status_generate_chatgpt
 from utils.translation import translation
 from utils.auth import validate_api_key
 from transformers import GPT2Tokenizer
 from base64 import b64encode
-from utils.car_data_validator import validate_token_count
+from chat_gpt.chat_gpt_validator import validate_token_count
 from openai import OpenAI
 import asyncio
 import requests
-
+from config import PlayerCarKeys
+from models import InputTextModel
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 
 router = APIRouter()
 
 client = OpenAI()
 
-@router.get("/{player}/car/data")
-async def make_car(player: str,text: str, api_key: str = Security(validate_api_key)):
+@router.get("/car/create")
+async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
 
-    text_en = translation(text,'JA','EN-US')
+    text_user_input = translation(input_text_model.text_user_input,'JA','EN-US')
     
-    if validate_token_count(text_en,5):
+    if validate_token_count(text_user_input,5):
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
-            image_generate_chatgpt_no_rembg(text_en),
-            status_generate_chatgpt(text_en)
+            image_generate_chatgpt_no_rembg(text_user_input),
+            status_generate_chatgpt(text_user_input)
         )
 
     
     text_jp = translation(text_car_status,'EN','JA')
 
 
-    return {"url_car_img": url_car_img,"name": name,"luk": luk,"text_car_status": text_jp}
+    return {PlayerCarKeys.image: url_car_img,
+            PlayerCarKeys.name: name,
+            PlayerCarKeys.luck: luk,
+            PlayerCarKeys.instruction: text_jp}
 
 def shaping_prompts_car_img(text:str):
 
@@ -39,9 +43,9 @@ def shaping_prompts_car_img(text:str):
     return prompt
 
 
-async def image_generate_chatgpt_no_rembg(text:str):
+async def image_generate_chatgpt_no_rembg(text_user_input:str):
     
-    text_prompt = shaping_prompts_car_img(text)
+    text_prompt = shaping_prompts_car_img(text_user_input)
     #modelはdell-e2
     response =  client.images.generate(
                         model   = "dall-e-2",   # モデル  

@@ -7,12 +7,17 @@ import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
+import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
+import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
 
-type Input = {
-  text: string;
-};
+import {
+  PLAYER_CAR
+} from "@/lib/const";
 
-export default function Home() {
+export default function Home
+  () {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
 
@@ -30,6 +35,16 @@ export default function Home() {
   const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<PlayerCarInput>({
+    defaultValues: {
+      text: "例：宇宙船に乗ってる猫",
+    },
+  });
+
   if (!apiId || !apiKey || !apiUrl) {
     return (
       <div>
@@ -38,40 +53,26 @@ export default function Home() {
     );
   }
 
-  const toBlob = async (base64: string) => {
-    try {
-      const bin = atob(base64);
-      const buffer = new Uint8Array(bin.length).map((_, i) =>
-        bin.charCodeAt(i)
-      );
-      const blob = new Blob([buffer], { type: "image/png" });
-      return blob;
-    } catch (e) {
-      console.error(e);
-      return false;
-    }
-  };
 
-  const onSubmit: SubmitHandler<Input> = async (data: Input) => {
+  const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
     try {
       setSubmit(true);
-      const response = await fetch(`${apiUrl}/1/car/data?text=${data.text}`, {
-        headers: {
-          [apiId]: apiKey,
-        },
-      });
-      const responseJson = await response.json();
-      const dataBase64 = responseJson.car_img;
-      const blob = await toBlob(dataBase64);
-      if (blob) {
-        const url = URL.createObjectURL(blob);
-        localStorage.setItem("UserCar", url);
-        router.push("/create/result");
-      }
+      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(data);
+      if (!responseJson) return Error;
+      await getResponseFromGpt(responseJson);
+      router.push("/create/result");
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
+  const getResponseFromGpt = async (responseJson: PlayerCarRes) => {
+    const carDataJsonWithUrl = await validatePlayerCarRes(responseJson);
+    if (!carDataJsonWithUrl) return false;
+    localStorage.setItem(PLAYER_CAR,
+      JSON.stringify(carDataJsonWithUrl));
+  };
+
   return (
     <main>
       {submit && (
