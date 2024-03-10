@@ -1,5 +1,5 @@
 import { RaceInfoRes } from "@/app/race/type";
-
+import { generateDummyResponseJson } from "@/lib/race/generateRequestBody";
 import {
     RACE_RESPONSE_DATA,
     FIRST_PLACE,
@@ -13,6 +13,7 @@ import {
 export const getPlayerRank = () => {
     // PLAYER_NAMEの取得
     const playerCar = localStorage.getItem(PLAYER_CAR);
+    console.log("Get PlayerCar", playerCar);
     if (playerCar === null) {
         throw new Error("Player Car Data is not found.");
     }
@@ -40,9 +41,13 @@ const getRank = (carName: string) => {
 
 const getResponseJson = () => {
     const responseJson = localStorage.getItem(RACE_RESPONSE_DATA);
+    console.log("Get ResponseJson", responseJson);
     if (responseJson === null) {
-        // 何もない場合は、エラーをthrowする
-        throw new Error("Response Data is not found.");
+        // 何もない場合は、仮のデータを返却する
+        console.log("Generate Dummy ResponseJson");
+        const dummyResponseJson = generateDummyResponseJson();
+        localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(dummyResponseJson));
+        return dummyResponseJson;
     }
     return JSON.parse(responseJson) as RaceInfoRes;
 };

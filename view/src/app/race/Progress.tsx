@@ -1,6 +1,7 @@
 import { ProgProps } from "./type";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import {
   RACE_CAR_IMAGES,
@@ -8,6 +9,7 @@ import {
   GENERATED_TEXT,
 } from "@/lib/const";
 import { OrderedImages, RaceInfoRes } from "./type";
+import { getPlayerRank } from "@/lib/race/getPlayerRank";
 
 export function Progress({ click }: ProgProps) {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -15,7 +17,8 @@ export function Progress({ click }: ProgProps) {
   };
 
   const router = useRouter();
-
+  const orderNum = getPlayerRank();
+  const orderImage = `/order_img/order_${orderNum}.png`;
   const carDataString = localStorage.getItem(RACE_CAR_IMAGES);
   const responseData = localStorage.getItem(RACE_RESPONSE_DATA);
   if (!carDataString || !responseData)
@@ -55,7 +58,19 @@ export function Progress({ click }: ProgProps) {
           </div>
         </div>
       </div>
-      <div className="flex justify-end z-10 w-full h-3/4 p-4">
+      <div className="flex justify-between z-10 w-full h-3/4 p-4">
+        <div className="flex flex-col justify-start h-full overflow-hidden">
+          <Card className="border-4 bg-tranparent border-basecolor">
+            <Image
+              src={orderImage}
+              alt="order"
+              width={200}
+              height={200}
+              className="object-center object-contain"
+              priority
+            />
+          </Card>
+        </div>
         <div className="flex justify-around items-center w-4/5 h-full p-4">
           <div className="flex flex-col justify-start w-full h-full ">
             <div className=" h-1/5"></div>

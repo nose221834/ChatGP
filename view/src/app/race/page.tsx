@@ -14,6 +14,7 @@ import {
 } from "@/lib/race/generateRequestBody";
 import { returnOrderImage } from "@/lib/race/returnOrderImage";
 import Image from "next/image";
+import { getPlayerRank } from "@/lib/race/getPlayerRank";
 
 export default function Home() {
   const router = useRouter();
@@ -41,10 +42,11 @@ export default function Home() {
       if (!responseJson) return <div>Error</div>;
       const carImagesData = returnOrderImage(responseJson);
       localStorage.setItem(RACE_CAR_IMAGES, JSON.stringify(carImagesData));
-
+      
       localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
       setResponse(true);
     }
+    console.log("getPlayerRank", getPlayerRank());
   }
 
   function nextScene(): void {
