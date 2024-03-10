@@ -67,6 +67,7 @@ export type RaceEndData = {
   [SECOND_CAR_NAME]: string;
   [THIRD_CAR_NAME]: string;
   [FOURTH_CAR_NAME]: string;
+  [PLAYER_CAR_NAME]: string;
   [FIRST_CAR_INSTRUCTION]: string;
   [SECOND_CAR_INSTRUCTION]: string;
   [THIRD_CAR_INSTRUCTION]: string;
