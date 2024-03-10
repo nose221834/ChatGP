@@ -1,8 +1,9 @@
 import { ProgProps } from "./type";
 import Image from "next/image";
-import { PLAYER_CAR, RACE_RESPONSE_DATA } from "@/lib/const";
+import { PLAYER_CAR, RACE_RESPONSE_DATA, GENERATED_TEXT } from "@/lib/const";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { RaceInfoRes } from "./type";
 
 export function Progress({ order, scene, cars, click }: ProgProps) {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -11,15 +12,19 @@ export function Progress({ order, scene, cars, click }: ProgProps) {
 
   const router = useRouter();
 
-  const userDataString = localStorage.getItem(PLAYER_CAR);
   const responseData = localStorage.getItem(RACE_RESPONSE_DATA);
-  if (!userDataString || !responseData)
+  if (!responseData)
     return (
       <div>
         <p>想定していないエラーが発生しています。</p>
         <p>リロードしてください。</p>
       </div>
     );
+
+  const responseJson = JSON.parse(responseData) as RaceInfoRes;
+  const responseText = responseJson[GENERATED_TEXT];
+
+  console.log(responseText);
 
   return (
     <div className="flex flex-col items-center justify-around w-screen h-screen overflow-hidden bg-basecolor">
@@ -33,9 +38,7 @@ export function Progress({ order, scene, cars, click }: ProgProps) {
       <div className="flex flex-col justify-around items-center z-10 p-4 w-3/5 h-1/2">
         <div className="flex flex-col justify-around items-center  h-full w-full p-4">
           <div className="font-extrabold text-4xl tracking-wider text-center w-11/12  p-8">
-            <p className=" text-shadow-edge text-basecolor">
-              ここにうけとった文章
-            </p>
+            <p className=" text-shadow-edge text-basecolor">{responseText}</p>
           </div>
           <div className="flex justify-end w-full">
             <div>

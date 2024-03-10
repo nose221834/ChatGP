@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { SubmitProps } from "./type";
 import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
-import { ENEMY_CAR, RACE_EVENT, RACE_RESPONSE_DATA } from "@/lib/const";
+import { ENEMY_CAR, RACE_RESPONSE_DATA } from "@/lib/const";
 import {
   generateRaceRequestBody,
   generateRaceEndRequestBody,
@@ -22,7 +22,6 @@ export default function Home() {
 
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
-      console.log("scene + 1 >= 3");
       const requestBody: RaceEndData = generateRaceEndRequestBody(data.event);
       const responseJson = await getEndDataFromGpt(requestBody);
       console.log("responseJson:", responseJson);
@@ -31,7 +30,6 @@ export default function Home() {
       router.push("/race/ending");
       // }
     } else {
-      console.log("router.push()");
       const requestBody: RaceData = generateRaceRequestBody(data.event);
       console.log("requestBody", requestBody);
       const responseJson = await getRaceDataFromGpt(requestBody);
