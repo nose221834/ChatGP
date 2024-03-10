@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
 import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";

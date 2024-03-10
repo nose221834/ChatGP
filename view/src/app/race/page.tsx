@@ -8,6 +8,7 @@ import { SubmitProps } from "./type";
 import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
 import { ENEMY_CAR, RACE_RESPONSE_DATA } from "@/lib/const";
+import Image from "next/image";
 import {
   generateRaceRequestBody,
   generateRaceEndRequestBody,
@@ -20,6 +21,8 @@ export default function Home() {
   // InteractiveとProgressを切り替えるState
   const [response, setResponse] = useState<boolean>(false);
 
+  const [submit, setSubmit] = useState<boolean>(false);
+
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
       const requestBody: RaceEndData = generateRaceEndRequestBody(data.event);
@@ -30,6 +33,7 @@ export default function Home() {
       router.push("/race/ending");
       // }
     } else {
+      setSubmit(true);
       const requestBody: RaceData = generateRaceRequestBody(data.event);
       console.log("requestBody", requestBody);
       const responseJson = await getRaceDataFromGpt(requestBody);
@@ -43,6 +47,7 @@ export default function Home() {
   function nextScene(): void {
     setScene(scene + 1);
     setResponse(false);
+    setSubmit(false);
   }
 
   const enemyCar0 = localStorage.getItem(`${ENEMY_CAR}_0`);
@@ -58,6 +63,24 @@ export default function Home() {
   if (!response) {
     return (
       <main>
+        {submit && (
+          <div className="flex flex-col z-50 items-center bg-basecolor absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-4 border-accentcolor rounded-xl">
+            <Image
+              src="/loading.png"
+              alt="loading"
+              width={196}
+              height={196}
+              priority
+              className="animate-spin"
+            />
+            <div className="p-4">
+              <div className=" flex flex-col items-center bg-primarycolor text-2xl text-basecolor p-4 rounded-md border-4 border-accentcolor ">
+                <p>ChatGPTの生成は時間がかかります！</p>
+                <p>少々お待ちください。</p>
+              </div>
+            </div>
+          </div>
+        )}
         <Interactive order={1} scene={scene} submit={onSubmit} />
       </main>
     );
