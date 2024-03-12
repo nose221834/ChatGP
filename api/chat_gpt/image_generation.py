@@ -2,7 +2,7 @@ from openai import OpenAI
 import requests
 from base64 import b64encode
 from utils.remove_bg import remove_background
-from utils.revere_image import reverse_image
+from utils.reverse_image import reverse_image
 
 client = OpenAI()
 
@@ -49,10 +49,10 @@ async def image_generate_chatgpt(text:str):
     # URLから画像(バイナリ)を取得
     car_img_binary: bytes = requests.get(image_url).content
 
-    remove_bg_img: bytes = remove_background(car_img_binary) # 画像の背景を透過する
+    remove_bg_binary: bytes = remove_background(car_img_binary) # 画像の背景を透過する
 
-    reverse_img: bytes = reverse_img(remove_bg_img) # 画像を反転する
+    reverse_binary: bytes = reverse_image(remove_bg_binary) # 画像を反転する
     
-    return b64encode(reverse_image) # 画像(バイナリ)をbase64に変換して返す
+    return b64encode(reverse_binary) # 画像(バイナリ)をbase64に変換して返す
 
 
