@@ -4,9 +4,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from s3 import image_interacter
 from chat_gpt import car_data
-from chat_gpt import race_routes , ending_routes
+from routes import race_routes , ending_routes ,database_routes
 from api_test import test_car_data,test_translation, no_rembg
-from database import database_routes
+
 app = FastAPI()
 
 origins = [
