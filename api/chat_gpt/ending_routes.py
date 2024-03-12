@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Security
 from utils.auth import validate_api_key
 from utils.translation import translation
-from chat_gpt.chat_gpt_validator import validate_token_count
+from validator.chat_gpt_validator import validate_token_count
 from chat_gpt.race_progression import race_moderator_chatgpt
 from chat_gpt.ending_generation import ending_generate_chatgpt
 from models import GameEndingModel
