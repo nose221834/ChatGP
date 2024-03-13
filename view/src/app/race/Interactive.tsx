@@ -5,10 +5,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { SubmitProps, InteProps, ResponceProps, ProgProps } from "./type";
+import { SubmitProps, InteProps, ResponseProps, ProgProps } from "./type";
 import { Messages } from "./messages";
+import { getPlayerRank } from "@/lib/race/getPlayerRank";
 
-export function Interactive({ order, scene, submit }: InteProps) {
+export function Interactive({ order, scene, isSubmit, submit }: InteProps) {
   const {
     register,
     handleSubmit,
@@ -18,6 +19,9 @@ export function Interactive({ order, scene, submit }: InteProps) {
       event: "なんかかいてね",
     },
   });
+
+  const orderNum = getPlayerRank();
+  if(!orderNum) return <div>Error</div>;
 
   console.log("scene", scene);
 
@@ -33,7 +37,7 @@ export function Interactive({ order, scene, submit }: InteProps) {
       <div className="flex flex-col justify-around items-center z-10 p-4 w-3/5 h-1/2">
         <div className="flex flex-col justify-around items-center  h-full w-full p-4">
           <div className="font-extrabold text-4xl tracking-wider text-center w-11/12  p-8">
-            <Messages scene={scene} order={order} />
+            <Messages scene={scene} order={orderNum} />
           </div>
         </div>
       </div>
@@ -53,7 +57,10 @@ export function Interactive({ order, scene, submit }: InteProps) {
               </div>
             )}
             <div className="flex p-4 justify-end">
-              <Button className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest">
+              <Button
+                disabled={isSubmit}
+                className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest"
+              >
                 送信
               </Button>
             </div>

@@ -1,101 +1,94 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Interactive } from "./Interactive";
 import { Progress } from "./Progress";
 import { useRouter } from "next/navigation";
-import { SubmitProps, InteProps, ResponceProps, ProgProps } from "./type";
-import { RaceData } from "@/app/race/type";
+import { SubmitProps } from "./type";
+import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
+import { RACE_CAR_IMAGES, RACE_RESPONSE_DATA } from "@/lib/const";
 import {
-  PLAYER_CAR,
-  PLAYER_CAR_IMAGE,
-  PLAYER_CAR_NAME,
-  PLAYER_CAR_LUCK,
-  PLAYER_CAR_INSTRUCTION,
-  PLAYER_CAR_FORTUNE,
-  RACE_EVENT,
-  RACE_RESPONSE_DATA,
-} from "@/lib/const";
-import { PlayerCarRes } from "@/app/create/type";
+  generateRaceRequestBody,
+  generateRaceEndRequestBody,
+} from "@/lib/race/generateRequestBody";
+import { returnOrderImage } from "@/lib/race/returnOrderImage";
+import Image from "next/image";
+import { getPlayerRank } from "@/lib/race/getPlayerRank";
 
 export default function Home() {
-  // Sample RaceData
-  const sampleRaceData: RaceData = {
-    first_car_name: "string",
-    second_car_name: "string",
-    third_car_name: "string",
-    fourth_car_name: "string",
-    player_car_name: "string",
-    first_car_instruction: "string",
-    second_car_instruction: "string",
-    third_car_instruction: "string",
-    fourth_car_instruction: "string",
-    event: "event",
-  };
-
-  const testGetRaceInfoFromGpt = async (event: string) => {
-    // Sample RaceData
-    console.log("sampleRaceData", JSON.stringify(sampleRaceData));
-    const responseJson = await getRaceDataFromGpt(sampleRaceData);
-    console.log("responseJson:", responseJson);
-    return true;
-  };
-
   const router = useRouter();
   // 場面を切り替えるためのState
   const [scene, setScene] = useState<number>(0);
   // InteractiveとProgressを切り替えるState
   const [response, setResponse] = useState<boolean>(false);
+  const [submit, setSubmit] = useState<boolean>(false);
 
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
-      console.log("scene + 1 >= 3");
-      const previousResponce = localStorage.getItem(RACE_RESPONSE_DATA);
-      if (previousResponce) {
-        const previousJson = JSON.parse(previousResponce) as RaceData;
-        const sendJson = {
-          ...previousJson,
-          [RACE_EVENT]: data.event,
-        };
-        // const responseJson = await getEndDataFromGpt(sendJson);
-        // localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
-        router.push("/race/ending");
-      }
+      setSubmit(true);
+      const requestBody: RaceEndData = generateRaceEndRequestBody(data.event);
+      const responseJson = await getEndDataFromGpt(requestBody);
+      console.log("responseJson:", responseJson);
+      if (!responseJson) return <div>Error</div>;
+      localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
+      router.push("/ending");
     } else {
-      console.log("router.push()");
-      const previousResponce = localStorage.getItem(RACE_RESPONSE_DATA);
-      if (previousResponce) {
-        console.log(previousResponce, "previousResponce");
-        const previousJson = JSON.parse(previousResponce) as RaceData;
-        const sendJson = {
-          ...previousJson,
-          [RACE_EVENT]: data.event,
-        };
-        const responseJson = await getRaceDataFromGpt(sendJson);
-        if (!responseJson) return <div>Error</div>;
-        localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
-        setResponse(true);
-      }
+      setSubmit(true);
+      const requestBody: RaceData = generateRaceRequestBody(data.event);
+      console.log("requestBody", requestBody);
+      const responseJson = await getRaceDataFromGpt(requestBody);
+      console.log("responseJson:", responseJson);
+      if (!responseJson) return <div>Error</div>;
+      const carImagesData = returnOrderImage(responseJson);
+      localStorage.setItem(RACE_CAR_IMAGES, JSON.stringify(carImagesData));
+      
+      localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
+      setResponse(true);
     }
+    console.log("getPlayerRank", getPlayerRank());
   }
 
   function nextScene(): void {
     setScene(scene + 1);
     setResponse(false);
+    setSubmit(false);
   }
 
   console.log(response, "response");
   if (!response) {
     return (
       <main>
-        <Interactive order={1} scene={scene} submit={onSubmit} />
+        {submit && (
+          <div className="flex flex-col z-50 items-center bg-basecolor absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-4 border-accentcolor rounded-xl">
+            <Image
+              src="/loading.png"
+              alt="loading"
+              width={196}
+              height={196}
+              priority
+              className="animate-spin"
+            />
+            <div className="p-4">
+              <div className=" flex flex-col items-center bg-primarycolor text-2xl text-basecolor p-4 rounded-md border-4 border-accentcolor ">
+                <p>ChatGPTの生成は時間がかかります！</p>
+                <p>少々お待ちください。</p>
+              </div>
+            </div>
+          </div>
+        )}
+        <Interactive
+          order={1}
+          scene={scene}
+          isSubmit={submit}
+          submit={onSubmit}
+        />
       </main>
     );
   } else
     return (
       <main>
-        <Progress order={1} scene={scene} click={nextScene} />
+        <Progress click={nextScene} />
       </main>
     );
 }

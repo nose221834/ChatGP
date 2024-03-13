@@ -28,18 +28,15 @@ export type SubmitProps = {
 export type InteProps = {
   order: number;
   scene: number;
+  isSubmit: boolean;
   submit: SubmitHandler<SubmitProps>;
 };
 
-export type ResponceProps = {
+export type ResponseProps = {
   text: string;
 };
 
-export type ProgProps = {
-  order: number;
-  scene: number;
-  click: () => void;
-};
+export type ProgProps = { click: () => void };
 
 export type RaceInfoRes = {
   [GENERATED_TEXT]: string;
@@ -67,6 +64,7 @@ export type RaceEndData = {
   [SECOND_CAR_NAME]: string;
   [THIRD_CAR_NAME]: string;
   [FOURTH_CAR_NAME]: string;
+  [PLAYER_CAR_NAME]: string;
   [FIRST_CAR_INSTRUCTION]: string;
   [SECOND_CAR_INSTRUCTION]: string;
   [THIRD_CAR_INSTRUCTION]: string;
@@ -74,4 +72,11 @@ export type RaceEndData = {
   [RACE_EVENT]: string;
   [PLAYER_CAR_INSTRUCTION]: string;
   [PLAYER_LUCK]: number;
+};
+
+export type OrderedImages = {
+  [FIRST_PLACE]: string;
+  [SECOND_PLACE]: string;
+  [THIRD_PLACE]: string;
+  [FOURTH_PLACE]: string;
 };

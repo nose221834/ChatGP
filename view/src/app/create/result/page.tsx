@@ -12,13 +12,12 @@ import {
   PLAYER_CAR_LUCK,
   PLAYER_CAR_INSTRUCTION,
   PLAYER_CAR_FORTUNE,
-  RACE_RESPONSE_DATA,
 } from "@/lib/const";
-import { RaceData } from "@/app/race/type";
 import { PlayerCarRes } from "@/app/create/type";
 
 export default function Home() {
   const router = useRouter();
+  if (typeof window === 'undefined') return false;
   let playerCar = localStorage.getItem(PLAYER_CAR);
   if (!playerCar) {
     // プレイヤーカーがない場合はcreateページに戻る
@@ -46,25 +45,13 @@ export default function Home() {
   if (!carFortune) router.push("/create");
 
   const moveToRace = () => {
-    const sampleRaceData: RaceData = {
-      first_car_name: "string",
-      second_car_name: "string",
-      third_car_name: "string",
-      fourth_car_name: "string",
-      player_car_name: "string",
-      first_car_instruction: "string",
-      second_car_instruction: "string",
-      third_car_instruction: "string",
-      fourth_car_instruction: "string",
-      event: "event",
-    };
-    localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(sampleRaceData));
     router.push("/race");
   };
 
   return (
     <main>
-      <div className="flex flex-wrap justigy-around items-center h-screen bg-basecolor">
+      
+      <div className="flex flex-wrap justify-around items-center h-screen bg-basecolor">
         <div className="flex h-full w-1/2 p-4 flex-col justify-around items-center">
           <div className="text-3xl tracking-wider text-center w-11/12 p-4 items-center bg-secondarycolor text-basecolor rounded-xl border-4 border-accentcolor">
             <div className="p-4 text-left">

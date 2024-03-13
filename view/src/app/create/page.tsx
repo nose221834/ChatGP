@@ -9,7 +9,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
-import { validatePlayerCarRes } from "@/lib/validator/carDatavalidator";
+import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
 
 import { PLAYER_CAR } from "@/lib/const";
 
@@ -26,11 +26,7 @@ export default function Home() {
       text: "例：宇宙船に乗ってる猫",
     },
   });
-
-  const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
-  const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
+  
   if (!apiId || !apiKey || !apiUrl) {
     return (
       <div>
@@ -121,7 +117,10 @@ export default function Home() {
                 {...register("text", { required: true, maxLength: 20 })}
               ></Textarea>
               <div className="flex p-4 justify-end">
-                <Button className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest">
+                <Button
+                  disabled={submit}
+                  className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest"
+                >
                   送信
                 </Button>
               </div>
