@@ -1,5 +1,5 @@
 import sqlite3
-from database.database_validator import connect_database,check_input_query
+from validator.database_validator import connect_database,check_input_query
 from fastapi import  HTTPException,status
 
 def add_data(db:str,command:str):
