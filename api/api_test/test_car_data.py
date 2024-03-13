@@ -6,7 +6,7 @@ from transformers import GPT2Tokenizer
 from base64 import b64encode
 from config import PlayerCarKeys
 from models import InputTextModel
-from utils.revere_image import reverse_image
+from utils.reverse_image import reverse_image
 
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
 router = APIRouter()
