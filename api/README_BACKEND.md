@@ -2,7 +2,7 @@
 バックエンドを記述
 
 ## Description
-FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
+FastAPIを使用してChatGPTAPIを操作できるようにする.
 
 ## Installation
 
@@ -12,87 +12,198 @@ FastAPIを使用してs3やChatGPTAPIを操作できるようにする.
 
 ## Usage
 API使用方法
+- /create/enemy
+    敵キャラクターの情報を取得
 
+    Args:
+
+    Returns:
+        enemy_car_image (bytes):入力されたidに対応した車の画像バイナリー
+        enemy_car_name (str):車の名前
+        enemy_car_luck (int):車の運勢
+        enemy_car_instruction (str): 車の解説
+
+    
+- /race/middle_part
+    ユーザーの入力を元にイベントを発生させ,レースの進行を行う
+
+    Args:
+        first_car_name (str): １位の車名
+        second_car_name (str): ２位の車名
+        third_car_name (str): ３位の車名
+        fourth_car_name (str): ４位の車名
+        player_car_name (str): プレーヤーの車の名前
+        first_car_instruction (str): １位の車の説明文
+        second_car_instruction (str): ２位の車の説明文
+        third_car_instruction (str): ３位の車の説明文
+        fourth_car_instruction (str): ４位の車の説明文
+        event (str):ユーザーの入力内容
+
+    Returns:
+        generated_text (str):ユーザー入力を元に生成されたシナリオ
+        first_place (str):１位の車名
+        second_place (str):２位の車名
+        third_place (str):３位の車名
+        fourth_prace (str):４位の車名
+
+- /race/ending
+    レースのエンディングを生成する
+
+    Args:
+        first_car_name (str): １位の車名
+        second_car_name (str): ２位の車名
+        third_car_name (str): ３位の車名
+        fourth_car_name (str): ４位の車名
+        player_car_name (str): プレーヤーの車の名前
+        first_car_instruction (str): １位の車の説明文
+        second_car_instruction (str): ２位の車の説明文
+        third_car_instruction (str): ３位の車の説明文
+        fourth_car_instruction (str): ４位の車の説明文
+        event (str):ユーザーの入力内容
+        player_luck (int)：　プレーヤーの運勢パラメータ
+
+    Returns:
+        generated_text (str):ユーザー入力を元に生成されたシナリオ
+        first_place (str):１位の車名
+        second_place (str):２位の車名
+        third_place (str):３位の車名
+        fourth_prace (str):４位の車名
+
+- /car/create
+    ユーザーの入力を元にChatGPTが車を作成する
+
+    Args:
+        text_user_input (str):　ユーザーの入力
+    Returns:
+        player_car_image (bytes): 生成された車画像のバイナリー
+        player_car_name (str):　生成された車の名前
+        player_car_luck (int):　生成された車の運勢パラメータ
+        player_car_instruction (str):　生成された車の紹介文
+
+- /test/car/create/status
+    ChatGPTのテキスト生成機能確認用API
+    Args:
+        text_user_input (str):　ユーザーの入力
+    Returns:
+        player_car_name (str):　生成された車の名前
+        player_car_luck (int):　生成された車の運勢パラメータ
+        player_car_instruction (str):　生成された車の紹介文
+
+- /test/translation
+    DeepLによる翻訳API
+    Args:
+        text_user_input (str):　ユーザーの入力
+    Returns:
+            en_text (str): 英語に翻訳後のテキスト
 
 
 ## File Structure
 
-- main.py:
+- api_test/ :
+    開発中にAPIの料金を抑えるために使用するテストAPI
 
-    アプリケーションのエントリーポイント
-    FastAPIのインスタンスを作成
+  - test_media/:
+        テストAPIで使用する画像データ
 
-- models.py:
+  - no_rembg.py:
+     chat_gpt/car_data.pyの代わりに使用,rembg(背景透過ライブラリ)を使用していない
 
-    データモデルとスキーマの定義
-    データベースのテーブルや、APIリクエストとレスポンスのPydanticモデルを含む
+  - test_car_data.py
+     chat_gpt/car_data.pyの代わりに使用,Next.jsの動作確認に使用
 
-- api_routes.py:
+  - test_translation.py
+     DeepLの動作確認用API
 
-    APIのエンドポイント定義
-    APIの具体的な記述はここで行う.(ChatGPTとs3以外)
-    ユーザーの入力を受け取り、画像生成や車のパラメータ生成、データベースへの保存などの機能を実装
+- chat_gpt/:
+    ChatGPTを用いた処理を管理
 
-- game_logic.py:
+  - ending_generation.py
+      レース内での行動や車のステータスを元にエンディングを生成するロジック
+      文章生成サービス(ChatGPT)との連携を担当
 
-    ゲームの進行に関わる主要なロジック
-    データベースから情報を取得し、Chat GPTに入力する形に整形する機能を含む
-
-- chat_gpt:
-  
   - image_generation.py:
+      ユーザーの入力に基づいて車の画像を生成するロジック
+      画像生成サービス(ChatGPT)との連携を担当
 
-      ユーザーの入力に基づいて画像を生成するロジック
-      画像生成サービスとの連携を担当
-
-  - car_data.py:
-
-      ユーザーの入力に基づいて車の設定を生成するロジック
-      必要な計算やデータの形式を扱う
+  - race_progression.py
+      ユーザーの入力に基づいてレースの進行を行うロジック
+      文章生成サービス(ChatGPT)との連携を担当
 
   - status_generation.py
-
       ユーザーの入力に基づいて車のステータスを生成するロジック
-      文章生成サービスとの連携を担当
+      文章生成サービス(ChatGPT)との連携を担当
 
+- database/:
+  - car_img/:
+      敵キャラクター(車)の画像
+  - .db
+      敵キャラクター(車)のステータスや画像を管理
 
-- s3
+  - database_operation.py
+      データベースに対するクエリを作成,データベースを操作する
+
+- routes/:
+  - database_routes.py
+      データベースからデータを取得するAPI
+      敵キャラクターのデータをフロントに送信する
+
+  - car_generation_routes.py
+      ユーザーの入力を元に車の外見やステータスを生成するAPI
+
+  - ending_routes.py
+      レースのエンディングを生成するAPI
+      ゴール直前の行動と車のステータスを元に作成したエンディングを送信する
+
+  - race_routes.py
+      ユーザーの入力を元にレースの進行を行うAPI
+      ユーザーが行った行動の結果を送信する.
+  
+
+- s3/:
   - aws_handler.py
-      データベース接続と操作のためのユーティリティ
+      s3接続と操作のためのユーティリティ
       S3との通信を扱う関数や、データの保存と取得のためのロジックを含む      
       S3から画像URLの取得
 
   - image_interacter.py
-      
       S3上にある画像のURLを返すAPI
 
-- utils:  
+- utils/:  
     共通ユーティリティ関数やヘルパー関数  
-    データの検証、形式の変換、エラーハンドリング関数などを含む
+    データの検証、形式の変換、などを含む
+
   - auth.py
     HTTPヘッダーの検証を行う
+
+  - remove_bg.py
+      画像の背景を透過する
+
+  - revere_image.py
+      画像を左右反転する
+
   - translation.py
-    DeepLを使用して翻訳を行う.
+    DeepLを使用して翻訳を行う
 
-- exceptions.py:
-  
-    アプリケーション独自の例外クラスを定義するファイル
-    例えば、特定のHTTPステータスコードを返すカスタムエラーを定義する
+- validator/:
+  - chat_gpt_validator.py
+      ChatGPTの入出力がフォーマットに従っているか検証を行う
 
-- logger.py:
-  
-    アプリケーションのロギング設定を定義するファイル
-    Pythonのloggingモジュールを使用してログのフォーマット、レベル、出力先を設定
+  - database_validator.py
+      データベースに対するクエリの検証を行う
+      
+- config.py
+    変数名を管理
+
+- main.py:
+    アプリケーションのエントリーポイント
+    FastAPIのインスタンスを作成
+
+- models.py:
+    APIリクエストとレスポンスのPydanticモデル
 
 - README_BACKEND.md:
-  
     プロジェクトの説明、セットアップ手順、使用方法などを記載するドキュメント
 
-
-- api_test/ :
-    本番環境ではない時に使用するAPI
-  - test_car_data.py
-     chat_gpt/car_data.pyの代わりに使用,Next.jsの動作確認に使用.
-  - test_translation.py
-     DeepLの動作確認用API
+- requirements.txt
+    pipでインストールするライブラリ一覧
 
