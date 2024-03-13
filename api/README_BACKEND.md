@@ -173,13 +173,16 @@ API使用方法
     データの検証、形式の変換、などを含む
 
   - auth.py
-    HTTPヘッダーの検証を行う
+      HTTPヘッダーの検証を行う
 
   - remove_bg.py
       画像の背景を透過する
 
-  - revere_image.py
+  - reverse_image.py
       画像を左右反転する
+
+  - save_image.py
+      画像を保存する
 
   - translation.py
     DeepLを使用して翻訳を行う
