@@ -4,7 +4,7 @@ from chat_gpt.image_generation import image_generate_chatgpt
 from utils.auth import validate_api_key
 from chat_gpt.status_generation import status_generate_chatgpt
 from utils.translation import translation
-from chat_gpt.chat_gpt_validator import validate_token_count
+from validator.chat_gpt_validator import validate_token_count
 import asyncio
 from config import PlayerCarKeys
 from models import InputTextModel

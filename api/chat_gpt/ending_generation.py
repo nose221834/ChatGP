@@ -1,6 +1,6 @@
 from openai import OpenAI
 from models import GameEndingModel
-from chat_gpt.chat_gpt_validator import validate_chat_gpt_output_count
+from validator.chat_gpt_validator import validate_chat_gpt_output_count
 import random
 
 client = OpenAI()
