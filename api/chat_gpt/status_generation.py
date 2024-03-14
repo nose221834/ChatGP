@@ -1,5 +1,5 @@
 from openai import OpenAI
-from chat_gpt.chat_gpt_validator import validate_chat_gpt_output_count,validate_luk_is_number
+from validator.chat_gpt_validator import validate_chat_gpt_output_count,validate_luk_is_number
 client = OpenAI()
 
 def shaping_prompts_status_generate(user_input:str):
