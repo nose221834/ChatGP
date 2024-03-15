@@ -19,16 +19,33 @@ client = OpenAI()
 
 @router.get("/car/create")
 async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
+    """
+    動作確認の際に,chat_gpt/car_data.pyの代わりに使用するAPI.
+    rembg(背景透過ライブラリ)を使用していない .
 
+    Args:  
+        text_user_input (str): ユーザーの入力  
+    Returns:  
+        player_car_image (bytes): 生成された車画像のバイナリー  
+        player_car_name (str): 生成された車の名前  
+        player_car_luck (int): 生成された車の運勢パラメータ  
+        player_car_instruction (str): 生成された車の紹介文  
+
+    """
+
+    # ChatGPTの入力は日本語より英語の方がトークン数を抑えれるため,DeepLで英語に翻訳.(DeepL APIは無料)
     text_user_input = translation(input_text_model.text_user_input,'JA','EN-US')
     
+    # ユーザー入力が入力トークン数の上限(5トークン)を上回っていないか検証
     if validate_token_count(text_user_input,5):
+
+        # ユーザー入力から車の画像とステータスを生成
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
             image_generate_chatgpt_no_rembg(text_user_input),
             status_generate_chatgpt(text_user_input)
         )
 
-    
+    # ChatGPTの出力(英語)を日本語に翻訳
     text_jp = translation(text_car_status,'EN','JA')
 
 
@@ -38,24 +55,50 @@ async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Se
             PlayerCarKeys.instruction: text_jp}
 
 def shaping_prompts_car_img(text:str):
+    """
+    ユーザー入力をChatGPTに入力するプロンプトに整形
+
+    Args:  
+        text (str): ユーザーの入力  
+    Returns:  
+        prompt (str): ChatGPTに入力する文章
+    """
 
     prompt="Draw a single car with a design based on the specified theme.#Theme# "+ text + " #Condition 1# Background is white. #Condition 2# The outline of the car is highlighted in black. #Condition 3# The theme must be reflected in the car's design, colors and decorations. For example, if the theme is [Cats are God!] then the car should include features and details that are reminiscent of cats (e.g., cat ears and tail shape, cat hair pattern design, etc.). However, the theme is not limited to this example, and the car design should be modified according to the theme. #Condition 4# Please depict only one car clearly, with no other objects displayed in the background."
+    
     return prompt
 
 
 async def image_generate_chatgpt_no_rembg(text_user_input:str):
-    
+
+    """
+    動作確認の際に,chat_gpt/car_data.pyの代わりに使用するAPI.
+    rembg(背景透過ライブラリ)を使用していない .
+
+    Args:  
+        text_user_input (str): ユーザーの入力  
+    Returns:  
+        player_car_image (bytes): 生成された車画像のバイナリー  
+        player_car_name (str): 生成された車の名前  
+        player_car_luck (int): 生成された車の運勢パラメータ  
+        player_car_instruction (str): 生成された車の紹介文  
+
+    """
+
+    # ユーザー入力をChatGPTに入力するプロンプトに整形
     text_prompt = shaping_prompts_car_img(text_user_input)
-    #modelはdell-e2
+
+    # dell-e2モデルで画像を生成
     response =  client.images.generate(
                         model   = "dall-e-2",   # モデル  
-                        prompt  = text_prompt,         # 画像生成に用いる説明文章         
+                        prompt  = text_prompt,  # 画像生成に用いる説明文章         
                         n       = 1,            # 何枚の画像を生成するか  
                         #size="1024x1024",
-                        size="256x256",
+                        size="256x256",         # 画像のサイズ
                         quality="standard",
                     )
-    
+
+    # ChatGPTが生成した画像を取得できるURLを取得
     image_url = response.data[0].url
 
     # URLから画像(バイナリ)を取得

@@ -3,6 +3,16 @@ from validator.chat_gpt_validator import validate_chat_gpt_output_count,validate
 client = OpenAI()
 
 def shaping_prompts_status_generate(user_input:str):
+    """
+        ChatGPTが車の設定を生成するプロンプトを作成する
+
+        Args:
+            user_input (str): ユーザーの入力.これを元に車を生成する
+        Returns:  
+            prompt (str): ChatGPTが車の設定を生成するプロンプト
+    """
+
+    # ChatGPTの設定を行うプロンプト
     system_prompt = """
 ###instruction###
 You are a designer with a sense of humor. In 50 words or less, present a car that reflects the opinions of its users. Also, please consider the fortune of this car from 1 to 6.When asked a question or a request, they reply, No, I can't.
@@ -14,38 +24,58 @@ opinions:Cats are the best!!
 |Car name|Feline Fury
 |Introduction|With its sophisticated exterior, cozy interior, and advanced features like an integrated laser pointer for entertainment, this car is perfectly designed for cat lovers. Guaranteed to make every drive feel like a catwalk. Meowvelous!"""
 
+    # 設定のフォーマットに則ったユーザー入力プロンプト
     user_prompt = f"""
 opinions:{user_input}"""
 
     return system_prompt,user_prompt
 
 async def status_generate_chatgpt(user_input:str):
+    """
+        ChatGPTで車の設定を生成する
 
-    number_of_generation:int = 0
-    text_split:list = []
-    item_count_in_format = 7
+        Args:
+            user_input (str): ユーザーの入力.これを元に車を生成する
+        Returns:  
+            prompt (str): 
+    """
+    
+    number_of_generation:int = 0 # ChatGPTで生成を行った回数
+    text_split:list = [] # ChatGPTの出力を項目ごとに分割し保存するリスト
+    item_count_in_format = 7 # フォーマットで指定したChatGPTの出力項目
 
+    # プロンプトの作成
     system_prompt,user_prompt = shaping_prompts_status_generate(user_input)
 
+    # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation) 
             and validate_luk_is_number(text_split[2],number_of_generation))):
 
+        # プロンプトを元に車の設定を生成する    
         res = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo", # 使用モデル
         messages=[
-            {"role": "system", "content": system_prompt},  
-            {"role": "user", "content": user_prompt}               
+            {"role": "system", "content": system_prompt}, # 設定プロンプト
+            {"role": "user", "content": user_prompt} # ユーザー入力プロンプト             
         ],
-        temperature=1,
-        max_tokens = 100
+        temperature=1, # どの程度ユニークな出力を行うか.1はとてもユニーク
+        max_tokens = 100 # 最大出力トークン数は100
         )
+
+        # ChatGPTは出力を複数作成することがあるため,その内１つを取得
         response = res.choices[0].message.content
+
+        # 出力フォーマットで項目ごとに"|"で区切ることを指定しているため,ChatGPTの出力を"|"で分割.
         text_split = response.split('|')
         #text_split=['LUK',1,2]
         #text_split=[0,1,2,3]
+
+        # ChatGPTでの生成回数をカウント
         number_of_generation += 1
 
-    luk = int(text_split[2])
-    name = text_split[4].replace('\n','')
-    text_car_status = text_split[6].replace('\n','')
+    # ChatGPTの出力から車の運勢パラメータ,車名,設定文を抽出
+    luk = int(text_split[2]) # 運勢パラメータ
+    name = text_split[4].replace('\n','') # 車名
+    text_car_status = text_split[6].replace('\n','') # 設定文
+    
     return [luk,name,text_car_status]
