@@ -69,6 +69,36 @@ def get_data(db:str,table:str,key:str,id:int) -> list:
 
     return results_list
 
+def get_all_data_from_db(db:str,table:str) -> list:
+    """
+        指定したテーブルの全データをデータベースから取得する
+
+        Args:
+            db (str): データベースのパス
+            table (str): データベースの作業テーブル
+            
+        Returns:  
+            all_data_in_table (list): テーブル内の全データ
+    """
+
+    # データベースに接続
+    conn = connect_database(db)
+    c = conn.cursor()
+
+    #クエリに問題がないかチェック
+    check_input_query([table])
+
+    # table内から全データを取得
+    query = f"SELECT * FROM {table}"
+    c.execute(query)
+    all_data_in_table = c.fetchall()
+
+    #データベースとの接続を閉じる
+    conn.close()
+
+    return all_data_in_table
+
+
 def count_record(db:str,table:str,key:str) -> int:
     """
         データベースのカラムが持つデータ数をカウント
