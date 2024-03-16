@@ -21,9 +21,6 @@ app.add_middleware(
     allow_headers=["*"],  # すべてのヘッダーを許可
 )
 
-app.include_router(image_interacter.router)
-
-
 
 """
 注意！！！本番以外はコメントアウト
@@ -31,11 +28,22 @@ app.include_router(image_interacter.router)
 app.include_router(api_test.router)
 を使用してください.
 """
-#ChatGPTで車の情報を生成
+# s3を使用したAPIのルーター
+# app.include_router(image_interacter.router)
+
+# ChatGPTで車を生成するAPIのルーター
 # app.include_router(car_generation_routes.router)
+
+# car_generation_routesでrembgを使用していないver
 # app.include_router(no_rembg.router)
+
+# データベースを操作するAPIのルーター
 app.include_router(database_routes.router)
+
+# レースの進行を行うAPIのルーター
 app.include_router(race_routes.router)
+
+# エンディングを生成するAPIのルーター
 app.include_router(ending_routes.router)
 
 
@@ -44,8 +52,8 @@ app.include_router(ending_routes.router)
 注意！！！本番以外はこっちを使用
 上記のAPIはコメントアウトしてください.
 """
-#APiの料金を抑えるためのtestAPI
-app.include_router(test_car_data.router)
+# car_generation_routesの代わりに使用
+app.include_router(test_car_data.router) 
+
+# 翻訳APIのルーター
 app.include_router(test_translation.router)
-
-

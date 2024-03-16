@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+# プレーヤーの車の情報を扱う際の変数
 @dataclass(frozen=True)
 class PlayerCarKeys:
     image: str = "player_car_image"
@@ -7,6 +8,7 @@ class PlayerCarKeys:
     luck: str = "player_car_luck"
     instruction: str = "player_car_instruction"
 
+# 敵キャラクターの情報を扱う際の変数
 @dataclass(frozen=True)
 class EnemyCarKeys:
     image: str = "enemy_car_image"
@@ -14,6 +16,7 @@ class EnemyCarKeys:
     luck: str = "enemy_car_luck"
     instruction: str = "enemy_car_instruction"
 
+# レースの進行をChatGPTで生成した際の出力変数
 @dataclass(frozen=True)
 class RaceInfoKeys:
     generated_text: str = "generated_text"

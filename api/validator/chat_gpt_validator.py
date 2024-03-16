@@ -17,9 +17,10 @@ def validate_chat_gpt_output_count(result:list,item_count_in_format:int,error_co
             HTTP_408_REQUEST_TIMEOUT: ChatGPTの出力がフォーマットに則っていない
     """
     
+    # 出力された項目の数が指定のものと一致すか. 一致/不一致(True/False)
+    # 判定を行うたびにerror_countを増加させ,4回になった際に408エラーを発生.
     if len(result) == item_count_in_format:
         return True
-
     else:
         print("Number of items output:"+str(len(result))+"Output_text" + str(result))
         if error_count >= 4:
@@ -43,13 +44,13 @@ def validate_luk_is_number(output_chatgpt:int,error_count:int) -> bool:
         Raises:
             HTTP_408_REQUEST_TIMEOUT: ChatGPTが LUK(int)|NAME(str)|TEXT(str) のフォーマットに従っていない.
     """
-    try:
-        #lukが数値になっているか？　ChatGPTの出力(str)をintに変換
 
+    # lukが数値になっているか?
+    # # 判定を行うたびにerror_countを増加させ,4回になった際に408エラーを発生.
+    try:
         _ = int(output_chatgpt)
         
         return True
-
     except:
         print("generated luck value" + str(output_chatgpt))
         if error_count >= 4:
@@ -76,7 +77,8 @@ def validate_token_count(text:str,token_num:int) -> bool:
         Raises:
             HTTP_400_BAD_REQUEST: ユーザーの入力がトークンの上限を超えた.
     """
-
+    # ChatGPTで処理する場合のトークン数をカウント
+    # 指定した上限を超えた場合400エラーを発生
     tokens = tokenizer.tokenize(text)
     if len(tokens) <= token_num:
         return True

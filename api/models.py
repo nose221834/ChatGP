@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from typing import Optional
 from fastapi import  HTTPException,status,Query
+
+# レースの進行を行うAPIの入力で使用するBaseModel
 class RaceModeratorModel(BaseModel):
     first_car_name:str
     second_car_name:str
@@ -17,12 +19,13 @@ class RaceModeratorModel(BaseModel):
         super().__init__(**data)
         
 
+# エンディングの生成を行うAPIの入力で使用するBaseModel
 class GameEndingModel(RaceModeratorModel):
     player_car_instruction:Optional[str] = 'default'
     player_luck:int
 
     def __init__(self, **data):
-        super().__init__(**data)  # 基底クラスのコンストラクタを呼び出す
+        super().__init__(**data)  
 
         #player_car_instructionを検索し,自動で設定
         car_instructions = {
@@ -38,6 +41,7 @@ class GameEndingModel(RaceModeratorModel):
         # player_carの紹介文を取得
         self.player_car_instruction = car_instructions.get(self.player_car_name, "Player's car is not listed.")
 
+# ユーザーからテキストを受け取る際に使用するBaseModel
 class InputTextModel(BaseModel):
         text_user_input: str = Query(..., description="ユーザーの入力")
         def __init__(self, **data):

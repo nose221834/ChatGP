@@ -11,11 +11,16 @@ def reverse_image(image: bytes | Image.Image):
         Raises:
             TypeError: imageがbytesまたはPIL.Imageでない場合
     """
+
+    # 画像(バイナリ)をImageに変換
     if isinstance(image, bytes):
-        image = Image.open(BytesIO(image)) # 画像(バイナリ)をImageに変換
+        image = Image.open(BytesIO(image))
     if not isinstance(image, Image.Image):
         raise TypeError("image must be bytes or PIL.Image")
-    reversed_image = image.transpose(Image.FLIP_LEFT_RIGHT) # 画像を反転
+    
+    # 画像を反転しPNGで保存
+    reversed_image = image.transpose(Image.FLIP_LEFT_RIGHT) 
     buffered = BytesIO()
     reversed_image.save(buffered, format="PNG")
+    
     return buffered.getvalue() # 画像(バイナリ)を取得
