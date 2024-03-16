@@ -2,23 +2,29 @@ import sqlite3
 from validator.database_validator import connect_database,check_input_query
 from fastapi import  HTTPException,status
 
-def add_data(db:str,command:str):
+def add_data(db:str,table:str,columns_list:list,values_list:list):
     """
         データベースにデータを追加する
 
         Args:
             db (str): データベースのパス
-            command (str): データベースのクエリ
+            table (str): 作業テーブルの名称
+            
             
         Returns:  
     """
+
+    # クエリの作成
+    columns = ", ".join(columns_list)
+    values = ", ".join(values_list)
+    query = "INSERT INTO " + table + " (" + columns + ") VALUES ("+ values +")"
 
     # データベースに接続
     conn = connect_database(db)
     c = conn.cursor()
     
     # データベースに対してクエリを実行
-    c.execute(command)
+    c.execute(query)
 
     # クエリによって実行された変更をデータベースにコミット
     conn.commit()
@@ -94,5 +100,5 @@ def count_record(db:str,table:str,key:str) -> int:
     return count
 
 if __name__ == '__main__':
-    #add_data('car.db',"INSERT INTO enemy_car_data (car_id, path_img, name, luk, text) VALUES (2, 'database/car_img/car2.png', 'Feline Fury', 4, 'With its sleek exterior, cozy interior, and advanced features such as a built-in laser pointer for entertainment, this car is perfectly designed for cat lovers. You can be assured that every drive will feel like a catwalk. Meowvelous!')")
+    #add_data('car.db',[car_id, path_img, name, luk, text],[20, 'path', 'name', 4, 'text'])
     pass
