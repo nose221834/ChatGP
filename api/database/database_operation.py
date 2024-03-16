@@ -2,22 +2,23 @@ import sqlite3
 from validator.database_validator import connect_database,check_input_query
 from fastapi import  HTTPException,status
 
-def add_data(db:str,table:str,columns_list:list,values_list:list):
+def adding_data_to_db(db:str,table:str,columns_list:list,values_list:list) -> None:
     """
         データベースにデータを追加する
 
         Args:
             db (str): データベースのパス
             table (str): 作業テーブルの名称
-            
-            
+            columns_list (list): テーブルが持つカラムのリスト
+            values_list (list): データベースに保存するデータのリスト,保存先はcolumns_listのインデックスと対応している
         Returns:  
+            None
     """
 
     # クエリの作成
     columns = ", ".join(columns_list)
     values = ", ".join(values_list)
-    query = "INSERT INTO " + table + " (" + columns + ") VALUES ("+ values +")"
+    query = f"INSERT INTO {table} ({columns}) VALUES ({values})"
 
     # データベースに接続
     conn = connect_database(db)
@@ -130,5 +131,5 @@ def count_record(db:str,table:str,key:str) -> int:
     return count
 
 if __name__ == '__main__':
-    #add_data('car.db',[car_id, path_img, name, luk, text],[20, 'path', 'name', 4, 'text'])
+    #add_data('database/.db',enemy_car_data,[car_id, path_img, name, luk, text],[20, 'path', 'name', 4, 'text'])
     pass
