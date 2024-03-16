@@ -84,17 +84,19 @@ def race_moderator_chatgpt(ending_model:RaceModeratorModel):
     item_count_in_format:int = 11 # フォーマットで指定したChatGPTの出力項目
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
+    # 問題がない場合レースのシナリオを生成する
     while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation))): 
         prompt_system,prompt_user = shaping_prompts_rece_moderator(ending_model)
 
+        # gpt-3.5-turboを使用,最大出力トークン数は200
         res = client.chat.completions.create(
-        model="gpt-3.5-turbo", # 使用モデル
+        model="gpt-3.5-turbo", 
         messages=[
-            {"role": "system","content":prompt_system}, # 設定プロンプト
-            {"role": "user", "content": prompt_user} # ユーザー入力プロンプト            
+            {"role": "system","content":prompt_system}, 
+            {"role": "user", "content": prompt_user}         
             ],
-        temperature=1,  # どの程度ユニークな出力を行うか.1はとてもユニーク
-        max_tokens = 200  # 最大出力トークン数
+        temperature = 1, # どの程度ユニークな出力を行うか.1はとてもユニーク
+        max_tokens = 200  
         )
 
         # ChatGPTは出力を複数作成することがあるため,その内１つを取得

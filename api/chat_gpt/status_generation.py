@@ -48,18 +48,19 @@ async def status_generate_chatgpt(user_input:str):
     system_prompt,user_prompt = shaping_prompts_status_generate(user_input)
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
+    # 問題がない場合,車の外見やステータスを生成
     while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation) 
             and validate_luk_is_number(text_split[2],number_of_generation))):
-
-        # プロンプトを元に車の設定を生成する    
+   
+        # gpt-3.5-turboを使用,最大出力トークン数は100
         res = client.chat.completions.create(
-        model="gpt-3.5-turbo", # 使用モデル
+        model="gpt-3.5-turbo", 
         messages=[
-            {"role": "system", "content": system_prompt}, # 設定プロンプト
-            {"role": "user", "content": user_prompt} # ユーザー入力プロンプト             
+            {"role": "system", "content": system_prompt}, 
+            {"role": "user", "content": user_prompt}           
         ],
-        temperature=1, # どの程度ユニークな出力を行うか.1はとてもユニーク
-        max_tokens = 100 # 最大出力トークン数は100
+        temperature = 1,                                  # どの程度ユニークな出力を行うか.1はとてもユニーク
+        max_tokens = 100 
         )
 
         # ChatGPTは出力を複数作成することがあるため,その内１つを取得
@@ -74,8 +75,8 @@ async def status_generate_chatgpt(user_input:str):
         number_of_generation += 1
 
     # ChatGPTの出力から車の運勢パラメータ,車名,設定文を抽出
-    luk = int(text_split[2]) # 運勢パラメータ
-    name = text_split[4].replace('\n','') # 車名
+    luk = int(text_split[2])                         # 運勢パラメータ
+    name = text_split[4].replace('\n','')            # 車名
     text_car_status = text_split[6].replace('\n','') # 設定文
     
     return [luk,name,text_car_status]

@@ -37,9 +37,8 @@ async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Se
     text_user_input = translation(input_text_model.text_user_input,'JA','EN-US')
     
     # ユーザー入力が入力トークン数の上限(5トークン)を上回っていないか検証
+    # 問題がない場合,ChatGPTで車の画像とステータスを生成
     if validate_token_count(text_user_input,5):
-
-        # ユーザー入力から車の画像とステータスを生成
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
             image_generate_chatgpt_no_rembg(text_user_input),
             status_generate_chatgpt(text_user_input)
@@ -88,20 +87,18 @@ async def image_generate_chatgpt_no_rembg(text_user_input:str):
     # ユーザー入力をChatGPTに入力するプロンプトに整形
     text_prompt = shaping_prompts_car_img(text_user_input)
 
-    # dell-e2モデルで画像を生成
+    # dell-e2モデルで256x256の画像を１枚生成
     response =  client.images.generate(
-                        model   = "dall-e-2",   # モデル  
-                        prompt  = text_prompt,  # 画像生成に用いる説明文章         
-                        n       = 1,            # 何枚の画像を生成するか  
+                        model   = "dall-e-2",    
+                        prompt  = text_prompt,         
+                        n       = 1,
                         #size="1024x1024",
-                        size="256x256",         # 画像のサイズ
+                        size="256x256", 
                         quality="standard",
                     )
 
-    # ChatGPTが生成した画像を取得できるURLを取得
+    # ChatGPTが生成した画像をバイナリーで取得
     image_url = response.data[0].url
-
-    # URLから画像(バイナリ)を取得
     car_img_binary = requests.get(image_url).content
     
     

@@ -109,17 +109,18 @@ def ending_generate_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,fi
     system_prompt,user_prompt = shaping_prompts_ending_generate(text_rust_event,first_car_name,second_car_name,third_car_name,fourth_car_name,race_moderate.player_car_name,race_moderate.player_car_instruction,race_moderate.player_luck)
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
+    # 問題がない場合,ChatGPTでエンディングを生成する.
     while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation))):
 
-        # プロンプトを元にChatGPTでエンディングを生成する.
+        # gpt-3.5-turboを使用,最大出力トークン数は300
         res = client.chat.completions.create(
-        model="gpt-3.5-turbo", # 使用モデル
+        model="gpt-3.5-turbo", 
         messages=[
-            {"role": "system", "content": system_prompt}, # 設定プロンプト
-            {"role": "user", "content": user_prompt} # ユーザー入力プロンプト            
+            {"role": "system", "content": system_prompt}, 
+            {"role": "user", "content": user_prompt} 
         ],
         temperature = 1, # どの程度ユニークな出力を行うか.1はとてもユニーク
-        max_tokens = 300 # 最大出力トークン数は300
+        max_tokens = 300 
         )
 
         # ChatGPTは出力を複数作成することがあるため,その内１つを取得

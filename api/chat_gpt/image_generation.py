@@ -51,22 +51,21 @@ async def image_generate_chatgpt(text:str):
             b64encode(reverse_binary) (str) :base64に変換した,画像のバイナリー 
     """
 
-    # ChatGPTに入力するプロンプトの作成
+    # ChatGPTに入力するプロンプトを作成
     text_prompt = shaping_prompts_car_img(text)
 
-    # 本番モデルはdall-e-3
+    # 本番モデルはdall-e-3で1024x1024のサイズで画像を1枚生成
     response =  client.images.generate(
-                        model   = "dall-e-2",   # モデル  
-                        prompt  = text_prompt,  # 画像生成に用いる説明文章         
-                        n       = 1,            # 何枚の画像を生成するか  
+                        model   = "dall-e-2",
+                        prompt  = text_prompt,         
+                        n       = 1, 
                         #size="1024x1024",
-                        size="256x256",         # 生成する画像のサイズ
-                        quality="standard",     # 画像のクオリティ
+                        size="256x256",
+                        quality="standard", 
                     )
-    # ChatGPTが生成した画像を取得できるURLを取得
-    image_url:str = response.data[0].url
 
-    # URLから画像(バイナリ)を取得
+    # ChatGPTが生成した画像(バイナリー)を取得
+    image_url:str = response.data[0].url
     car_img_binary: bytes = requests.get(image_url).content
 
     # 画像を保存
