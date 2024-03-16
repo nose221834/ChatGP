@@ -33,6 +33,32 @@ def adding_data_to_db(db:str,table:str,columns_list:list,values_list:list) -> No
     # データベースとの接続を閉じる
     conn.close()
 
+def deleting_db_data(db:str,table:str, column:str, record: int | str) -> None:
+    """
+        データベースのデータを削除
+
+        Args:
+            db (str): データベースのパス
+            table (str): 作業テーブルの名称
+            column (str): 検索カラム
+            record (int | str): 削除するレコード
+        Returns:  
+            None
+    """
+
+    # データベースに接続
+    conn = connect_database(db)
+    c = conn.cursor()
+    
+    # データを削除
+    query = f"DELETE FROM {table} WHERE {column} = ?"
+    c.execute(query, (record,))
+
+    # クエリによって実行された変更をデータベースにコミット
+    conn.commit()
+
+    # データベースとの接続を閉じる
+    conn.close()
 
 def get_data(db:str,table:str,key:str,id:int) -> list:
     """
