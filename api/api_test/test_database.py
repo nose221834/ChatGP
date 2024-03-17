@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Security, Form
 from utils.auth import validate_api_key
 from models import InputTextModel
-from database.database_operation import get_all_data_from_db,adding_data_to_db,deleting_db_data
+from database.database_operation import DatabaseOperator
 
 router = APIRouter()
 
@@ -17,8 +17,9 @@ def api_get_all_data_from_db(db:str,table:str,api_key: str = Security(validate_a
         Returns:  
             all_data_in_table (list): テーブル内の全データ
     """
+    db_operator = DatabaseOperator(db,table)
 
-    all_data_in_table = get_all_data_from_db(db,table)
+    all_data_in_table = db_operator.get_all_data_from_db()
     
     return {"all_data_in_table": all_data_in_table}
 
@@ -35,8 +36,9 @@ def api_adding_data_to_db(db:str,table:str,columns_list:list = Form(...),values_
         Returns:  
             None
     """
+    db_operator = DatabaseOperator(db,table)
 
-    adding_data_to_db(db,table,columns_list,values_list)
+    db_operator.adding_data_to_db(columns_list,values_list)
 
 @router.delete("/test/database/delete_data")
 def api_deleting_db_data(db:str,table:str,column:str,record:int | str,api_key: str = Security(validate_api_key)):
@@ -51,5 +53,6 @@ def api_deleting_db_data(db:str,table:str,column:str,record:int | str,api_key: s
         Returns:  
             None
     """
+    db_operator = DatabaseOperator(db,table)
 
-    deleting_db_data(db,table,column,record)
+    db_operator.deleting_db_data(column,record)
