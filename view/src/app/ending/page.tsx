@@ -25,7 +25,7 @@ export default function Home() {
       setOrder(orderImage);
     }
     setLoader(false);
-  });
+  }, []);
 
   const handleClick = () => {
     router.push("/");

@@ -19,8 +19,6 @@ export function Interactive({ order, scene, isSubmit, submit }: InteProps) {
     },
   });
 
-  console.log("scene", scene);
-
   return (
     <div className="flex flex-col items-center justify-between w-screen h-screen overflow-hidden bg-basecolor">
       <Image
