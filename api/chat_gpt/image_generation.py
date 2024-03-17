@@ -10,7 +10,7 @@ client = OpenAI()
 
 
 
-def create_prompt_generating_car_img(text:str):
+def create_prompt_generating_car_img(text_inputted_user:str):
     """
         ChatGPTが車の画像を生成するプロンプトを作成する
 
@@ -24,7 +24,7 @@ def create_prompt_generating_car_img(text:str):
 You are a unique designer. Draw one car with a design based on a specified theme.
 
 ###Theme###
-{text} 
+{text_inputted_user} 
 
 ###Condition 1###
 Background is white. 
@@ -41,7 +41,7 @@ Only one car must be depicted clearly, with no other objects or text in the back
     return prompt
 
 # dall-e-2は使い物にならないので本番はdall-e-3を使用
-async def generate_car_img_by_chatgpt(text:str):
+async def generate_car_img_by_chatgpt(text_inputted_user:str):
     """
     ユーザー入力を元に,ChatGPTで車の画像を生成する
 
@@ -56,7 +56,7 @@ async def generate_car_img_by_chatgpt(text:str):
     """
 
     # ChatGPTに入力するプロンプトを作成
-    text_prompt = create_prompt_generating_car_img(text)
+    text_prompt = create_prompt_generating_car_img(text_inputted_user)
 
     # 本番モデルはdall-e-3で1024x1024のサイズで画像を1枚生成
     response =  client.images.generate(
@@ -69,8 +69,8 @@ async def generate_car_img_by_chatgpt(text:str):
                     )
 
     # ChatGPTが生成した画像(バイナリー)を取得
-    image_url:str = response.data[0].url
-    car_img_binary: bytes = requests.get(image_url).content
+    url_car_img:str = response.data[0].url
+    car_img_binary: bytes = requests.get(url_car_img).content
 
     # 画像を保存
     image_output_dir = Path("tmp/img")

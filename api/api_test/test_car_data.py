@@ -20,7 +20,7 @@ def test_generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(),api
     ChatGPTを使用性ないため,料金が発生しない.
 
     Args:  
-        text_user_input (str): ユーザーの入力  
+        text_inputted_user (str): ユーザーの入力  
     Returns:  
         player_car_image (bytes): 生成された車画像のバイナリー  
         player_car_name (str): 生成された車の名前  
@@ -31,19 +31,19 @@ def test_generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(),api
 
     # あらかじめ作成した画像(バイナリー)を取得
     with open("api_test/test_media/removed_test_car.bin","rb") as f:
-        binary_data = f.read()
+        car_img_binary = f.read()
     
     # 画像を左右反転
-    binary_data = reverse_image(binary_data)
+    car_img_binary = reverse_image(car_img_binary)
 
     # 出力するする車のステータスを設定
-    name = 'Test Car'
-    luk = 4
+    car_name = 'Test Car'
+    player_luck = 4
     text_car_status = 'サバンナをかける豹のように、あなたの車は速く、そして美しいです。'
     
-    return {PlayerCarKeys.image: b64encode(binary_data),
-            PlayerCarKeys.name: name,
-            PlayerCarKeys.luck: luk,
+    return {PlayerCarKeys.image: b64encode(car_img_binary),
+            PlayerCarKeys.car_name: car_name,
+            PlayerCarKeys.luck: player_luck,
             PlayerCarKeys.instruction: text_car_status}
 
 
@@ -54,7 +54,7 @@ async def test_generate_car_status(input_text_model:InputTextModel = Depends(),a
     ChatGPTのテキスト生成機能確認用API  
     プロンプトの性能確認など
     Args:  
-        text_user_input (str): ユーザーの入力  
+        text_inputted_user (str): ユーザーの入力  
     Returns:  
         player_car_name (str): 生成された車の名前  
         player_car_luck (int): 生成された車の運勢パラメータ  
@@ -62,14 +62,14 @@ async def test_generate_car_status(input_text_model:InputTextModel = Depends(),a
 
     """
     # ChatGPTの入力は日本語より英語の方がトークン数を抑えれるため,DeepLで英語に翻訳.(DeepL APIは無料)
-    text_en = translation(input_text_model.text_user_input,'JA','EN-US')
+    text_en = translation(input_text_model.text_inputted_user,'JA','EN-US')
 
     # ユーザー入力からステータスを生成
-    [luk,name,text_car_status] = await generate_car_status_by_chatgpt(text_en)
+    [player_luck,car_name,text_car_status] = await generate_car_status_by_chatgpt(text_en)
 
     # ChatGPTの出力(英語)を日本語に翻訳
     text_jp = translation(text_car_status,'EN','JA')
 
-    return {"name": name,"luk": luk,"text_car_status": text_jp}
+    return {"name": car_name,"luk": player_luck,"text_car_status": text_jp}
 
 

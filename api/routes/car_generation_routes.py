@@ -32,12 +32,12 @@ async def generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(), a
     """
 
     # ユーザー入力を英語に翻訳
-    text_en = translation(input_text_model.text_user_input,'JA','EN-US')
+    text_en = translation(input_text_model.text_inputted_user,'JA','EN-US')
     
     # 入力トークンが上限(30トークン)を超えていないかチェック
     # 問題ない場合,ユーザー入力を元に,ChatGPTで車の設定と画像を生成.
     if validate_token_count(text_en,30):
-        url_car_img, [luk,name,text_car_status] = await asyncio.gather(
+        url_car_img, [player_luck,car_name,text_car_status] = await asyncio.gather(
             generate_car_img_by_chatgpt(text_en),
             generate_car_status_by_chatgpt(text_en)
         )
@@ -47,6 +47,6 @@ async def generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(), a
 
 
     return {PlayerCarKeys.image: url_car_img,
-            PlayerCarKeys.name: name,
-            PlayerCarKeys.luck: luk,
+            PlayerCarKeys.car_name: car_name,
+            PlayerCarKeys.luck: player_luck,
             PlayerCarKeys.instruction: text_jp}

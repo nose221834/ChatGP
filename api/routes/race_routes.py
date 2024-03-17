@@ -31,14 +31,14 @@ def generate_race_scenario(race_moderate:RaceModeratorModel,api_key: str = Secur
     # 入力トークンが上限(30トークン)を超えていないかチェック
     # 問題がない場合,ChatGPTを用いて,ユーザーの入力を元にゲームのシナリオを作成
     if validate_token_count(race_moderate.event,30):
-        result_text,first,second,third,fourth = generate_race_scenario_by_chatgpt(race_moderate)
+        text_scenario,first_car,second_car,third_car,fourth_car = generate_race_scenario_by_chatgpt(race_moderate)
 
     # ユーザーの入力(イベント)を日本語に翻訳
-    result_text_jp = translation(result_text,'EN','JA')
+    text_scenario = translation(text_scenario,'EN','JA')
 
 
-    return {RaceInfoKeys.generated_text: result_text_jp,
-            RaceInfoKeys.first_place: first,
-            RaceInfoKeys.second_place: second,
-            RaceInfoKeys.third_place: third,
-            RaceInfoKeys.fourth_place:fourth}
+    return {RaceInfoKeys.generated_text: text_scenario,
+            RaceInfoKeys.first_place: first_car,
+            RaceInfoKeys.second_place: second_car,
+            RaceInfoKeys.third_place: third_car,
+            RaceInfoKeys.fourth_place:fourth_car}

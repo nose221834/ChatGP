@@ -16,7 +16,6 @@ def connect_database(path) -> Connection:
 
         Raises:
             HTTP_404_NOT_Found: 指定したデータベースが存在しない or 指定されたidのデータがデータベースに存在しない
-
     """
 
     # データベースが存在する場合は接続を開き,存在しない場合は404エラーが発生

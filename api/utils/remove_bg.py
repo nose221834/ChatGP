@@ -20,8 +20,8 @@ def remove_background(image: bytes | Image.Image) -> bytes:
         raise TypeError("image must be bytes or PIL.Image")
 
     # 背景を透過したPNGに変換 
-    removebg_image = remove(image) 
+    remove_bg_image = remove(image) 
     buffered = BytesIO()
-    removebg_image.save(buffered, format="PNG")
+    remove_bg_image.save(buffered, format="PNG")
     
     return buffered.getvalue() # 画像(バイナリ)を取得

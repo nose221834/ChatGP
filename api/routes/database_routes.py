@@ -46,20 +46,20 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
 
     #pathから画像を取得
     print("list_car_data", list_car_data[1])
-    img = Image.open(list_car_data[1])
+    car_img = Image.open(list_car_data[1])
 
 
     #背景を透過
-    rembg: bytes = remove_background(img)
+    remove_bg_binary: bytes = remove_background(car_img)
 
     #画像を逆転
-    reverse: bytes = reverse_image(rembg)
+    reverse_binary: bytes = reverse_image(remove_bg_binary)
 
     # 敵キャラクターの運勢を取得
     luck = int(list_car_data[3])
 
-    return {EnemyCarKeys.image: b64encode(reverse),
-            EnemyCarKeys.name:list_car_data[2],
+    return {EnemyCarKeys.image: b64encode(reverse_binary),
+            EnemyCarKeys.car_name:list_car_data[2],
             EnemyCarKeys.luck:luck,
             EnemyCarKeys.instruction: list_car_data[4]}
 

@@ -9,7 +9,7 @@ def pick_event_by_player_luck(player_luck:int):
     """
         player_luckの値を元に発生するイベントを抽選 
     Args:  
-        player_luck (int): ユーザーの入力(日本語) 
+        player_luck (int): ユーザーの運勢パラメータ 
     Returns:  
         en_text (str): 英語に翻訳後のテキスト
     """

@@ -2,12 +2,12 @@ from openai import OpenAI
 from validator.chat_gpt_validator import validate_chat_gpt_output_count,validate_luk_is_number
 client = OpenAI()
 
-def create_prompt_generating_car_status(user_input:str):
+def create_prompt_generating_car_status(text_inputted_user:str):
     """
         ChatGPTが車の設定を生成するプロンプトを作成する
 
         Args:
-            user_input (str): ユーザーの入力.これを元に車を生成する
+            text_inputted_user (str): ユーザーの入力.これを元に車を生成する
         Returns:  
             prompt (str): ChatGPTが車の設定を生成するプロンプト
     """
@@ -26,18 +26,20 @@ opinions:Cats are the best!!
 
     # 設定のフォーマットに則ったユーザー入力プロンプト
     user_prompt = f"""
-opinions:{user_input}"""
+opinions:{text_inputted_user}"""
 
     return system_prompt,user_prompt
 
-async def generate_car_status_by_chatgpt(user_input:str):
+async def generate_car_status_by_chatgpt(text_inputted_user:str):
     """
         ChatGPTで車の設定を生成する
 
         Args:
-            user_input (str): ユーザーの入力.これを元に車を生成する
+            text_inputted_user (str): ユーザーの入力.これを元に車を生成する
         Returns:  
-            prompt (str): 
+            player_luck (int): プレイヤーの運勢パラメータ
+            car_name (str): 車の名前
+            text_car_status (str): 車の設定文
     """
     
     number_of_generation:int = 0 # ChatGPTで生成を行った回数
@@ -45,7 +47,7 @@ async def generate_car_status_by_chatgpt(user_input:str):
     item_count_in_format = 7 # フォーマットで指定したChatGPTの出力項目
 
     # プロンプトの作成
-    system_prompt,user_prompt = create_prompt_generating_car_status(user_input)
+    system_prompt,user_prompt = create_prompt_generating_car_status(text_inputted_user)
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合,車の外見やステータスを生成
@@ -75,8 +77,8 @@ async def generate_car_status_by_chatgpt(user_input:str):
         number_of_generation += 1
 
     # ChatGPTの出力から車の運勢パラメータ,車名,設定文を抽出
-    luk = int(text_split[2])                         # 運勢パラメータ
-    name = text_split[4].replace('\n','')            # 車名
+    player_luck = int(text_split[2])                 # 運勢パラメータ
+    car_name = text_split[4].replace('\n','')        # 車名
     text_car_status = text_split[6].replace('\n','') # 設定文
     
-    return [luk,name,text_car_status]
+    return [player_luck,car_name,text_car_status]
