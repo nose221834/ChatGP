@@ -10,16 +10,12 @@ import { useState } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
 import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
-
+import { Loading } from "@/components/Loading";
 import { PLAYER_CAR } from "@/lib/const";
 
 export default function Home() {
   const router = useRouter();
   const [submit, setSubmit] = useState<boolean>(false);
-
-  const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
-  const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const {
     register,
@@ -31,14 +27,6 @@ export default function Home() {
     },
   });
 
-  if (!apiId || !apiKey || !apiUrl) {
-    return (
-      <div>
-        <h1>環境変数がありません</h1>
-      </div>
-    );
-  }
-
   const onSubmit: SubmitHandler<PlayerCarInput> = async (
     data: PlayerCarInput
   ) => {
@@ -47,9 +35,10 @@ export default function Home() {
       const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(
         data
       );
-      if (!responseJson) return Error;
-      await getResponseFromGpt(responseJson);
-      router.push("/create/result");
+      if (responseJson) {
+        await getResponseFromGpt(responseJson);
+        router.push("/create/result");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -57,30 +46,15 @@ export default function Home() {
 
   const getResponseFromGpt = async (responseJson: PlayerCarRes) => {
     const carDataJsonWithUrl = await validatePlayerCarRes(responseJson);
-    if (!carDataJsonWithUrl) return false;
-    localStorage.setItem(PLAYER_CAR, JSON.stringify(carDataJsonWithUrl));
+    if (carDataJsonWithUrl) {
+      localStorage.setItem(PLAYER_CAR, JSON.stringify(carDataJsonWithUrl));
+    }
+    // TODO elseを書く
   };
 
   return (
     <main>
-      {submit && (
-        <div className="flex flex-col items-center bg-basecolor absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 border-4 border-accentcolor rounded-xl">
-          <Image
-            src="/loading.png"
-            alt="loading"
-            width={196}
-            height={196}
-            priority
-            className="animate-spin"
-          />
-          <div className="p-4">
-            <div className=" flex flex-col items-center bg-primarycolor text-2xl text-basecolor p-4 rounded-md border-4 border-accentcolor ">
-              <p>ChatGPTの生成は時間がかかります！</p>
-              <p>少々お待ちください。</p>
-            </div>
-          </div>
-        </div>
-      )}
+      {submit && <Loading />}
       <div className="flex flex-wrap justify-around items-center h-screen bg-basecolor">
         <div className="h-4/5 w-1/2 p-4">
           <div className="flex flex-col justify-around items-center h-full w-full bg-primarycolor rounded-xl border-4 border-secondarycolor">

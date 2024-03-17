@@ -74,7 +74,7 @@ async def image_generate_chatgpt(text:str):
 
     # 画像を保存
     image_output_dir = Path("tmp/img")
-    image_output_dir.mkdir(exist_ok=True)
+    image_output_dir.mkdir(exist_ok=True, parents=True)
     image_file_name = "generated.png"
 
     # 生成された画像を確認するために用いる。本番では不要

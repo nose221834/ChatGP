@@ -5,12 +5,16 @@ import { getEnemyCar } from "@/app/getEnemyCar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
   const router = useRouter();
-  const moveToCreate = () => {
+  const [submit, setSubmit] = useState<boolean>(false);
+
+  const moveToCreate = async () => {
+    setSubmit(true);
     localStorage.clear();
-    getEnemyCar();
+    await getEnemyCar();
     router.push("/create");
   };
   return (
@@ -23,6 +27,7 @@ export default function Home() {
         </div>
         <Button
           onClick={moveToCreate}
+          disabled={submit}
           className=" w-80 h-32 text-4xl tracking-widest items-center"
         >
           スタート！！
