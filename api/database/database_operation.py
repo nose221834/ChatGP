@@ -106,7 +106,7 @@ class DatabaseOperator():
         # データベースとの接続を閉じる
         self._close_connection_with_db()
 
-    def get_data(self,key:str,id:int) -> list:
+    def get_data_from_db(self,key:str,id:int) -> list:
         """
             データベースからデータを取得する
 

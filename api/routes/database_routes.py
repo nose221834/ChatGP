@@ -43,7 +43,7 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
     car_id = random.randint(1, total_records)
 
     #データベースから敵の車データを取得
-    [list_car_data] = db_operator.get_data(key,car_id)
+    [list_car_data] = db_operator.get_data_from_db(key,car_id)
 
     #pathから画像を取得
     img = Image.open(list_car_data[1])
