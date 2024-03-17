@@ -12,7 +12,6 @@ export default function Home() {
 
   const [text, setText] = useState<string>("");
   const [order, setOrder] = useState<string>("");
-
   const [loader, setLoader] = useState(true);
 
   useEffect(() => {
@@ -26,7 +25,7 @@ export default function Home() {
       setOrder(orderImage);
     }
     setLoader(false);
-  }, []);
+  });
 
   const handleClick = () => {
     router.push("/");
@@ -51,7 +50,9 @@ export default function Home() {
             </div>
           </div>
           <div className="absolute bottom-0 reft-0 m-4">
-            <Image src={order} alt="order" width={200} height={200} />
+            {!loader && (
+              <Image src={order} alt="order" width={200} height={200} />
+            )}
           </div>
           <div className="absolute bottom-0 right-0 m-4">
             <Button
