@@ -4,21 +4,13 @@ import { ProgProps } from "./type";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  RACE_CAR_IMAGES,
-  RACE_RESPONSE_DATA,
-  GENERATED_TEXT,
-} from "@/lib/const";
-import { OrderedImages, RaceInfoRes } from "./type";
-import { getPlayerRank } from "@/lib/race/getPlayerRank";
-import { useState, useEffect } from "react";
 
 export function Progress({ order, text, carImages, click }: ProgProps) {
+  const orderImage = `/order_img/order_${order}.png`;
+
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     click();
   };
-
-  const orderImage = `/order_img/order_${order}.png`;
 
   return (
     <div className="flex flex-col items-center justify-around w-screen h-screen overflow-hidden bg-basecolor">

@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { SubmitProps, InteProps, ResponseProps, ProgProps } from "./type";
+import { SubmitProps, InteProps } from "./type";
 import { Messages } from "./messages";
-import { getPlayerRank } from "@/lib/race/getPlayerRank";
 
 export function Interactive({ order, scene, isSubmit, submit }: InteProps) {
   const {
