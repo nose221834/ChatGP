@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Security,Depends
 from fastapi.responses import Response
-from chat_gpt.status_generation import status_generate_chatgpt
+from chat_gpt.status_generation import generate_car_status_by_chatgpt
 from utils.translation import translation
 from utils.auth import validate_api_key
 from transformers import GPT2Tokenizer
@@ -41,7 +41,7 @@ async def generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(),ap
     if validate_token_count(text_user_input,5):
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
             generate_car_img_no_rembg(text_user_input),
-            status_generate_chatgpt(text_user_input)
+            generate_car_status_by_chatgpt(text_user_input)
         )
 
     # ChatGPTの出力(英語)を日本語に翻訳

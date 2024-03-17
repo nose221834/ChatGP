@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Security,Depends
-from chat_gpt.status_generation import status_generate_chatgpt
+from chat_gpt.status_generation import generate_car_status_by_chatgpt
 from utils.translation import translation
 from utils.auth import validate_api_key
 from transformers import GPT2Tokenizer
@@ -65,7 +65,7 @@ async def test_generate_car_status(input_text_model:InputTextModel = Depends(),a
     text_en = translation(input_text_model.text_user_input,'JA','EN-US')
 
     # ユーザー入力からステータスを生成
-    [luk,name,text_car_status] = await status_generate_chatgpt(text_en)
+    [luk,name,text_car_status] = await generate_car_status_by_chatgpt(text_en)
 
     # ChatGPTの出力(英語)を日本語に翻訳
     text_jp = translation(text_car_status,'EN','JA')

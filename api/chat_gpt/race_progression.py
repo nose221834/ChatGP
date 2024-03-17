@@ -5,7 +5,7 @@ from models import RaceModeratorModel
 
 client = OpenAI()
 
-def shaping_prompts_rece_moderator(ending_model:RaceModeratorModel):
+def create_prompt_generating_race_scenario(ending_model:RaceModeratorModel):
     """
         ChatGPTにレースのシナリオを生成させるプロンプトを作成
 
@@ -65,7 +65,7 @@ car_instruction:{ending_model.third_car_instruction}
 
 
 
-def race_moderator_chatgpt(ending_model:RaceModeratorModel):
+def generate_race_scenario(ending_model:RaceModeratorModel):
     """
         ChatGPTがユーザーの入力を受け取り,その入力を元にシナリオを作成する
 
@@ -86,7 +86,7 @@ def race_moderator_chatgpt(ending_model:RaceModeratorModel):
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合レースのシナリオを生成する
     while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation))): 
-        prompt_system,prompt_user = shaping_prompts_rece_moderator(ending_model)
+        prompt_system,prompt_user = create_prompt_generating_race_scenario(ending_model)
 
         # gpt-3.5-turboを使用,最大出力トークン数は200
         res = client.chat.completions.create(

@@ -2,7 +2,7 @@ from openai import OpenAI
 from validator.chat_gpt_validator import validate_chat_gpt_output_count,validate_luk_is_number
 client = OpenAI()
 
-def shaping_prompts_status_generate(user_input:str):
+def create_prompt_generating_car_status(user_input:str):
     """
         ChatGPTが車の設定を生成するプロンプトを作成する
 
@@ -30,7 +30,7 @@ opinions:{user_input}"""
 
     return system_prompt,user_prompt
 
-async def status_generate_chatgpt(user_input:str):
+async def generate_car_status_by_chatgpt(user_input:str):
     """
         ChatGPTで車の設定を生成する
 
@@ -45,7 +45,7 @@ async def status_generate_chatgpt(user_input:str):
     item_count_in_format = 7 # フォーマットで指定したChatGPTの出力項目
 
     # プロンプトの作成
-    system_prompt,user_prompt = shaping_prompts_status_generate(user_input)
+    system_prompt,user_prompt = create_prompt_generating_car_status(user_input)
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合,車の外見やステータスを生成

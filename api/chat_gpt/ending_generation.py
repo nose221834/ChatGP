@@ -28,7 +28,7 @@ def pick_event_by_player_luck(player_luck:int):
 
     return player_destiny
 
-def shaping_prompts_ending_generate(text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,
+def create_prompt_generating_ending(text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,
                                         fourth_car_name:str,player_car_name:str,player_car_instruction:str,player_luck:int):
     """
         ChatGPTがエンディングを生成するプロンプトを作成する
@@ -85,7 +85,7 @@ introduction:{player_car_instruction}
 
     return prompt_system,prompt_user
 
-def ending_generate_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str):
+def generate_ending_by_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str):
     """
         ChatGPTでレースのエンディングを生成する
 
@@ -106,7 +106,7 @@ def ending_generate_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,fi
     item_count_in_format:int = 3 # フォーマットで指定したChatGPTの出力項目
     
     # プロンプトの作成
-    system_prompt,user_prompt = shaping_prompts_ending_generate(text_rust_event,first_car_name,second_car_name,third_car_name,fourth_car_name,race_moderate.player_car_name,race_moderate.player_car_instruction,race_moderate.player_luck)
+    system_prompt,user_prompt = create_prompt_generating_ending(text_rust_event,first_car_name,second_car_name,third_car_name,fourth_car_name,race_moderate.player_car_name,race_moderate.player_car_instruction,race_moderate.player_luck)
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合,ChatGPTでエンディングを生成する.
