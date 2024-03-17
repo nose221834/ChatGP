@@ -41,7 +41,7 @@ Only one car must be depicted clearly, with no other objects or text in the back
     return prompt
 
 # dall-e-2は使い物にならないので本番はdall-e-3を使用
-async def generate_car_img(text:str):
+async def generate_car_img_by_chatgpt(text:str):
     """
     ユーザー入力を元に,ChatGPTで車の画像を生成する
 

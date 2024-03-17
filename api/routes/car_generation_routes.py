@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Security,Depends
 from fastapi.responses import Response
-from chat_gpt.image_generation import generate_car_img
+from chat_gpt.image_generation import generate_car_img_by_chatgpt
 from utils.auth import validate_api_key
 from chat_gpt.status_generation import generate_car_status_by_chatgpt
 from utils.translation import translation
@@ -38,7 +38,7 @@ async def generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(), a
     # 問題ない場合,ユーザー入力を元に,ChatGPTで車の設定と画像を生成.
     if validate_token_count(text_en,30):
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
-            generate_car_img(text_en),
+            generate_car_img_by_chatgpt(text_en),
             generate_car_status_by_chatgpt(text_en)
         )
 

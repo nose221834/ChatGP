@@ -40,7 +40,7 @@ async def generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(),ap
     # 問題がない場合,ChatGPTで車の画像とステータスを生成
     if validate_token_count(text_user_input,5):
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
-            generate_car_img_no_rembg(text_user_input),
+            generate_car_img_by_chatgpt_no_rembg(text_user_input),
             generate_car_status_by_chatgpt(text_user_input)
         )
 
@@ -68,7 +68,7 @@ def create_prompt_generating_car_img(text:str):
     return prompt
 
 
-async def generate_car_img_no_rembg(text_user_input:str):
+async def generate_car_img_by_chatgpt_no_rembg(text_user_input:str):
 
     """
     動作確認の際に,chat_gpt/car_data.pyの代わりに使用するAPI.

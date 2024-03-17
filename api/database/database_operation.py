@@ -1,8 +1,8 @@
 import sqlite3
-from validator.database_validator import connect_database,check_input_query
+from validator.database_validator import connect_database,validate_input_query
 from fastapi import  HTTPException,status
 
-def add_data(db:str,command:str):
+def add_data_from_db(db:str,command:str):
     """
         データベースにデータを追加する
 
@@ -27,7 +27,7 @@ def add_data(db:str,command:str):
     conn.close()
 
 
-def get_data(db:str,table:str,key:str,id:int) -> list:
+def get_data_from_db(db:str,table:str,key:str,id:int) -> list:
     """
         データベースからデータを取得する
 
@@ -46,7 +46,7 @@ def get_data(db:str,table:str,key:str,id:int) -> list:
     c = conn.cursor()
 
     #クエリに問題がないかチェック
-    check_input_query([table,key])
+    validate_input_query([table,key])
 
     # table内からidと一意するデータをkey(カラム)の中から検索し,全カラムのデータを所得する
     # 形式:[(カラム1-1,カラム2-1,カラム3-1,・・・),(カラム2-1,カラム2-2,カラム3-2,・・・),・・・]
@@ -63,7 +63,7 @@ def get_data(db:str,table:str,key:str,id:int) -> list:
 
     return results_list
 
-def count_record(db:str,table:str,key:str) -> int:
+def count_db_record(db:str,table:str,key:str) -> int:
     """
         データベースのカラムが持つデータ数をカウント
 
@@ -81,7 +81,7 @@ def count_record(db:str,table:str,key:str) -> int:
     c = conn.cursor()
 
     # クエリに問題がないかチェック
-    check_input_query([table,key])
+    validate_input_query([table,key])
 
     # table内のkey(カラム)に要素が何個あるかをカウントし取得
     query = f"SELECT COUNT({key}) FROM {table}"
@@ -94,5 +94,5 @@ def count_record(db:str,table:str,key:str) -> int:
     return count
 
 if __name__ == '__main__':
-    #add_data('car.db',"INSERT INTO enemy_car_data (car_id, path_img, name, luk, text) VALUES (2, 'database/car_img/car2.png', 'Feline Fury', 4, 'With its sleek exterior, cozy interior, and advanced features such as a built-in laser pointer for entertainment, this car is perfectly designed for cat lovers. You can be assured that every drive will feel like a catwalk. Meowvelous!')")
+    #add_data_from_db('car.db',"INSERT INTO enemy_car_data (car_id, path_img, name, luk, text) VALUES (2, 'database/car_img/car2.png', 'Feline Fury', 4, 'With its sleek exterior, cozy interior, and advanced features such as a built-in laser pointer for entertainment, this car is perfectly designed for cat lovers. You can be assured that every drive will feel like a catwalk. Meowvelous!')")
     pass

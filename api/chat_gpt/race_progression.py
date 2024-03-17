@@ -65,7 +65,7 @@ car_instruction:{ending_model.third_car_instruction}
 
 
 
-def generate_race_scenario(ending_model:RaceModeratorModel):
+def generate_race_scenario_by_chatgpt(ending_model:RaceModeratorModel):
     """
         ChatGPTがユーザーの入力を受け取り,その入力を元にシナリオを作成する
 
