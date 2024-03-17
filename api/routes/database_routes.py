@@ -6,7 +6,8 @@ from PIL import Image
 from base64 import b64encode
 import random
 from config import EnemyCarKeys
-from io import BytesIO
+from utils.remove_bg import remove_background
+from utils.reverse_image import reverse_image
 
 router = APIRouter()
 
@@ -41,14 +42,18 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
     #データベースから敵の車データを取得
     [list_car_data] = get_data(db,table,key,car_id)
     #pathから画像を取得
+    print("list_car_data", list_car_data[1])
     img = Image.open(list_car_data[1])
 
-    buffered = BytesIO()
-    img.save(buffered, format="PNG")
+    #背景を透過
+    rembg: bytes = remove_background(img)
+
+    #画像を逆転
+    reverse: bytes = reverse_image(rembg)
 
     luck = int(list_car_data[3])
 
-    return {EnemyCarKeys.image: b64encode(buffered.getvalue()),
+    return {EnemyCarKeys.image: b64encode(reverse),
             EnemyCarKeys.name:list_car_data[2],
             EnemyCarKeys.luck:luck,
             EnemyCarKeys.instruction: list_car_data[4]}
