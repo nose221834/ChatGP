@@ -11,7 +11,7 @@ services:
     container_name: "view"
     build:
       context: ./view
-      dockerfile: view.prod.Dockerfile
+      dockerfile: view.Dockerfile
     volumes:
       - ./view:/view
       - ./view/node_modules:/view/node_modules
