@@ -11,6 +11,8 @@ def save_image(image: bytes, output_path: str | Path)->None:
         Return:
             None
     """
+
+    # 指定したパスに画像を保存
     img_buffer = BytesIO(image)
     img = Image.open(img_buffer)
     img.save(output_path)

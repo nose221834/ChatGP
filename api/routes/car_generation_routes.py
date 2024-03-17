@@ -14,16 +14,35 @@ router = APIRouter()
 
 @router.get("/car/create")
 async def make_car(input_text_model:InputTextModel = Depends(), api_key: str = Security(validate_api_key)):
+    """
+        ユーザーの入力を元にChatGPTが車を作成する  
 
+    Args:  
+        input_text_model (InputTextModel): ユーザーの入力  
+    Returns:  
+        player_car_image (bytes): 生成された車画像のバイナリー  
+        player_car_name (str): 生成された車の名前  
+        player_car_luck (int): 生成された車の運勢パラメータ  
+        player_car_instruction (str): 生成された車の紹介文 
+        api_key (str): APIにアクセスするために必要なセキュリティーキー
+
+        Raises:
+            HTTP_408_REQUEST_TIMEOUT: ChatGPTの出力がフォーマットに則っていない
+            HTTP_400_BAD_REQUEST: ユーザーの入力がトークンの上限を超えた.
+    """
+
+    # ユーザー入力を英語に翻訳
     text_en = translation(input_text_model.text_user_input,'JA','EN-US')
     
+    # 入力トークンが上限(30トークン)を超えていないかチェック
+    # 問題ない場合,ユーザー入力を元に,ChatGPTで車の設定と画像を生成.
     if validate_token_count(text_en,30):
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
             image_generate_chatgpt(text_en),
             status_generate_chatgpt(text_en)
         )
 
-    
+    # ChatGPTの出力を日本語に翻訳
     text_jp = translation(text_car_status,'EN','JA')
 
 

@@ -8,9 +8,17 @@ from pathlib import Path
 
 client = OpenAI()
 
-#dall-e-2は使い物にならないので本番はdall-e-3を使用
+
 
 def shaping_prompts_car_img(text:str):
+    """
+        ChatGPTが車の画像を生成するプロンプトを作成する
+
+        Args:
+            text (str): どんな車がいいのかを指定したユーザー入力.
+        Returns:  
+            b64encode(reverse_binary) (str): ChatGPTで生成した画像(バイナリ)
+    """
 
     prompt = f"""
 You are a unique designer. Draw one car with a design based on a specified theme.
@@ -32,34 +40,51 @@ Only one car must be depicted clearly, with no other objects or text in the back
 
     return prompt
 
-
+# dall-e-2は使い物にならないので本番はdall-e-3を使用
 async def image_generate_chatgpt(text:str):
-    
+    """
+    ユーザー入力を元に,ChatGPTで車の画像を生成する
+
+    Args:  
+        text (str): ユーザーの入力  
+    Returns:  
+        player_car_image (bytes): 生成された車画像のバイナリー  
+        player_car_name (str): 生成された車の名前  
+        player_car_luck (int): 生成された車の運勢パラメータ  
+        player_car_instruction (str): 生成された車の紹介文  
+
+    """
+
+    # ChatGPTに入力するプロンプトを作成
     text_prompt = shaping_prompts_car_img(text)
-    #modelはdell-e2
+
+    # 本番モデルはdall-e-3で1024x1024のサイズで画像を1枚生成
     response =  client.images.generate(
-                        model   = "dall-e-2",   # モデル  
-                        prompt  = text_prompt,         # 画像生成に用いる説明文章         
-                        n       = 1,            # 何枚の画像を生成するか  
+                        model   = "dall-e-2",
+                        prompt  = text_prompt,         
+                        n       = 1, 
                         #size="1024x1024",
                         size="256x256",
-                        quality="standard",
+                        quality="standard", 
                     )
-    
-    image_url = response.data[0].url
 
-    # URLから画像(バイナリ)を取得
+    # ChatGPTが生成した画像(バイナリー)を取得
+    image_url:str = response.data[0].url
     car_img_binary: bytes = requests.get(image_url).content
 
     # 画像を保存
     image_output_dir = Path("tmp/img")
     image_output_dir.mkdir(exist_ok=True, parents=True)
     image_file_name = "generated.png"
-    save_image(car_img_binary, image_output_dir / image_file_name) # 生成された画像を確認するために用いる。本番では不要
 
-    remove_bg_binary: bytes = remove_background(car_img_binary) # 画像の背景を透過する
+    # 生成された画像を確認するために用いる。本番では不要
+    save_image(car_img_binary, image_output_dir / image_file_name) 
 
-    reverse_binary: bytes = reverse_image(remove_bg_binary) # 画像を反転する
+    # 画像の背景を透過する
+    remove_bg_binary: bytes = remove_background(car_img_binary) 
+
+    # 画像を反転する
+    reverse_binary: bytes = reverse_image(remove_bg_binary) 
     
     return b64encode(reverse_binary) # 画像(バイナリ)をbase64に変換して返す
 

@@ -5,8 +5,16 @@ import random
 
 client = OpenAI()
 
-def determine_player_luck(player_luck:int):
+def pick_event_by_player_luck(player_luck:int):
+    """
+        player_luckの値を元に発生するイベントを抽選 
+    Args:  
+        player_luck (int): ユーザーの入力(日本語) 
+    Returns:  
+        en_text (str): 英語に翻訳後のテキスト
+    """
 
+    # player_luckの値を元に,発生するイベントを抽選.こののイベントをどう解釈するかはChatGPT次第
     luck_value = player_luck * random.randint(1, 6)
 
     if luck_value > 31:
@@ -22,9 +30,26 @@ def determine_player_luck(player_luck:int):
 
 def shaping_prompts_ending_generate(text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,
                                         fourth_car_name:str,player_car_name:str,player_car_instruction:str,player_luck:int):
+    """
+        ChatGPTがエンディングを生成するプロンプトを作成する
 
-    player_destiny = determine_player_luck(player_luck)
+        Args:
+            text_rust_event (str): 最終ラップでのユーザー入力  
+            first_car_name (str): １位の車名  
+            second_car_name (str): ２位の車名  
+            third_car_name (str): ３位の車名  
+            fourth_car_name (str): ４位の車名  
+            player_car_name (str): プレーヤーの車の名前  
+            player_car_instruction (str): プレイヤーの車の詳細
+            player_luck (int): プレイヤーの運勢パラメータ 
+        Returns:  
+            prompt_system (str): ChatGPTの設定を行うプロンプト
+            prompt_user (str): 設定のフォーマットに則った入力プロンプト
+    """
+    # player_luckの値を元に,発生するイベントを抽選
+    player_destiny = pick_event_by_player_luck(player_luck)
 
+    # ChatGPTの設定を行うプロンプト
     prompt_system = f"""
 
 You are a unique scenario writer.
@@ -47,6 +72,7 @@ introduction:{player_car_instruction}
 |result|Eager to win, {first_car_name} caught up with the car in front of him, and when they started to run side by side, {first_car_name} started to hit the car from the side. Unfortunately...
 """
 
+    # 設定のフォーマットに則った入力プロンプト
     prompt_user = f"""
 **race position**
 **finishing position**
@@ -60,32 +86,55 @@ introduction:{player_car_instruction}
     return prompt_system,prompt_user
 
 def ending_generate_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,first_car_name:str,second_car_name:str,third_car_name:str,fourth_car_name:str):
+    """
+        ChatGPTでレースのエンディングを生成する
 
-    number_of_generation:int = 0
-    text_split:list = []
-    item_count_in_format = 3
+        Args:
+
+            race_moderate (GameEndingModel): レースに出場した車の情報  
+            text_rust_event (str): 最終ラップでのユーザー入力 
+            first_car_name (str): １位の車名  
+            second_car_name (str): ２位の車名  
+            third_car_name (str): ３位の車名  
+            fourth_car_name (str): ４位の車名  
+        Returns:  
+            text_ending (str): エンディング文章
+    """
+
+    number_of_generation:int = 0 # ChatGPTで生成を行った回数
+    text_split:list = [] # ChatGPTの出力を項目ごとに分割し保存するリスト
+    item_count_in_format:int = 3 # フォーマットで指定したChatGPTの出力項目
     
+    # プロンプトの作成
     system_prompt,user_prompt = shaping_prompts_ending_generate(text_rust_event,first_car_name,second_car_name,third_car_name,fourth_car_name,race_moderate.player_car_name,race_moderate.player_car_instruction,race_moderate.player_luck)
 
+    # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
+    # 問題がない場合,ChatGPTでエンディングを生成する.
     while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation))):
 
+        # gpt-3.5-turboを使用,最大出力トークン数は300
         res = client.chat.completions.create(
-        model="gpt-3.5-turbo",
+        model="gpt-3.5-turbo", 
         messages=[
-            {"role": "system", "content": system_prompt},  
-            {"role": "user", "content": user_prompt}               
+            {"role": "system", "content": system_prompt}, 
+            {"role": "user", "content": user_prompt} 
         ],
-        temperature=1,
-        max_tokens = 300
+        temperature = 1, # どの程度ユニークな出力を行うか.1はとてもユニーク
+        max_tokens = 300 
         )
+
+        # ChatGPTは出力を複数作成することがあるため,その内１つを取得
         response = res.choices[0].message.content
+
+        # 出力フォーマットで項目ごとに"|"で区切ることを指定しているため,ChatGPTの出力を"|"で分割.
         text_split = response.split('|')
+        # text_split=["a","b","c","d"]
 
-        #text_split=["a","b","c","d"]
-
+        # ChatGPTでの生成回数をカウント
         number_of_generation += 1
 
-    text_ending = text_split[2].replace('\n','')
+    # ChatGPTの出力からエンディング文の箇所を抽出
+    text_ending:str = text_split[2].replace('\n','')
 
     return text_ending
 
