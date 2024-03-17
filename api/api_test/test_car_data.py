@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 @router.get("/car/create")
-def test_make_car(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
+def test_generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
 
     """
     フロント動作確認の際に,chat_gpt/car_data.pyの代わりに使用するAPI.
@@ -48,7 +48,7 @@ def test_make_car(input_text_model:InputTextModel = Depends(),api_key: str = Sec
 
 
 @router.get("/test/car/create/status")
-async def test_make_car_status(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
+async def test_generate_car_status(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
 
     """
     ChatGPTのテキスト生成機能確認用API  

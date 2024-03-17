@@ -10,7 +10,7 @@ client = OpenAI()
 
 
 
-def shaping_prompts_car_img(text:str):
+def create_prompt_generating_car_img(text:str):
     """
         ChatGPTが車の画像を生成するプロンプトを作成する
 
@@ -41,7 +41,7 @@ Only one car must be depicted clearly, with no other objects or text in the back
     return prompt
 
 # dall-e-2は使い物にならないので本番はdall-e-3を使用
-async def image_generate_chatgpt(text:str):
+async def generate_car_img(text:str):
     """
     ユーザー入力を元に,ChatGPTで車の画像を生成する
 
@@ -56,7 +56,7 @@ async def image_generate_chatgpt(text:str):
     """
 
     # ChatGPTに入力するプロンプトを作成
-    text_prompt = shaping_prompts_car_img(text)
+    text_prompt = create_prompt_generating_car_img(text)
 
     # 本番モデルはdall-e-3で1024x1024のサイズで画像を1枚生成
     response =  client.images.generate(

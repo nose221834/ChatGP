@@ -7,7 +7,7 @@ from models import InputTextModel
 router = APIRouter()
 
 @router.get("/test/translation")
-def translation_jp_to_en(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
+def translate_jp_to_en(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
     """
         DeepLによる翻訳API  
     Args:  

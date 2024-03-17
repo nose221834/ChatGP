@@ -18,7 +18,7 @@ router = APIRouter()
 client = OpenAI()
 
 @router.get("/car/create")
-async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
+async def generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(),api_key: str = Security(validate_api_key)):
     """
     動作確認の際に,chat_gpt/car_data.pyの代わりに使用するAPI.
     rembg(背景透過ライブラリ)を使用していない .
@@ -40,7 +40,7 @@ async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Se
     # 問題がない場合,ChatGPTで車の画像とステータスを生成
     if validate_token_count(text_user_input,5):
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
-            image_generate_chatgpt_no_rembg(text_user_input),
+            generate_car_img_no_rembg(text_user_input),
             status_generate_chatgpt(text_user_input)
         )
 
@@ -53,7 +53,7 @@ async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Se
             PlayerCarKeys.luck: luk,
             PlayerCarKeys.instruction: text_jp}
 
-def shaping_prompts_car_img(text:str):
+def create_prompt_generating_car_img(text:str):
     """
     ユーザー入力をChatGPTに入力するプロンプトに整形
 
@@ -68,7 +68,7 @@ def shaping_prompts_car_img(text:str):
     return prompt
 
 
-async def image_generate_chatgpt_no_rembg(text_user_input:str):
+async def generate_car_img_no_rembg(text_user_input:str):
 
     """
     動作確認の際に,chat_gpt/car_data.pyの代わりに使用するAPI.
@@ -85,7 +85,7 @@ async def image_generate_chatgpt_no_rembg(text_user_input:str):
     """
 
     # ユーザー入力をChatGPTに入力するプロンプトに整形
-    text_prompt = shaping_prompts_car_img(text_user_input)
+    text_prompt = create_prompt_generating_car_img(text_user_input)
 
     # dell-e2モデルで256x256の画像を１枚生成
     response =  client.images.generate(
