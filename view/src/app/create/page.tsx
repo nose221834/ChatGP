@@ -47,9 +47,10 @@ export default function Home() {
       const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(
         data
       );
-      if (!responseJson) return Error;
-      await getResponseFromGpt(responseJson);
-      router.push("/create/result");
+      if (responseJson) {
+        await getResponseFromGpt(responseJson);
+        router.push("/create/result");
+      }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -57,8 +58,9 @@ export default function Home() {
 
   const getResponseFromGpt = async (responseJson: PlayerCarRes) => {
     const carDataJsonWithUrl = await validatePlayerCarRes(responseJson);
-    if (!carDataJsonWithUrl) return false;
-    localStorage.setItem(PLAYER_CAR, JSON.stringify(carDataJsonWithUrl));
+    if (carDataJsonWithUrl) {
+      localStorage.setItem(PLAYER_CAR, JSON.stringify(carDataJsonWithUrl));
+    }
   };
 
   return (

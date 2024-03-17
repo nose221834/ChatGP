@@ -4,7 +4,6 @@ import { ProgProps } from "./type";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useRouter } from "next/navigation";
 import {
   RACE_CAR_IMAGES,
   RACE_RESPONSE_DATA,
@@ -12,27 +11,14 @@ import {
 } from "@/lib/const";
 import { OrderedImages, RaceInfoRes } from "./type";
 import { getPlayerRank } from "@/lib/race/getPlayerRank";
+import { useState, useEffect } from "react";
 
-export function Progress({ click }: ProgProps) {
+export function Progress({ order, text, carImages, click }: ProgProps) {
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
     click();
   };
 
-  const router = useRouter();
-  const orderNum = getPlayerRank();
-  const orderImage = `/order_img/order_${orderNum}.png`;
-  const carDataString = localStorage.getItem(RACE_CAR_IMAGES);
-  const responseData = localStorage.getItem(RACE_RESPONSE_DATA);
-  if (!carDataString || !responseData)
-    return (
-      <div>
-        <p>想定していないエラーが発生しています。</p>
-        <p>リロードしてください。</p>
-      </div>
-    );
-  const carIMagesJson = JSON.parse(carDataString) as OrderedImages;
-  const responseJson = JSON.parse(responseData) as RaceInfoRes;
-  const responseText = responseJson[GENERATED_TEXT];
+  const orderImage = `/order_img/order_${order}.png`;
 
   return (
     <div className="flex flex-col items-center justify-around w-screen h-screen overflow-hidden bg-basecolor">
@@ -46,7 +32,7 @@ export function Progress({ click }: ProgProps) {
       <div className="flex flex-col justify-around items-center z-10 p-4 w-3/5 h-1/2">
         <div className="flex flex-col justify-around items-center  h-full w-full p-4">
           <div className="font-extrabold text-4xl tracking-wider text-center w-11/12  p-8">
-            <p className=" text-shadow-edge text-basecolor">{responseText}</p>
+            <p className=" text-shadow-edge text-basecolor">{text}</p>
           </div>
           <div className="flex justify-end w-full">
             <div>
@@ -77,7 +63,7 @@ export function Progress({ click }: ProgProps) {
           <div className="flex flex-col justify-start w-full h-full ">
             <div className=" h-1/5"></div>
             <Image
-              src={carIMagesJson.fourth_prace}
+              src={carImages.fourth_prace}
               alt="enemy0"
               width={168}
               height={168}
@@ -87,7 +73,7 @@ export function Progress({ click }: ProgProps) {
           <div className="flex flex-col justify-start w-full h-full">
             <div className="flex justify-end w-full ">
               <Image
-                src={carIMagesJson.third_place}
+                src={carImages.third_place}
                 alt="enemy1"
                 width={168}
                 height={168}
@@ -97,7 +83,7 @@ export function Progress({ click }: ProgProps) {
           </div>
           <div className="flex flex-col justify-end w-full h-full">
             <Image
-              src={carIMagesJson.second_place}
+              src={carImages.second_place}
               alt="enemy2"
               width={168}
               height={168}
@@ -106,7 +92,7 @@ export function Progress({ click }: ProgProps) {
           </div>
           <div className="flex flex-col justify-around w-full h-full">
             <Image
-              src={carIMagesJson.first_place}
+              src={carImages.first_place}
               alt="enemy3"
               width={168}
               height={168}

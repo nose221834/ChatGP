@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Interactive } from "./Interactive";
 import { Progress } from "./Progress";
 import { useRouter } from "next/navigation";
-import { SubmitProps } from "./type";
+import { SubmitProps, OrderedImages, RaceInfoRes } from "./type";
 import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
-import { RACE_CAR_IMAGES, RACE_RESPONSE_DATA } from "@/lib/const";
+import {
+  RACE_CAR_IMAGES,
+  RACE_RESPONSE_DATA,
+  GENERATED_TEXT,
+} from "@/lib/const";
 import {
   generateRaceRequestBody,
   generateRaceEndRequestBody,
@@ -17,12 +21,40 @@ import Image from "next/image";
 import { getPlayerRank } from "@/lib/race/getPlayerRank";
 
 export default function Home() {
+  const InitialCarImages: OrderedImages = {
+    first_place: "",
+    second_place: "",
+    third_place: "",
+    fourth_prace: "",
+  };
+
   const router = useRouter();
+  // 送信したときに
+  const [submit, setSubmit] = useState<boolean>(false);
+
   // 場面を切り替えるためのState
   const [scene, setScene] = useState<number>(0);
   // InteractiveとProgressを切り替えるState
   const [response, setResponse] = useState<boolean>(false);
-  const [submit, setSubmit] = useState<boolean>(false);
+  const [order, setOrder] = useState<number>(0);
+
+  // Progress
+  const [text, setText] = useState<string>("");
+  const [carImages, setCarImages] = useState<OrderedImages>(InitialCarImages);
+
+  useEffect(() => {
+    const carDataString = localStorage.getItem(RACE_CAR_IMAGES);
+    const responseData = localStorage.getItem(RACE_RESPONSE_DATA);
+    const orderNum = getPlayerRank();
+    if (carDataString && responseData && orderNum) {
+      const carIMagesJson = JSON.parse(carDataString) as OrderedImages;
+      const responseJson = JSON.parse(responseData) as RaceInfoRes;
+      const responseText = responseJson[GENERATED_TEXT];
+      setText(responseText);
+      setCarImages(carIMagesJson);
+      setOrder(orderNum);
+    }
+  }, [response]);
 
   async function onSubmit(data: SubmitProps) {
     if (scene + 1 >= 3) {
@@ -42,7 +74,7 @@ export default function Home() {
       if (!responseJson) return <div>Error</div>;
       const carImagesData = returnOrderImage(responseJson);
       localStorage.setItem(RACE_CAR_IMAGES, JSON.stringify(carImagesData));
-      
+
       localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(responseJson));
       setResponse(true);
     }
@@ -78,7 +110,7 @@ export default function Home() {
           </div>
         )}
         <Interactive
-          order={1}
+          order={order}
           scene={scene}
           isSubmit={submit}
           submit={onSubmit}
@@ -88,7 +120,12 @@ export default function Home() {
   } else
     return (
       <main>
-        <Progress click={nextScene} />
+        <Progress
+          order={order}
+          text={text}
+          carImages={carImages}
+          click={nextScene}
+        />
       </main>
     );
 }

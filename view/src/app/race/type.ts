@@ -36,7 +36,12 @@ export type ResponseProps = {
   text: string;
 };
 
-export type ProgProps = { click: () => void };
+export type ProgProps = {
+  order: number;
+  text: string;
+  carImages: OrderedImages;
+  click: () => void;
+};
 
 export type RaceInfoRes = {
   [GENERATED_TEXT]: string;
