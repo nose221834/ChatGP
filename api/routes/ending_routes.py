@@ -33,21 +33,19 @@ def output_game_ending(ending_model:GameEndingModel,api_key: str = Security(vali
     """
 
     # ユーザー入力を英語に翻訳し,入力を整形.
-    text_en = "The goal is in sight!" + translation(ending_model.event,'JA','EN-US')
+    text_en = translation(ending_model.event,'JA','EN-US')
     
     # イベント文を更新
-    ending_model.event = text_en
+    ending_model.event = "The goal is in sight!" + text_en
 
     # 入力トークンが上限(35トークン)を超えていないかチェック
     # 問題がない場合,ユーザ入力を元にChatGPTでエンディングのテキストを生成
-    if validate_token_count(text_en,35):
+    if validate_token_count(ending_model.event,35):
         text_result,first,second,third,fourth = race_moderator_chatgpt(ending_model)
         ending_text = ending_generate_chatgpt(ending_model,text_result,first,second,third,fourth)
 
     # エンディングを日本語に翻訳
     ending_text_jp = translation(ending_text ,'EN','JA')
-
-    print(ending_model.player_car_instruction)
 
     return {RaceInfoKeys.generated_text: ending_text_jp,
             RaceInfoKeys.first_place: first,
