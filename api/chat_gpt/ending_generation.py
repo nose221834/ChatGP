@@ -5,7 +5,7 @@ import random
 
 client = OpenAI()
 
-def determine_player_luck(player_luck:int):
+def pick_event_by_player_luck(player_luck:int):
     """
         player_luckの値を元に発生するイベントを抽選 
     Args:  
@@ -47,7 +47,7 @@ def shaping_prompts_ending_generate(text_rust_event:str,first_car_name:str,secon
             prompt_user (str): 設定のフォーマットに則った入力プロンプト
     """
     # player_luckの値を元に,発生するイベントを抽選
-    player_destiny = determine_player_luck(player_luck)
+    player_destiny = pick_event_by_player_luck(player_luck)
 
     # ChatGPTの設定を行うプロンプト
     prompt_system = f"""

@@ -17,7 +17,7 @@ def shaping_prompts_car_img(text:str):
         Args:
             text (str): どんな車がいいのかを指定したユーザー入力.
         Returns:  
-            prompt (str): ChatGPTで車の画像を生成するプロンプト
+            b64encode(reverse_binary) (str): ChatGPTで生成した画像(バイナリ)
     """
 
     prompt = f"""
@@ -43,12 +43,16 @@ Only one car must be depicted clearly, with no other objects or text in the back
 # dall-e-2は使い物にならないので本番はdall-e-3を使用
 async def image_generate_chatgpt(text:str):
     """
-        ChatGPTが車の画像を生成するプロンプトを作成する
+    ユーザー入力を元に,ChatGPTで車の画像を生成する
 
-        Args:
-            text (str): どんな車がいいのかを指定したユーザー入力.
-        Returns:  
-            b64encode(reverse_binary) (str) :base64に変換した,画像のバイナリー 
+    Args:  
+        text (str): ユーザーの入力  
+    Returns:  
+        player_car_image (bytes): 生成された車画像のバイナリー  
+        player_car_name (str): 生成された車の名前  
+        player_car_luck (int): 生成された車の運勢パラメータ  
+        player_car_instruction (str): 生成された車の紹介文  
+
     """
 
     # ChatGPTに入力するプロンプトを作成
