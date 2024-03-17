@@ -1,3 +1,5 @@
+"use client";
+
 import { RaceInfoRes } from "@/app/race/type";
 import { generateDummyResponseJson } from "@/lib/race/generateRequestBody";
 import {
