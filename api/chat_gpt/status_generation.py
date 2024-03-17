@@ -1,5 +1,5 @@
 from openai import OpenAI
-from validator.chat_gpt_validator import validate_chat_gpt_output_count,validate_luk_is_number
+from validator.chat_gpt_validator import ChatgptOutputValidator
 client = OpenAI()
 
 def shaping_prompts_status_generate(user_input:str):
@@ -40,18 +40,18 @@ async def status_generate_chatgpt(user_input:str):
             prompt (str): 
     """
     
-    number_of_generation:int = 0 # ChatGPTで生成を行った回数
     text_split:list = [] # ChatGPTの出力を項目ごとに分割し保存するリスト
     item_count_in_format = 7 # フォーマットで指定したChatGPTの出力項目
+
+    chatgpt_output_validator = ChatgptOutputValidator()
 
     # プロンプトの作成
     system_prompt,user_prompt = shaping_prompts_status_generate(user_input)
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合,車の外見やステータスを生成
-    while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation) 
-            and validate_luk_is_number(text_split[2],number_of_generation))):
-   
+    while(chatgpt_output_validator.validate_car_generated_chatgpt(item_count_in_format,text_split)):
+
         # gpt-3.5-turboを使用,最大出力トークン数は100
         res = client.chat.completions.create(
         model="gpt-3.5-turbo", 
@@ -71,8 +71,6 @@ async def status_generate_chatgpt(user_input:str):
         #text_split=['LUK',1,2]
         #text_split=[0,1,2,3]
 
-        # ChatGPTでの生成回数をカウント
-        number_of_generation += 1
 
     # ChatGPTの出力から車の運勢パラメータ,車名,設定文を抽出
     luk = int(text_split[2])                         # 運勢パラメータ

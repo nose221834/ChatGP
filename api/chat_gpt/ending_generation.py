@@ -1,6 +1,6 @@
 from openai import OpenAI
 from models import GameEndingModel
-from validator.chat_gpt_validator import validate_chat_gpt_output_count
+from validator.chat_gpt_validator import ChatgptOutputValidator
 import random
 
 client = OpenAI()
@@ -101,16 +101,17 @@ def ending_generate_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,fi
             text_ending (str): エンディング文章
     """
 
-    number_of_generation:int = 0 # ChatGPTで生成を行った回数
     text_split:list = [] # ChatGPTの出力を項目ごとに分割し保存するリスト
     item_count_in_format:int = 3 # フォーマットで指定したChatGPTの出力項目
+    
+    chatgpt_output_validator = ChatgptOutputValidator()
     
     # プロンプトの作成
     system_prompt,user_prompt = shaping_prompts_ending_generate(text_rust_event,first_car_name,second_car_name,third_car_name,fourth_car_name,race_moderate.player_car_name,race_moderate.player_car_instruction,race_moderate.player_luck)
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合,ChatGPTでエンディングを生成する.
-    while(not(validate_chat_gpt_output_count(text_split,item_count_in_format,number_of_generation))):
+    while(chatgpt_output_validator.validate_scenario_generated_chatgpt(item_count_in_format,text_split)):
 
         # gpt-3.5-turboを使用,最大出力トークン数は300
         res = client.chat.completions.create(
@@ -128,10 +129,7 @@ def ending_generate_chatgpt(race_moderate:GameEndingModel,text_rust_event:str,fi
 
         # 出力フォーマットで項目ごとに"|"で区切ることを指定しているため,ChatGPTの出力を"|"で分割.
         text_split = response.split('|')
-        # text_split=["a","b","c","d"]
-
-        # ChatGPTでの生成回数をカウント
-        number_of_generation += 1
+        #text_split=["a","b","c","d"]
 
     # ChatGPTの出力からエンディング文の箇所を抽出
     text_ending:str = text_split[2].replace('\n','')
