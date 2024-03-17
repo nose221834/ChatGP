@@ -8,6 +8,8 @@ from api_test import test_car_data,test_translation, no_rembg
 
 app = FastAPI()
 
+EXECUTING_ENVIRONMENT= os.getenv('EXECUTING_ENVIRONMENT')
+
 origins = [
      os.getenv("ACSESS_ALLOW_URL"),  # Next.jsアプリケーションのオリジン
     # 必要に応じて他のオリジンも追加
@@ -22,38 +24,39 @@ app.add_middleware(
 )
 
 
-"""
-注意！！！本番以外はコメントアウト
-本番は下記の
-app.include_router(api_test.router)
-を使用してください.
-"""
-# s3を使用したAPIのルーター
-# app.include_router(image_interacter.router)
+if EXECUTING_ENVIRONMENT=="prod":
 
-# ChatGPTで車を生成するAPIのルーター
-# app.include_router(car_generation_routes.router)
+    # ChatGPTで車を生成するAPIのルーター
+    app.include_router(car_generation_routes.router)
 
-# car_generation_routesでrembgを使用していないver
-# app.include_router(no_rembg.router)
+    # データベースを操作するAPIのルーター
+    app.include_router(database_routes.router)
 
-# データベースを操作するAPIのルーター
-app.include_router(database_routes.router)
+    # レースの進行を行うAPIのルーター
+    app.include_router(race_routes.router)
 
-# レースの進行を行うAPIのルーター
-app.include_router(race_routes.router)
+    # エンディングを生成するAPIのルーター
+    app.include_router(ending_routes.router)
 
-# エンディングを生成するAPIのルーター
-app.include_router(ending_routes.router)
+elif EXECUTING_ENVIRONMENT=="dev":
+    # s3を使用したAPIのルーター
+    # app.include_router(image_interacter.router)
 
+    # ChatGPTで車を生成するAPIのルーター
+    app.include_router(test_car_data.router) 
 
+    # データベースを操作するAPIのルーター
+    app.include_router(database_routes.router)
 
-"""
-注意！！！本番以外はこっちを使用
-上記のAPIはコメントアウトしてください.
-"""
-# car_generation_routesの代わりに使用
-app.include_router(test_car_data.router) 
+    # レースの進行を行うAPIのルーター
+    app.include_router(race_routes.router)
 
-# 翻訳APIのルーター
-app.include_router(test_translation.router)
+    # エンディングを生成するAPIのルーター
+    app.include_router(ending_routes.router)
+
+    # 翻訳APIのルーター
+    app.include_router(test_translation.router)
+    
+else:
+    pass 
+
