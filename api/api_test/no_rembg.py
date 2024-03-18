@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Security,Depends
+from fastapi import APIRouter, Security,Depends,HTTPException,status
 from fastapi.responses import Response
 from chat_gpt.status_generation import status_generate_chatgpt
 from utils.translation import translation
@@ -9,6 +9,7 @@ from validator.chat_gpt_validator import validate_token_count
 from openai import OpenAI
 import asyncio
 import requests
+import os
 from config import PlayerCarKeys
 from models import InputTextModel
 tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
@@ -33,6 +34,17 @@ async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Se
 
     """
 
+    IMAGE_MODEL_CHATGPT = os.getenv('IMAGE_MODEL_CHATGPT')
+
+    if IMAGE_MODEL_CHATGPT == "dall-e-2":
+        img_size = "256x256"
+    elif IMAGE_MODEL_CHATGPT == "dall-e-3":
+        img_size = "1024x1024"
+    else:
+        raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="There is an error in the name of the model",
+            )
     # ChatGPTの入力は日本語より英語の方がトークン数を抑えれるため,DeepLで英語に翻訳.(DeepL APIは無料)
     text_user_input = translation(input_text_model.text_user_input,'JA','EN-US')
     
@@ -40,7 +52,7 @@ async def make_car(input_text_model:InputTextModel = Depends(),api_key: str = Se
     # 問題がない場合,ChatGPTで車の画像とステータスを生成
     if validate_token_count(text_user_input,5):
         url_car_img, [luk,name,text_car_status] = await asyncio.gather(
-            image_generate_chatgpt_no_rembg(text_user_input),
+            image_generate_chatgpt_no_rembg(text_user_input,IMAGE_MODEL_CHATGPT,img_size),
             status_generate_chatgpt(text_user_input)
         )
 
@@ -68,7 +80,7 @@ def shaping_prompts_car_img(text:str):
     return prompt
 
 
-async def image_generate_chatgpt_no_rembg(text_user_input:str):
+async def image_generate_chatgpt_no_rembg(text_user_input:str,model_chatgpt:str | None,img_size:str):
 
     """
     動作確認の際に,chat_gpt/car_data.pyの代わりに使用するAPI.
@@ -89,11 +101,10 @@ async def image_generate_chatgpt_no_rembg(text_user_input:str):
 
     # dell-e2モデルで256x256の画像を１枚生成
     response =  client.images.generate(
-                        model   = "dall-e-2",    
+                        model   = model_chatgpt,    
                         prompt  = text_prompt,         
                         n       = 1,
-                        #size="1024x1024",
-                        size="256x256", 
+                        size = img_size, 
                         quality="standard",
                     )
 

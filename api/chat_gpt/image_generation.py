@@ -1,5 +1,6 @@
-from openai import OpenAI
+import os
 import requests
+from openai import OpenAI
 from base64 import b64encode
 from utils.remove_bg import remove_background
 from utils.reverse_image import reverse_image
@@ -40,8 +41,7 @@ Only one car must be depicted clearly, with no other objects or text in the back
 
     return prompt
 
-# dall-e-2は使い物にならないので本番はdall-e-3を使用
-async def image_generate_chatgpt(text:str):
+async def image_generate_chatgpt(text:str,model_chatgpt:str | None,img_size:str):
     """
     ユーザー入力を元に,ChatGPTで車の画像を生成する
 
@@ -58,13 +58,12 @@ async def image_generate_chatgpt(text:str):
     # ChatGPTに入力するプロンプトを作成
     text_prompt = shaping_prompts_car_img(text)
 
-    # 本番モデルはdall-e-3で1024x1024のサイズで画像を1枚生成
+
     response =  client.images.generate(
-                        model   = "dall-e-2",
+                        model   = model_chatgpt,
                         prompt  = text_prompt,         
                         n       = 1, 
-                        #size="1024x1024",
-                        size="256x256",
+                        size = img_size,
                         quality="standard", 
                     )
 
