@@ -1,5 +1,5 @@
 
-from database.database_operation import get_data,count_record
+from database.database_operation import DatabaseOperator
 from utils.auth import validate_api_key
 from fastapi import APIRouter, Security
 from PIL import Image
@@ -35,14 +35,16 @@ def get_enemy_car( api_key: str = Security(validate_api_key)):
     table = 'enemy_car_data' # テーブルの名称
     key = 'car_id' # 検索に使用するカラムの名前
 
+    db_operator = DatabaseOperator(db,table)
     #レコードの数
-    total_records = count_record(db,table,key)
+    total_records = db_operator.count_record(key)
+
 
     #ランダムに車を選択
     car_id = random.randint(1, total_records)
 
     #データベースから敵の車データを取得
-    [list_car_data] = get_data(db,table,key,car_id)
+    [list_car_data] = db_operator.get_data_from_db(key,car_id)
 
     #pathから画像を取得
     print("list_car_data", list_car_data[1])

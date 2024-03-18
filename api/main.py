@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from s3 import image_interacter
 from routes import race_routes , ending_routes ,database_routes,car_generation_routes
-from api_test import test_car_data,test_translation, no_rembg
+from api_test import test_car_data,test_translation, no_rembg,test_database
 
 app = FastAPI()
 
@@ -59,4 +59,5 @@ elif EXECUTING_ENVIRONMENT=="dev":
     
 else:
     pass 
+
 

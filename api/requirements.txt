@@ -6,4 +6,6 @@ deepl
 transformers
 rembg
 pillow
+python-multipart
+
 
