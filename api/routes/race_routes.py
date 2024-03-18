@@ -3,12 +3,12 @@ from utils.auth import validate_api_key
 from models import RaceModeratorModel
 from utils.translation import translation
 from validator.chat_gpt_validator import validate_token_count
-from chat_gpt.race_progression import race_moderator_chatgpt
+from chat_gpt.race_progression import generate_race_scenario
 from config import RaceInfoKeys
 router = APIRouter()
 
 @router.post("/race/middle_part")
-def output_race_progress(race_moderate:RaceModeratorModel,api_key: str = Security(validate_api_key)):
+def generate_race_scenario_by_chatgpt(race_moderate:RaceModeratorModel,api_key: str = Security(validate_api_key)):
     """    
     Args:  
         race_moderate (RaceModeratorModel):レースに参加している車の情報
@@ -31,14 +31,14 @@ def output_race_progress(race_moderate:RaceModeratorModel,api_key: str = Securit
     # 入力トークンが上限(30トークン)を超えていないかチェック
     # 問題がない場合,ChatGPTを用いて,ユーザーの入力を元にゲームのシナリオを作成
     if validate_token_count(race_moderate.event,30):
-        result_text,first,second,third,fourth = race_moderator_chatgpt(race_moderate)
+        text_scenario,first_car,second_car,third_car,fourth_car  = generate_race_scenario(race_moderate)
 
     # ユーザーの入力(イベント)を日本語に翻訳
-    result_text_jp = translation(result_text,'EN','JA')
+    text_scenario = translation(text_scenario,'EN','JA')
 
 
-    return {RaceInfoKeys.generated_text: result_text_jp,
-            RaceInfoKeys.first_place: first,
-            RaceInfoKeys.second_place: second,
-            RaceInfoKeys.third_place: third,
-            RaceInfoKeys.fourth_place:fourth}
+    return {RaceInfoKeys.generated_text: text_scenario,
+            RaceInfoKeys.first_place: first_car,
+            RaceInfoKeys.second_place: second_car,
+            RaceInfoKeys.third_place: third_car,
+            RaceInfoKeys.fourth_place:fourth_car}

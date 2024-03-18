@@ -108,7 +108,7 @@ def validate_token_count(text:str,token_num:int) -> bool:
     if len(tokens) <= token_num:
         return True
     else:
-        print("text_user_input:"+text)
+        print("text_inputted_by_user:"+text)
         print("token_num:"+str(token_num))
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

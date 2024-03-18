@@ -29,7 +29,7 @@ def connect_database(path) -> Connection:
         conn = sqlite3.connect(path)
         return conn
 
-def check_input_query(check_list:list) -> None:
+def validate_input_query(check_list:list) -> None:
     """
         データベースのクエリに使用する変数をチェック
         Args:
