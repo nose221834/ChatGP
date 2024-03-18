@@ -4,12 +4,6 @@
 ## Description
 FastAPIを使用してChatGPTAPIを操作できるようにする.
 
-## Installation
-
-```bash
-docker compose build 
-docker compose up
-```
 
 ## Usage
 API使用方法
