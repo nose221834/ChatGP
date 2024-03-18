@@ -2,7 +2,7 @@ import random
 from fastapi import  HTTPException,status
 from transformers import GPT2Tokenizer
 
-class ChatgptOutputValidator():
+class ChatGptOutputValidator():
     def __init__(self) -> None:
         self.error_count = 0
         
@@ -14,7 +14,7 @@ class ChatgptOutputValidator():
             result (list): ChatGPTの出力を分割して格納したリスト.
             error_count (int): フォーマットに従わない出力が行われた回数
         Returns:
-            bool: returnは正常/異常(1/0)
+            bool: returnは正常/異常(0/1)
         Raises:
             HTTP_408_REQUEST_TIMEOUT: ChatGPTが LUK(int)|NAME(str)|TEXT(str) のフォーマットに従っていない.
         """
@@ -22,13 +22,13 @@ class ChatgptOutputValidator():
         try:
             _ = int(output_chatgpt)
             
-            return False
+            return True
         except:
             print("generated luck value:" + str(output_chatgpt))
 
-            return True
+            return False
 
-    def _output_items_count_is_rightness(self,item_count_in_format:int,output_chatgpt:list) -> bool:
+    def _is_correct_gpt_output(self,item_count_in_format:int,output_chatgpt:list) -> bool:
         """
         ChatGPTが出力した項目の数がフォーマットに則っているか確認する
         3回失敗したらエラーを出力
@@ -37,25 +37,25 @@ class ChatgptOutputValidator():
             item_count_in_format (int): フォーマットで指定した出力項目の数
             error_count (int): フォーマットに従わない出力が行われた回数
         Returns:
-            bool: returnは正常/異常(1/0)
+            bool: returnは正常/異常(0/1)
         Raises:
             HTTP_408_REQUEST_TIMEOUT: ChatGPTの出力がフォーマットに則っていない
         """
         # 出力された項目の数が指定のものと一致すか. 一致/不一致(True/False)
         # 判定を行うたびにerror_countを増加させ,4回になった際に408エラーを発生.
         if len(output_chatgpt) == item_count_in_format:
-            return False
+            return True
         else:
             print("Number of items output:"+str(len(output_chatgpt))+",Output_text" + str(output_chatgpt))
 
-            return True
+            return False
 
     def validate_car_generated_chatgpt(self,item_count_in_format:int,output_chatgpt:list):
         print(output_chatgpt)
-        if self._output_items_count_is_rightness(item_count_in_format,output_chatgpt):
+        if not(self._is_correct_gpt_output(item_count_in_format,output_chatgpt)):
             self.error_count += 1
 
-        elif self._luk_is_number(output_chatgpt[2]):
+        elif not(self._luk_is_number(output_chatgpt[2])):
             self.error_count += 1
 
         else:
@@ -70,9 +70,9 @@ class ChatgptOutputValidator():
         
         return True
 
-    def validate_scenario_generated_chatgpt(self,item_count_in_format:int,output_chatgpt:list):
+    def validate_scenario_generated_by_chatgpt(self,item_count_in_format:int,output_chatgpt:list):
         print(output_chatgpt)
-        if self._output_items_count_is_rightness(item_count_in_format,output_chatgpt):
+        if not(self._is_correct_gpt_output(item_count_in_format,output_chatgpt)):
             self.error_count += 1
         else:
             return False

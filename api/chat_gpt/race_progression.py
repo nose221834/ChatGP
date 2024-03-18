@@ -1,5 +1,5 @@
 from openai import OpenAI
-from validator.chat_gpt_validator import ChatgptOutputValidator
+from validator.chat_gpt_validator import ChatGptOutputValidator
 from models import RaceModeratorModel
 
 
@@ -82,11 +82,11 @@ def race_moderator_chatgpt(ending_model:RaceModeratorModel):
     text_split:list = [] # ChatGPTの出力を項目ごとに分割し保存するリスト
     item_count_in_format:int = 11 # フォーマットで指定したChatGPTの出力項目
 
-    chatgpt_output_validator = ChatgptOutputValidator()
+    chatgpt_output_validator = ChatGptOutputValidator()
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合レースのシナリオを生成する
-    while(chatgpt_output_validator.validate_scenario_generated_chatgpt(item_count_in_format,text_split)):
+    while(chatgpt_output_validator.validate_scenario_generated_by_chatgpt(item_count_in_format,text_split)):
         prompt_system,prompt_user = shaping_prompts_rece_moderator(ending_model)
 
         # gpt-3.5-turboを使用,最大出力トークン数は200

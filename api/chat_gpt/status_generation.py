@@ -1,5 +1,5 @@
 from openai import OpenAI
-from validator.chat_gpt_validator import ChatgptOutputValidator
+from validator.chat_gpt_validator import ChatGptOutputValidator
 client = OpenAI()
 
 def shaping_prompts_status_generate(user_input:str):
@@ -43,7 +43,7 @@ async def status_generate_chatgpt(user_input:str):
     text_split:list = [] # ChatGPTの出力を項目ごとに分割し保存するリスト
     item_count_in_format = 7 # フォーマットで指定したChatGPTの出力項目
 
-    chatgpt_output_validator = ChatgptOutputValidator()
+    chatgpt_output_validator = ChatGptOutputValidator()
 
     # プロンプトの作成
     system_prompt,user_prompt = shaping_prompts_status_generate(user_input)
