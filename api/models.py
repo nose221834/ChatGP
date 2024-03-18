@@ -43,6 +43,6 @@ class GameEndingModel(RaceModeratorModel):
 
 # ユーザーからテキストを受け取る際に使用するBaseModel
 class InputTextModel(BaseModel):
-        text_user_input: str = Query(..., description="ユーザーの入力")
+        text_inputted_by_user: str = Query(..., description="ユーザーの入力")
         def __init__(self, **data):
             super().__init__(**data)

@@ -5,7 +5,7 @@ from models import RaceModeratorModel
 
 client = OpenAI()
 
-def shaping_prompts_rece_moderator(ending_model:RaceModeratorModel):
+def shaping_prompts_rece_moderator(race_moderator_model:RaceModeratorModel):
     """
         ChatGPTにレースのシナリオを生成させるプロンプトを作成
 
@@ -22,57 +22,57 @@ You will give the names of the four participating cars, their current standings 
 Predict the outcome of the event and any changes in the standings and output them according to the format.
 
 ###car_data###
-car_name:{ending_model.second_car_name}
-instruction:{ending_model.second_car_instruction}
+car_name:{race_moderator_model.second_car_name}
+instruction:{race_moderator_model.second_car_instruction}
 
-car_name:{ending_model.fourth_car_name}
-car_instruction:{ending_model.fourth_car_instruction}
+car_name:{race_moderator_model.fourth_car_name}
+car_instruction:{race_moderator_model.fourth_car_instruction}
 
-car_name:{ending_model.first_car_name}
-car_instruction:{ending_model.first_car_instruction}
+car_name:{race_moderator_model.first_car_name}
+car_instruction:{race_moderator_model.first_car_instruction}
 
-car_name:{ending_model.third_car_name}
-car_instruction:{ending_model.third_car_instruction}
+car_name:{race_moderator_model.third_car_name}
+car_instruction:{race_moderator_model.third_car_instruction}
 
 ###input format###
 **race position**
-|1th|{ending_model.second_car_name}
-|2nd|{ending_model.third_car_name}
-|3rd|{ending_model.first_car_name}
-|4th|{ending_model.fourth_car_name}
-|event|Actions of {ending_model.first_car_name}:I'm going to crash into the car in front of me by accelerating!
+|1th|{race_moderator_model.second_car_name}
+|2nd|{race_moderator_model.third_car_name}
+|3rd|{race_moderator_model.first_car_name}
+|4th|{race_moderator_model.fourth_car_name}
+|event|Actions of {race_moderator_model.first_car_name}:I'm going to crash into the car in front of me by accelerating!
 
 ###event###
-{ending_model.first_car_name} just rammed into the car in front!
+{race_moderator_model.first_car_name} just rammed into the car in front!
 
 ###output format###
-|1th|{ending_model.second_car_name}
-|2nd|{ending_model.first_car_name}
-|3rd|{ending_model.third_car_name}
-|4th|{ending_model.fourth_car_name}
-|result|Oops! {ending_model.first_car_name} hit the car in front of him! What a wild ride! {ending_model.first_car_name} in front of him spun wide!"""
+|1th|{race_moderator_model.second_car_name}
+|2nd|{race_moderator_model.first_car_name}
+|3rd|{race_moderator_model.third_car_name}
+|4th|{race_moderator_model.fourth_car_name}
+|result|Oops! {race_moderator_model.first_car_name} hit the car in front of him! What a wild ride! {race_moderator_model.first_car_name} in front of him spun wide!"""
 
     # 設定のフォーマットに則ったユーザー入力プロンプト
     prompt_user = f"""
 **race position**
-|1th|{ending_model.first_car_name}
-|2nd|{ending_model.second_car_name}
-|3rd|{ending_model.third_car_name}
-|4th|{ending_model.fourth_car_name}
-|event|Actions of {ending_model.player_car_name}:{ending_model.event}"""
+|1th|{race_moderator_model.first_car_name}
+|2nd|{race_moderator_model.second_car_name}
+|3rd|{race_moderator_model.third_car_name}
+|4th|{race_moderator_model.fourth_car_name}
+|event|Actions of {race_moderator_model.player_car_name}:{race_moderator_model.event}"""
 
     return prompt_system,prompt_user
 
 
 
-def race_moderator_chatgpt(ending_model:RaceModeratorModel):
+def generate_race_scenario(race_moderator_model:RaceModeratorModel):
     """
         ChatGPTがユーザーの入力を受け取り,その入力を元にシナリオを作成する
 
         Args:
             ending_model (RaceModeratorModel):レースに参加している車の情報
         Returns:  
-            result_text (str): ChatGPTが生成したシナリオ文
+            text_scenario (str): ChatGPTが生成したシナリオ文
             first (str): １位の車名
             second (str): ２位の車名
             third (str): ３位の車名
@@ -87,7 +87,7 @@ def race_moderator_chatgpt(ending_model:RaceModeratorModel):
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合レースのシナリオを生成する
     while(chatgpt_output_validator.validate_scenario_generated_by_chatgpt(item_count_in_format,text_split)):
-        prompt_system,prompt_user = shaping_prompts_rece_moderator(ending_model)
+        prompt_system,prompt_user = shaping_prompts_rece_moderator(race_moderator_model)
 
         # gpt-3.5-turboを使用,最大出力トークン数は200
         res = client.chat.completions.create(
@@ -112,6 +112,6 @@ def race_moderator_chatgpt(ending_model:RaceModeratorModel):
     second = text_split[4].replace('\n','')
     third = text_split[6].replace('\n','')
     fourth = text_split[8].replace('\n','')
-    result_text = text_split[10].replace('\n','')
+    text_scenario = text_split[10].replace('\n','')
     
-    return result_text,first,second,third,fourth
+    return text_scenario,first,second,third,fourth

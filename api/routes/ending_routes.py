@@ -2,8 +2,8 @@ from fastapi import APIRouter, Security
 from utils.auth import validate_api_key
 from utils.translation import translation
 from validator.chat_gpt_validator import validate_token_count
-from chat_gpt.race_progression import race_moderator_chatgpt
-from chat_gpt.ending_generation import ending_generate_chatgpt
+from chat_gpt.race_progression import generate_race_scenario
+from chat_gpt.ending_generation import generate_ending_by_chatgpt
 from models import GameEndingModel
 from config import RaceInfoKeys
 
@@ -12,7 +12,7 @@ router = APIRouter()
 
 
 @router.post("/race/ending")
-def output_game_ending(ending_model:GameEndingModel,api_key: str = Security(validate_api_key)):
+def generate_game_ending(ending_model:GameEndingModel,api_key: str = Security(validate_api_key)):
     """
     レースのエンディングを生成する  
 
@@ -41,8 +41,8 @@ def output_game_ending(ending_model:GameEndingModel,api_key: str = Security(vali
     # 入力トークンが上限(35トークン)を超えていないかチェック
     # 問題がない場合,ユーザ入力を元にChatGPTでエンディングのテキストを生成
     if validate_token_count(ending_model.event,35):
-        text_result,first,second,third,fourth = race_moderator_chatgpt(ending_model)
-        ending_text = ending_generate_chatgpt(ending_model,text_result,first,second,third,fourth)
+        text_result,first,second,third,fourth = generate_race_scenario(ending_model)
+        ending_text = generate_ending_by_chatgpt(ending_model,text_result,first,second,third,fourth)
 
     # エンディングを日本語に翻訳
     ending_text_jp = translation(ending_text ,'EN','JA')

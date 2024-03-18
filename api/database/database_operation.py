@@ -1,5 +1,5 @@
 import sqlite3
-from validator.database_validator import connect_database,check_input_query
+from validator.database_validator import connect_database,validate_input_query
 from fastapi import  HTTPException,status
 
 class DatabaseOperator():
@@ -124,7 +124,7 @@ class DatabaseOperator():
         c = self._open_connection_with_db()
 
         #クエリに問題がないかチェック
-        check_input_query([self.table,key])
+        validate_input_query([self.table,key])
 
         # table内からidと一意するデータをkey(カラム)の中から検索し,全カラムのデータを所得する
         # 形式:[(カラム1-1,カラム2-1,カラム3-1,・・・),(カラム2-1,カラム2-2,カラム3-2,・・・),・・・]
@@ -157,7 +157,7 @@ class DatabaseOperator():
         c = self._open_connection_with_db()
 
         #クエリに問題がないかチェック
-        check_input_query([self.table])
+        validate_input_query([self.table])
 
         # table内から全データを取得
         query = f"SELECT * FROM {self.table}"
@@ -169,7 +169,7 @@ class DatabaseOperator():
 
         return all_data_in_table
 
-    def count_record(self,key:str) -> int:
+    def count_db_record(self,key:str) -> int:
         """
             データベースのカラムが持つデータ数をカウント
 
@@ -186,7 +186,7 @@ class DatabaseOperator():
         c = self._open_connection_with_db()
 
         # クエリに問題がないかチェック
-        check_input_query([self.table,key])
+        validate_input_query([self.table,key])
 
         # table内のkey(カラム)に要素が何個あるかをカウントし取得
         query = f"SELECT COUNT({key}) FROM {self.table}"

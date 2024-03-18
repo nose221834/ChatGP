@@ -11,7 +11,7 @@ client = OpenAI()
 
 
 
-def shaping_prompts_car_img(text:str):
+def create_prompt_generating_car_img(text_inputted_by_user:str):
     """
         ChatGPTが車の画像を生成するプロンプトを作成する
 
@@ -25,7 +25,7 @@ def shaping_prompts_car_img(text:str):
 You are a unique designer. Draw one car with a design based on a specified theme.
 
 ###Theme###
-{text} 
+{text_inputted_by_user} 
 
 ###Condition 1###
 Background is white. 
@@ -41,7 +41,7 @@ Only one car must be depicted clearly, with no other objects or text in the back
 
     return prompt
 
-async def image_generate_chatgpt(text:str,model_chatgpt:str | None,img_size:str):
+async def generate_car_img_by_chatgpt(text_inputted_by_user:str,model_chatgpt:str | None,img_size:str):
     """
     ユーザー入力を元に,ChatGPTで車の画像を生成する
 
@@ -56,7 +56,7 @@ async def image_generate_chatgpt(text:str,model_chatgpt:str | None,img_size:str)
     """
 
     # ChatGPTに入力するプロンプトを作成
-    text_prompt = shaping_prompts_car_img(text)
+    text_prompt = create_prompt_generating_car_img(text_inputted_by_user)
 
 
     response =  client.images.generate(
@@ -68,8 +68,8 @@ async def image_generate_chatgpt(text:str,model_chatgpt:str | None,img_size:str)
                     )
 
     # ChatGPTが生成した画像(バイナリー)を取得
-    image_url:str = response.data[0].url
-    car_img_binary: bytes = requests.get(image_url).content
+    url_car_img:str = response.data[0].url
+    car_img_binary: bytes = requests.get(url_car_img).content
 
     # 画像を保存
     image_output_dir = Path("tmp/img")
