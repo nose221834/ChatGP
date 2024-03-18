@@ -2,12 +2,12 @@ from openai import OpenAI
 from validator.chat_gpt_validator import validate_chat_gpt_output_count,validate_luk_is_number
 client = OpenAI()
 
-def create_prompt_generating_car_status(text_inputted_user:str):
+def create_prompt_generating_car_status(text_inputted_by_user:str):
     """
         ChatGPTが車の設定を生成するプロンプトを作成する
 
         Args:
-            text_inputted_user (str): ユーザーの入力.これを元に車を生成する
+            text_inputted_by_user (str): ユーザーの入力.これを元に車を生成する
         Returns:  
             prompt (str): ChatGPTが車の設定を生成するプロンプト
     """
@@ -26,16 +26,16 @@ opinions:Cats are the best!!
 
     # 設定のフォーマットに則ったユーザー入力プロンプト
     user_prompt = f"""
-opinions:{text_inputted_user}"""
+opinions:{text_inputted_by_user}"""
 
     return system_prompt,user_prompt
 
-async def generate_car_status_by_chatgpt(text_inputted_user:str):
+async def generate_car_status_by_chatgpt(text_inputted_by_user:str):
     """
         ChatGPTで車の設定を生成する
 
         Args:
-            text_inputted_user (str): ユーザーの入力.これを元に車を生成する
+            text_inputted_by_user (str): ユーザーの入力.これを元に車を生成する
         Returns:  
             player_luck (int): プレイヤーの運勢パラメータ
             car_name (str): 車の名前
@@ -47,7 +47,7 @@ async def generate_car_status_by_chatgpt(text_inputted_user:str):
     item_count_in_format = 7 # フォーマットで指定したChatGPTの出力項目
 
     # プロンプトの作成
-    system_prompt,user_prompt = create_prompt_generating_car_status(text_inputted_user)
+    system_prompt,user_prompt = create_prompt_generating_car_status(text_inputted_by_user)
 
     # ChatGPTがフォーマットに則った出力を行わない場合,もう一度生成を行う(3回まで)
     # 問題がない場合,車の外見やステータスを生成

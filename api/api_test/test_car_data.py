@@ -20,7 +20,7 @@ def test_generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(),api
     ChatGPTを使用性ないため,料金が発生しない.
 
     Args:  
-        text_inputted_user (str): ユーザーの入力  
+        text_inputted_by_user (str): ユーザーの入力  
     Returns:  
         player_car_image (bytes): 生成された車画像のバイナリー  
         player_car_name (str): 生成された車の名前  
@@ -54,7 +54,7 @@ async def test_generate_car_status(input_text_model:InputTextModel = Depends(),a
     ChatGPTのテキスト生成機能確認用API  
     プロンプトの性能確認など
     Args:  
-        text_inputted_user (str): ユーザーの入力  
+        text_inputted_by_user (str): ユーザーの入力  
     Returns:  
         player_car_name (str): 生成された車の名前  
         player_car_luck (int): 生成された車の運勢パラメータ  
@@ -62,7 +62,7 @@ async def test_generate_car_status(input_text_model:InputTextModel = Depends(),a
 
     """
     # ChatGPTの入力は日本語より英語の方がトークン数を抑えれるため,DeepLで英語に翻訳.(DeepL APIは無料)
-    text_en = translation(input_text_model.text_inputted_user,'JA','EN-US')
+    text_en = translation(input_text_model.text_inputted_by_user,'JA','EN-US')
 
     # ユーザー入力からステータスを生成
     [player_luck,car_name,text_car_status] = await generate_car_status_by_chatgpt(text_en)

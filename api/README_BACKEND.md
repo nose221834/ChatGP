@@ -74,7 +74,7 @@ API使用方法
     　　ユーザーの入力を元にChatGPTが車を作成する  
 
     Args:  
-    　　``text_inputted_user`` (str):　ユーザーの入力  
+    　　``text_inputted_by_user`` (str):　ユーザーの入力  
     Returns:  
     　　``player_car_image`` (bytes): 生成された車画像のバイナリー  
     　　``player_car_name`` (str):　生成された車の名前  
@@ -84,7 +84,7 @@ API使用方法
 - ``/test/car/create/status`` :  
     　　ChatGPTのテキスト生成機能確認用API  
     Args:  
-    　　``text_inputted_user`` (str):　ユーザーの入力  
+    　　``text_inputted_by_user`` (str):　ユーザーの入力  
     Returns:  
     　　``player_car_name`` (str):　生成された車の名前  
     　　``player_car_luck`` (int):　生成された車の運勢パラメータ  
@@ -93,7 +93,7 @@ API使用方法
 - ``/test/translation`` :  
     　　DeepLによる翻訳API  
     Args:  
-    　　``text_inputted_user`` (str):　ユーザーの入力  
+    　　``text_inputted_by_user`` (str):　ユーザーの入力  
     Returns:  
     　　``en_text`` (str): 英語に翻訳後のテキスト  
 

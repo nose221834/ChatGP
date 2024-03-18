@@ -32,7 +32,7 @@ async def generate_car_by_chatgpt(input_text_model:InputTextModel = Depends(), a
     """
 
     # ユーザー入力を英語に翻訳
-    text_en = translation(input_text_model.text_inputted_user,'JA','EN-US')
+    text_en = translation(input_text_model.text_inputted_by_user,'JA','EN-US')
     
     # 入力トークンが上限(30トークン)を超えていないかチェック
     # 問題ない場合,ユーザー入力を元に,ChatGPTで車の設定と画像を生成.
