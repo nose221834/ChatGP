@@ -3,11 +3,12 @@ run-name: docker-yarn-build-test
 on: [push, pull_request]
 
 jobs:
-  test:
-    name: Build Test
+
+  create-envfile:
     runs-on: ubuntu-latest
+
     steps:
-        - name: Create envfile for view
+    - name: Make envfile for view
       uses: SpicyPizza/create-envfile@v2.0
       with:
         envkey_NEXT_PUBLIC_API_ACCESS_ID: ${{ secrets.NEXT_PUBLIC_API_ACCESS_ID }}
@@ -15,7 +16,7 @@ jobs:
         envkey_NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
         file_name: view.env
 
-    - name: Create envfile for api
+    - name: Make envfile for api
       uses: SpicyPizza/create-envfile@v2.0
       with:
         envkey_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -26,6 +27,30 @@ jobs:
         envkey_EXECUTING_ENVIRONMENT: ${{ secrets.EXECUTING_ENVIRONMENT }}
         envkey_IMAGE_MODEL_CHATGPT: ${{ secrets.IMAGE_MODEL_CHATGPT }}
         file_name: api.env
+
+  test:
+    name: Build Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create envfile for view
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_NEXT_PUBLIC_API_ACCESS_ID: ${{ secrets.NEXT_PUBLIC_API_ACCESS_ID }}
+          envkey_NEXT_PUBLIC_API_ACCESS_KEY: ${{ secrets.NEXT_PUBLIC_API_ACCESS_KEY }}
+          envkey_NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+          file_name: view.env
+
+      - name: Create envfile for api
+        uses: SpicyPizza/create-envfile@v2.0
+        with:
+          envkey_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          envkey_DEEPL_AUTH_KEY: ${{ secrets.DEEPL_AUTH_KEY }}
+          envkey_API_ACCESS_ID: ${{ secrets.API_ACCESS_ID }}
+          envkey_API_ACCESS_KEY: ${{ secrets.API_ACCESS_KEY }}
+          envkey_ACSESS_ALLOW_URL: ${{ secrets.ACSESS_ALLOW_URL }}
+          envkey_EXECUTING_ENVIRONMENT: ${{ secrets.EXECUTING_ENVIRONMENT }}
+          envkey_IMAGE_MODEL_CHATGPT: ${{ secrets.IMAGE_MODEL_CHATGPT }}
+          file_name: api.env
 
       - uses: actions/checkout@v4
       - name: Docker Compose Build
