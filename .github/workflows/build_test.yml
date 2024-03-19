@@ -3,12 +3,11 @@ run-name: docker-yarn-build-test
 on: [push, pull_request]
 
 jobs:
-
-  create-envfile:
+  test:
+    name: Build Test
     runs-on: ubuntu-latest
-
     steps:
-    - name: Make envfile for view
+        - name: Create envfile for view
       uses: SpicyPizza/create-envfile@v2.0
       with:
         envkey_NEXT_PUBLIC_API_ACCESS_ID: ${{ secrets.NEXT_PUBLIC_API_ACCESS_ID }}
@@ -16,7 +15,7 @@ jobs:
         envkey_NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
         file_name: view.env
 
-    - name: Make envfile for api
+    - name: Create envfile for api
       uses: SpicyPizza/create-envfile@v2.0
       with:
         envkey_OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -28,10 +27,6 @@ jobs:
         envkey_IMAGE_MODEL_CHATGPT: ${{ secrets.IMAGE_MODEL_CHATGPT }}
         file_name: api.env
 
-  test:
-    name: Build Test
-    runs-on: ubuntu-latest
-    steps:
       - uses: actions/checkout@v4
       - name: Docker Compose Build
         run: docker-compose -f docker-compose.prod.yml build
