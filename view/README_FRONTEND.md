@@ -34,7 +34,7 @@ FastAPIを使用してChatGPTAPIを操作できるようにする.
     - serverActionsなどがある
   - `tailwind.config.ts`
     - tailwindの設定を記述
-    - 枠つく文字などをここで追加している
+    - 枠つき文字などをここで追加している
   - `tsconfig.json`
     - typescriptの設定が記述されている
   - `view.Dockerfile`
