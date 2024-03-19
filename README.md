@@ -1,3 +1,6 @@
+[![Super-Linter](https://github.com/sharehouse-sanhaimu/ChatGP/actions/workflows/super_linter/badge.svg)](https://github.com/marketplace/actions/super-linter)
+
+
 # ChatGP
 
 【技育 CAMP2024】ハッカソン Vol.1 に参加して作成したアプリ
