@@ -335,6 +335,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@marsidev/react-turnstile@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "@marsidev/react-turnstile@npm:0.5.3"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 10c0/4fc1cbb36059b76f91eec9f266fc0c3027f1257c18c1530ad1e4e1ef9c03e20cd494939e4b9e29e18f2a80d270a2ff4b05fb4cf7216ad788da79844c2939d390
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:14.1.0":
   version: 14.1.0
   resolution: "@next/env@npm:14.1.0"
@@ -4328,6 +4338,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "view@workspace:."
   dependencies:
+    "@marsidev/react-turnstile": "npm:^0.5.3"
     "@radix-ui/react-slot": "npm:^1.0.2"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
