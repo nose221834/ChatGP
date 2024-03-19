@@ -19,6 +19,29 @@ export default function Home() {
   };
   return (
     <main>
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.1/css/bootstrap.min.css"
+        integrity="sha512-siwe/oXMhSjGCwLn+scraPOWrJxHlUgMBMZXdPe2Tnk3I0x3ESCoLz7WZ5NTH6SZrywMY+PB1cjyqJ5jAluCOg=="
+        crossOrigin="anonymous"
+        referrerPolicy="no-referrer"
+      />
+      <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.9.1/font/bootstrap-icons.min.css"
+        integrity="sha512-5PV92qsds/16vyYIJo3T/As4m2d8b6oWYfoqV+vtizRB6KhF1F9kYzWzQmsO6T3z3QG2Xdhrx7FQ+5R1LiQdUA=="
+        crossOrigin="anonymous"
+        referrerPolicy="no-referrer"
+      />
+      <script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        defer
+      ></script>
+      <div
+        className="cf-turnstile"
+        data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+        data-theme="light"
+      ></div>
       <div className=" flex flex-col items-center justify-around  h-screen w-screen bg-basecolor">
         <div className="p-4 w-[40rem] h-[10rem] text-4xl tracking-widest items-center text-shadow-edge ">
           <Card className=" text-basecolor flex flex-col items-center justify-around h-full bg-accentcolor ">
