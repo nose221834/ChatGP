@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 
-export function Progress({ order, text, carImages, click }: ProgProps) {
+export function Progress({ loader, order, text, carImages, click }: ProgProps) {
   const orderImage = `/order_img/order_${order}.png`;
 
   const handleClick: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -38,61 +38,67 @@ export function Progress({ order, text, carImages, click }: ProgProps) {
           </div>
         </div>
       </div>
-      <div className="flex justify-between z-10 w-full h-3/4 p-4">
-        <div className="flex flex-col justify-start h-full overflow-hidden">
-          <Card className="border-4 bg-tranparent border-basecolor">
-            <Image
-              src={orderImage}
-              alt="order"
-              width={200}
-              height={200}
-              className="object-center object-contain"
-              priority
-            />
-          </Card>
-        </div>
-        <div className="flex justify-around items-center w-4/5 h-full p-4">
-          <div className="flex flex-col justify-start w-full h-full ">
-            <div className=" h-1/5"></div>
-            <Image
-              src={carImages.fourth_prace}
-              alt="enemy0"
-              width={168}
-              height={168}
-              className=" animate-jello-horizontal"
-            />
-          </div>
-          <div className="flex flex-col justify-start w-full h-full">
-            <div className="flex justify-end w-full ">
+      {loader ? (
+        <div className="flex justify-between z-10 w-full h-3/4 p-4">
+          <div className="flex flex-col justify-start h-full overflow-hidden">
+            <Card className="border-4 bg-tranparent border-basecolor">
               <Image
-                src={carImages.third_place}
-                alt="enemy1"
+                src={orderImage}
+                alt="order"
+                width={200}
+                height={200}
+                className="object-center object-contain"
+                priority
+              />
+            </Card>
+          </div>
+          <div className="flex justify-around items-center w-4/5 h-full p-4">
+            <div className="flex flex-col justify-start w-full h-full ">
+              <div className=" h-1/5"></div>
+              <Image
+                src={carImages.fourth_prace}
+                alt="enemy0"
+                width={168}
+                height={168}
+                className=" animate-jello-horizontal"
+              />
+            </div>
+            <div className="flex flex-col justify-start w-full h-full">
+              <div className="flex justify-end w-full ">
+                <Image
+                  src={carImages.third_place}
+                  alt="enemy1"
+                  width={168}
+                  height={168}
+                  className=" animate-vibrate-1"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col justify-end w-full h-full">
+              <Image
+                src={carImages.second_place}
+                alt="enemy2"
                 width={168}
                 height={168}
                 className=" animate-vibrate-1"
               />
             </div>
-          </div>
-          <div className="flex flex-col justify-end w-full h-full">
-            <Image
-              src={carImages.second_place}
-              alt="enemy2"
-              width={168}
-              height={168}
-              className=" animate-vibrate-1"
-            />
-          </div>
-          <div className="flex flex-col justify-around w-full h-full">
-            <Image
-              src={carImages.first_place}
-              alt="enemy3"
-              width={168}
-              height={168}
-              className=" animate-heartbeat"
-            />
+            <div className="flex flex-col justify-around w-full h-full">
+              <Image
+                src={carImages.first_place}
+                alt="enemy3"
+                width={168}
+                height={168}
+                className=" animate-heartbeat"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div className="whitespace-normal text-accentyellow text-2xl font-bold">
+          Loading
+        </div>
+      )}
     </div>
   );
 }

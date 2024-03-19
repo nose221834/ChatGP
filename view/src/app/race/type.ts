@@ -37,6 +37,7 @@ export type ResponseProps = {
 };
 
 export type ProgProps = {
+  loader: boolean;
   order: number;
   text: string;
   carImages: OrderedImages;
