@@ -56,7 +56,7 @@ export function Progress({ loader, order, text, carImages, click }: ProgProps) {
             <div className="flex flex-col justify-start w-full h-full ">
               <div className=" h-1/5"></div>
               <Image
-                src={carImages.fourth_prace}
+                src={carImages.fourth_place}
                 alt="enemy0"
                 width={168}
                 height={168}
