@@ -1,3 +1,5 @@
+![Test](https://github.com/sharehouse-sanhaimu/ChatGP/actions/workflows/build_test.yml/badge.svg)
+
 # ChatGP
 
 【技育 CAMP2024】ハッカソン Vol.1 に参加して作成したアプリ
