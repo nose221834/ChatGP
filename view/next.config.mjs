@@ -3,13 +3,8 @@
  */
 
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants.js";
-import removeImports from "next-remove-imports";
 import TerserPlugin from "terser-webpack-plugin";
 
-const removeImportsFun = removeImports({
-  test: /node_modules([\s\S]*?)\.(tsx|ts|js|mjs|jsx)$/,
-  matchImports: "\\.(less|css|scss|sass|styl)$",
-});
 
 const nextConfig = (phase, { defaultConfig }) => {
   if (phase === PHASE_DEVELOPMENT_SERVER) {
