@@ -115,8 +115,10 @@ const getCarInstruction = (carName: string) => {
 
 const getResponseJson = () => {
   const responseJson = localStorage.getItem(RACE_RESPONSE_DATA);
+  console.log("Get responseJson",responseJson)
   if (responseJson === null) {
     // 何もない場合は、仮のデータを返却する
+    console.log("Generate Dummy ResponseJson")
     const dummyResponseJson = generateDummyResponseJson();
     localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(dummyResponseJson));
     return dummyResponseJson;

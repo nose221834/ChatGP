@@ -25,7 +25,7 @@ export default function Home() {
     first_place: "",
     second_place: "",
     third_place: "",
-    fourth_prace: "",
+    fourth_place: "",
   };
 
   const router = useRouter();

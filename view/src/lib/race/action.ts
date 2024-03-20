@@ -10,6 +10,8 @@ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 export const getRaceDataFromGpt = async (data: RaceData) => {
   if (!apiId || !apiKey || !apiUrl) return false;
   const endPoint = `${apiUrl}/race/middle_part`;
+  console.log("Request Body:", data);
+  console.log("Endpoint:", endPoint);
   const responseJson: RaceInfoRes = await fetch(endPoint, {
     method: "POST",
     headers: {
@@ -23,6 +25,7 @@ export const getRaceDataFromGpt = async (data: RaceData) => {
       console.error("Error:", err);
       return false;
     });
+  console.log("responseJson:", responseJson);
   return responseJson;
 };
 

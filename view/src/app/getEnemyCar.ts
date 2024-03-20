@@ -8,6 +8,7 @@ export const getEnemyCar = async () => {
   // 異なる3台のEnemy Car Dataを取得する
   // 取得したDataはlocalStorageに保存し、
   // 処理が終わったらtrueをそれ以外ならfalseを返す
+  console.log("Get Enemy Car Data...");
   let enemyCarSet = new Set<string>();
   while (enemyCarSet.size < 3) {
     const enemyCarData = await getEnemyCarDataFromGpt();
@@ -29,6 +30,7 @@ const setEnemyCar = (
   // localStorageにすでに値が存在する場合は、保存しない
   const ENEMY_CAR_KEY = ENEMY_CAR + "_" + currentEnemyCount.toString();
   if (localStorage.getItem(ENEMY_CAR_KEY)) return false;
+  console.log("Saved Enemy Car Data:");
   localStorage.setItem(ENEMY_CAR_KEY, JSON.stringify(enemyCarDataWithUrl));
   return true;
 };
