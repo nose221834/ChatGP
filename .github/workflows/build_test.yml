@@ -1,5 +1,5 @@
-name: Docker and Yarn Build Test
-run-name: docker-yarn-build-test
+name: Build Test
+run-name: build-test
 on: [push, pull_request]
 
 jobs:
