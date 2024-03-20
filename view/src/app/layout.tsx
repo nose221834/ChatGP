@@ -24,6 +24,19 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <title>ChatGP</title>
+        <meta
+          name="keywords"
+          content="chatgpt,chatgp.nosse.net,nosse.net,race game"
+        />
+        <meta name="description" content="ChatGPTを利用したレースゲーム" />
+        <meta property="og:title" content="ChatGP" />
+        <meta
+          property="og:description"
+          content="ChatGPTを利用したレースゲーム"
+        />
+        <meta property="og:image" content="./icon.png" />
+        <link rel="icon" href="./icon.png" />
         {children}
       </body>
     </html>
