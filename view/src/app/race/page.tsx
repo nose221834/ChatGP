@@ -8,11 +8,7 @@ import { SubmitProps, OrderedImages, RaceInfoRes } from "./type";
 import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
 import { Loading } from "@/components/Loading";
-import {
-  RACE_CAR_IMAGES,
-  RACE_RESPONSE_DATA,
-  GENERATED_TEXT,
-} from "@/lib/const";
+import { RACE_CAR_IMAGES, RACE_RESPONSE_DATA, GENERATED_TEXT } from "@/lib/const";
 import {
   generateRaceRequestBody,
   generateRaceEndRequestBody,
@@ -94,12 +90,7 @@ export default function Home() {
     return (
       <main>
         {submit && <Loading />}
-        <Interactive
-          order={order}
-          scene={scene}
-          isSubmit={submit}
-          submit={onSubmit}
-        />
+        <Interactive order={order} scene={scene} isSubmit={submit} submit={onSubmit} />
       </main>
     );
   } else

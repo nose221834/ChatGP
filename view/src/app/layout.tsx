@@ -18,23 +18,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable
-        )}
-      >
+      <body className={cn("min-h-screen bg-background font-sans antialiased", fontSans.variable)}>
         <title>ChatGP</title>
-        <meta
-          name="keywords"
-          content="chatgpt,chatgp.nosse.net,nosse.net,race game"
-        />
+        <meta name="keywords" content="chatgpt,chatgp.nosse.net,nosse.net,race game" />
         <meta name="description" content="ChatGPTを利用したレースゲーム" />
         <meta property="og:title" content="ChatGP" />
-        <meta
-          property="og:description"
-          content="ChatGPTを利用したレースゲーム"
-        />
+        <meta property="og:description" content="ChatGPTを利用したレースゲーム" />
         <meta property="og:image" content="./icon.png" />
         <link rel="icon" href="./icon.png" />
         {children}
