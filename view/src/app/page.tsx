@@ -41,6 +41,7 @@ export default function Home() {
             width={256}
             height={256}
             className=" animate-vibrate-1 "
+            priority
           />
           <div className="flex">
             <div className="w-20 h-40"></div>

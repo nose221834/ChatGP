@@ -25,12 +25,15 @@ export default function Home() {
     first_place: "",
     second_place: "",
     third_place: "",
-    fourth_prace: "",
+    fourth_place: "",
   };
 
   const router = useRouter();
   // 送信したときにボタンを押せなくする
   const [submit, setSubmit] = useState<boolean>(false);
+
+  // useEffectによるロードを判定する
+  const [loader, setLoader] = useState(false);
 
   // 場面を切り替える
   const [scene, setScene] = useState<number>(0);
@@ -57,6 +60,7 @@ export default function Home() {
       setText(responseText);
       setCarImages(carIMagesJson);
       setOrder(orderNum);
+      setLoader(true);
     }
   }, [response]);
 
@@ -103,6 +107,7 @@ export default function Home() {
       <main>
         <Progress
           order={order}
+          loader={loader}
           text={text}
           carImages={carImages}
           click={nextScene}
