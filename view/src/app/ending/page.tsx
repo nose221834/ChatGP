@@ -12,7 +12,7 @@ export default function Home() {
 
   const [text, setText] = useState<string>("");
   const [order, setOrder] = useState<string>("");
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     let raceResponseData = localStorage.getItem(RACE_RESPONSE_DATA);
@@ -24,7 +24,7 @@ export default function Home() {
       const orderImage = `/order_img/order_${orderNum}.png`;
       setOrder(orderImage);
     }
-    setLoader(false);
+    setLoader(true);
   }, []);
 
   const handleClick = () => {
@@ -40,17 +40,17 @@ export default function Home() {
             <div className="max-w-4xl overflow-auto p-4">
               {loader ? (
                 <p className="whitespace-normal text-accentyellow text-2xl font-bold">
-                  Loading
+                  {text}
                 </p>
               ) : (
                 <p className="whitespace-normal text-accentyellow text-2xl font-bold">
-                  {text}
+                  Loading
                 </p>
               )}
             </div>
           </div>
           <div className="absolute bottom-0 reft-0 m-4">
-            {!loader && (
+            {loader && (
               <Image src={order} alt="order" width={200} height={200} />
             )}
           </div>

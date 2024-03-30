@@ -1,6 +1,6 @@
 "use server";
 
-import { RaceData, RaceEndData, RaceInfoRes } from '@/app/race/type'
+import { RaceData, RaceEndData, RaceInfoRes } from "@/app/race/type";
 
 const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
 const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
@@ -15,7 +15,7 @@ export const getRaceDataFromGpt = async (data: RaceData) => {
   const responseJson: RaceInfoRes = await fetch(endPoint, {
     method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       [apiId]: apiKey,
     },
     body: JSON.stringify(data),
@@ -27,16 +27,15 @@ export const getRaceDataFromGpt = async (data: RaceData) => {
     });
   console.log("responseJson:", responseJson);
   return responseJson;
-}
+};
 
 export const getEndDataFromGpt = async (data: RaceEndData) => {
   if (!apiId || !apiKey || !apiUrl) return false;
   const endPoint = `${apiUrl}/race/ending`;
-  console.log("Endpoint:", endPoint);
   const responseJson: RaceInfoRes = await fetch(endPoint, {
     method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       [apiId]: apiKey,
     },
     body: JSON.stringify(data),
@@ -47,4 +46,4 @@ export const getEndDataFromGpt = async (data: RaceEndData) => {
       return false;
     });
   return responseJson;
-}
+};
