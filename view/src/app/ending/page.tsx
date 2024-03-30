@@ -12,7 +12,7 @@ export default function Home() {
 
   const [text, setText] = useState<string>("");
   const [order, setOrder] = useState<string>("");
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     let raceResponseData = localStorage.getItem(RACE_RESPONSE_DATA);
@@ -24,7 +24,7 @@ export default function Home() {
       const orderImage = `/order_img/order_${orderNum}.png`;
       setOrder(orderImage);
     }
-    setLoader(false);
+    setLoader(true);
   }, []);
 
   const handleClick = () => {
@@ -33,30 +33,24 @@ export default function Home() {
 
   return (
     <main>
-      <div className="relative bg-[url('/ending_back.png')] bg-cover h-screen w-full p-4">
+      <div className="relative h-screen w-full bg-[url('/ending_back.png')] bg-cover p-4">
         {/* 背景を暗くするためのオーバーレイ */}
         <div className="absolute inset-0 bg-accentcolor bg-opacity-20">
-          <div className="flex items-center justify-center h-screen">
+          <div className="flex h-screen items-center justify-center">
             <div className="max-w-4xl overflow-auto p-4">
               {loader ? (
-                <p className="whitespace-normal text-accentyellow text-2xl font-bold">
-                  Loading
-                </p>
+                <p className="whitespace-normal text-2xl font-bold text-accentyellow">{text}</p>
               ) : (
-                <p className="whitespace-normal text-accentyellow text-2xl font-bold">
-                  {text}
-                </p>
+                <p className="whitespace-normal text-2xl font-bold text-accentyellow">Loading</p>
               )}
             </div>
           </div>
-          <div className="absolute bottom-0 reft-0 m-4">
-            {!loader && (
-              <Image src={order} alt="order" width={200} height={200} />
-            )}
+          <div className="reft-0 absolute bottom-0 m-4">
+            {loader && <Image src={order} alt="order" width={200} height={200} />}
           </div>
           <div className="absolute bottom-0 right-0 m-4">
             <Button
-              className="border bg-transparent hover:bg-secondarycolor text-basecolor w-30 h-16 text-xl text-center tracking-widest"
+              className="bg-transparent w-30 h-16 border text-center text-xl tracking-widest text-basecolor hover:bg-secondarycolor"
               onClick={handleClick}
             >
               Game End

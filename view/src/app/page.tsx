@@ -19,21 +19,21 @@ export default function Home() {
   };
   return (
     <main>
-      <div className=" flex flex-col items-center justify-around  h-screen w-screen bg-basecolor">
-        <div className="p-4 w-[40rem] h-[10rem] text-4xl tracking-widest items-center text-shadow-edge ">
-          <Card className=" text-basecolor flex flex-col items-center justify-around h-full bg-accentcolor ">
+      <div className=" flex h-screen w-screen flex-col  items-center justify-around bg-basecolor">
+        <div className="h-[10rem] w-[40rem] items-center p-4 text-4xl tracking-widest text-shadow-edge ">
+          <Card className=" flex h-full flex-col items-center justify-around bg-accentcolor text-basecolor ">
             ChatGPへようこそ
           </Card>
         </div>
         <Button
           onClick={moveToCreate}
           disabled={submit}
-          className=" w-80 h-32 text-4xl tracking-widest items-center"
+          className=" h-32 w-80 items-center text-4xl tracking-widest"
         >
           スタート！！
         </Button>
       </div>
-      <div className="flex z-50 items-center justify-around absolute w-full h-1/4 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  ">
+      <div className="absolute left-1/2 top-1/2 z-50 flex h-1/4 w-full -translate-x-1/2 -translate-y-1/2 items-center justify-around  ">
         <div className="flex flex-col justify-between ">
           <Image
             src="/rembg_1.png"
@@ -41,9 +41,10 @@ export default function Home() {
             width={256}
             height={256}
             className=" animate-vibrate-1 "
+            priority
           />
           <div className="flex">
-            <div className="w-20 h-40"></div>
+            <div className="h-40 w-20"></div>
             <Image
               src="/rembg_0.png"
               alt="enemy0"
@@ -63,7 +64,7 @@ export default function Home() {
             className=" animate-jello-horizontal"
           />
           <div className="flex flex-col">
-            <div className="flex w-20 h-40"></div>
+            <div className="flex h-40 w-20"></div>
             <div className=" w-20"> </div>
             <Image
               src="/rembg_2.png"

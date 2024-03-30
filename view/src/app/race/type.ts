@@ -1,6 +1,4 @@
 import { SubmitHandler } from "react-hook-form";
-import { PlayerCarRes } from "@/app/create/type";
-
 import {
   GENERATED_TEXT,
   FIRST_PLACE,
@@ -37,6 +35,7 @@ export type ResponseProps = {
 };
 
 export type ProgProps = {
+  loader: boolean;
   order: number;
   text: string;
   carImages: OrderedImages;

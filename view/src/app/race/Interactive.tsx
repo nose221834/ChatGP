@@ -20,40 +20,40 @@ export function Interactive({ order, scene, isSubmit, submit }: InteProps) {
   });
 
   return (
-    <div className="flex flex-col items-center justify-between w-screen h-screen overflow-hidden bg-basecolor">
+    <div className="flex h-screen w-screen flex-col items-center justify-between overflow-hidden bg-basecolor">
       <Image
         src={`/race${scene}.webp`}
         alt="scene"
         width={1792}
         height={1024}
-        className="h-full w-full object-center object-cover z-0 absolute"
+        className="absolute z-0 h-full w-full object-cover object-center"
       />
-      <div className="flex flex-col justify-around items-center z-10 p-4 w-3/5 h-1/2">
-        <div className="flex flex-col justify-around items-center  h-full w-full p-4">
-          <div className="font-extrabold text-4xl tracking-wider text-center w-11/12  p-8">
+      <div className="z-10 flex h-1/2 w-3/5 flex-col items-center justify-around p-4">
+        <div className="flex h-full w-full flex-col  items-center justify-around p-4">
+          <div className="w-11/12 p-8 text-center text-4xl font-extrabold  tracking-wider">
             <Messages scene={scene} order={order} />
           </div>
         </div>
       </div>
-      <div className="flex flex-col justify-around items-center z-10 p-4 w-11/12">
-        <Card className="flex flex-col justify-around bg-basecolor h-full w-full p-4">
+      <div className="z-10 flex w-11/12 flex-col items-center justify-around p-4">
+        <Card className="flex h-full w-full flex-col justify-around bg-basecolor p-4">
           <form onSubmit={handleSubmit(submit)}>
             <Textarea
-              className="text-center text-2xl border-2 border-accentcolor"
+              className="border-2 border-accentcolor text-center text-2xl"
               rows={1}
               {...register("event", { required: true, maxLength: 20 })}
             ></Textarea>
             {errors.event && (
               <div className="p-4">
-                <div className=" bg-basecolor border-secondarycolor border-4 text-2xl text-center text-accentcolor font-bold p-2 rounded-xl">
+                <div className=" rounded-xl border-4 border-secondarycolor bg-basecolor p-2 text-center text-2xl font-bold text-accentcolor">
                   20文字以内で入力してください
                 </div>
               </div>
             )}
-            <div className="flex p-4 justify-end">
+            <div className="flex justify-end p-4">
               <Button
                 disabled={isSubmit}
-                className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest"
+                className=" h-12 w-24 bg-accentcolor text-center text-xl tracking-widest text-basecolor hover:bg-secondarycolor"
               >
                 送信
               </Button>

@@ -8,11 +8,7 @@ import { SubmitProps, OrderedImages, RaceInfoRes } from "./type";
 import { RaceData, RaceEndData } from "@/app/race/type";
 import { getRaceDataFromGpt, getEndDataFromGpt } from "@/lib/race/action";
 import { Loading } from "@/components/Loading";
-import {
-  RACE_CAR_IMAGES,
-  RACE_RESPONSE_DATA,
-  GENERATED_TEXT,
-} from "@/lib/const";
+import { RACE_CAR_IMAGES, RACE_RESPONSE_DATA, GENERATED_TEXT } from "@/lib/const";
 import {
   generateRaceRequestBody,
   generateRaceEndRequestBody,
@@ -25,12 +21,15 @@ export default function Home() {
     first_place: "",
     second_place: "",
     third_place: "",
-    fourth_prace: "",
+    fourth_place: "",
   };
 
   const router = useRouter();
   // 送信したときにボタンを押せなくする
   const [submit, setSubmit] = useState<boolean>(false);
+
+  // useEffectによるロードを判定する
+  const [loader, setLoader] = useState(false);
 
   // 場面を切り替える
   const [scene, setScene] = useState<number>(0);
@@ -57,6 +56,7 @@ export default function Home() {
       setText(responseText);
       setCarImages(carIMagesJson);
       setOrder(orderNum);
+      setLoader(true);
     }
   }, [response]);
 
@@ -90,12 +90,7 @@ export default function Home() {
     return (
       <main>
         {submit && <Loading />}
-        <Interactive
-          order={order}
-          scene={scene}
-          isSubmit={submit}
-          submit={onSubmit}
-        />
+        <Interactive order={order} scene={scene} isSubmit={submit} submit={onSubmit} />
       </main>
     );
   } else
@@ -103,6 +98,7 @@ export default function Home() {
       <main>
         <Progress
           order={order}
+          loader={loader}
           text={text}
           carImages={carImages}
           click={nextScene}

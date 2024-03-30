@@ -1,0 +1,30 @@
+name: Auto Deploy
+run-name: ChatGP is deploying
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST_HACKASON}}
+          username: ${{ secrets.SSH_USERNAME_HACKASON}}
+          key: ${{ secrets.SSH_PRIVATE_KEY_HACKASON}}
+          port: ${{ secrets.SSH_PORT_HACKASON}}
+          script: |
+            cd ~/ChatGP
+            git pull origin main
+            git checkout main
+            bash script/down.sh
+            bash script/up.sh

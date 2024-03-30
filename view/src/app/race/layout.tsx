@@ -7,9 +7,9 @@ export default function RaceLayout({
 }>) {
   return (
     <div>
-      <div className="absolute top-0 left-0 z-50 p-8">
+      <div className="absolute left-0 top-0 z-50 p-8">
         <Image
-          className="border-4 border-accentcolor rounded-xl "
+          className="rounded-xl border-4 border-accentcolor "
           src="/announcer.webp"
           alt="announcer"
           width={192}
