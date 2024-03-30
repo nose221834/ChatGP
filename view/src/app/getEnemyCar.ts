@@ -23,10 +23,7 @@ export const getEnemyCar = async () => {
   return true;
 };
 
-const setEnemyCar = (
-  currentEnemyCount: number,
-  enemyCarDataWithUrl: EnemyCarRes
-) => {
+const setEnemyCar = (currentEnemyCount: number, enemyCarDataWithUrl: EnemyCarRes) => {
   // localStorageにすでに値が存在する場合は、保存しない
   const ENEMY_CAR_KEY = ENEMY_CAR + "_" + currentEnemyCount.toString();
   if (localStorage.getItem(ENEMY_CAR_KEY)) return false;

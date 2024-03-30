@@ -31,8 +31,7 @@ export const generateRaceEndRequestBody = (event: string) => {
   if (playerCar === null) {
     throw new Error("Player Car Data is not found.");
   }
-  const playerCarInstruction: string =
-    JSON.parse(playerCar)[PLAYER_CAR_INSTRUCTION];
+  const playerCarInstruction: string = JSON.parse(playerCar)[PLAYER_CAR_INSTRUCTION];
   const playerCarLuck: number = JSON.parse(playerCar)[PLAYER_CAR_LUCK];
   const requestBody: RaceEndData = {
     ...raceRequestBody,
@@ -91,12 +90,7 @@ const getCarInstruction = (carName: string) => {
   const enemyCar0 = localStorage.getItem(ENEMY_CAR + "_0");
   const enemyCar1 = localStorage.getItem(ENEMY_CAR + "_1");
   const enemyCar2 = localStorage.getItem(ENEMY_CAR + "_2");
-  if (
-    playerCarName === null ||
-    enemyCar0 === null ||
-    enemyCar1 === null ||
-    enemyCar2 === null
-  ) {
+  if (playerCarName === null || enemyCar0 === null || enemyCar1 === null || enemyCar2 === null) {
     throw new Error("Player Car or Enemy Car Data is not found.");
   }
   const enemyCarName0: string = JSON.parse(enemyCar0)[ENEMY_CAR_NAME];
@@ -115,10 +109,10 @@ const getCarInstruction = (carName: string) => {
 
 const getResponseJson = () => {
   const responseJson = localStorage.getItem(RACE_RESPONSE_DATA);
-  console.log("Get responseJson",responseJson)
+  console.log("Get responseJson", responseJson);
   if (responseJson === null) {
     // 何もない場合は、仮のデータを返却する
-    console.log("Generate Dummy ResponseJson")
+    console.log("Generate Dummy ResponseJson");
     const dummyResponseJson = generateDummyResponseJson();
     localStorage.setItem(RACE_RESPONSE_DATA, JSON.stringify(dummyResponseJson));
     return dummyResponseJson;
@@ -136,12 +130,7 @@ export const generateDummyResponseJson = () => {
   const enemyCar0 = localStorage.getItem(ENEMY_CAR + "_0");
   const enemyCar1 = localStorage.getItem(ENEMY_CAR + "_1");
   const enemyCar2 = localStorage.getItem(ENEMY_CAR + "_2");
-  if (
-    playerCarName === null ||
-    enemyCar0 === null ||
-    enemyCar1 === null ||
-    enemyCar2 === null
-  ) {
+  if (playerCarName === null || enemyCar0 === null || enemyCar1 === null || enemyCar2 === null) {
     throw new Error("Player Car or Enemy Car Data is not found.");
   }
   const enemyCarName0: string = JSON.parse(enemyCar0)[ENEMY_CAR_NAME];

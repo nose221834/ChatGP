@@ -1,6 +1,4 @@
 import { SubmitHandler } from "react-hook-form";
-import { PlayerCarRes } from "@/app/create/type";
-
 import {
   GENERATED_TEXT,
   FIRST_PLACE,

@@ -27,14 +27,10 @@ export default function Home() {
     },
   });
 
-  const onSubmit: SubmitHandler<PlayerCarInput> = async (
-    data: PlayerCarInput
-  ) => {
+  const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
     try {
       setSubmit(true);
-      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(
-        data
-      );
+      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(data);
       if (responseJson) {
         await getResponseFromGpt(responseJson);
         router.push("/create/result");
@@ -55,9 +51,9 @@ export default function Home() {
   return (
     <main>
       {submit && <Loading />}
-      <div className="flex flex-wrap justify-around items-center h-screen bg-basecolor">
+      <div className="flex h-screen flex-wrap items-center justify-around bg-basecolor">
         <div className="h-4/5 w-1/2 p-4">
-          <div className="flex flex-col justify-around items-center h-full w-full bg-primarycolor rounded-xl border-4 border-secondarycolor">
+          <div className="flex h-full w-full flex-col items-center justify-around rounded-xl border-4 border-secondarycolor bg-primarycolor">
             <Image
               src="/announcer.webp"
               alt="announcer"
@@ -66,14 +62,14 @@ export default function Home() {
               priority
               className=" rounded-sm border-4 border-accentcolor"
             />
-            <Card className="text-4xl tracking-wider text-center w-11/12 border-4 border-basecolor p-8">
+            <Card className="w-11/12 border-4 border-basecolor p-8 text-center text-4xl tracking-wider">
               <p>これからレースだ！</p>
               <p> 君の車を作製しよう！</p>
             </Card>
           </div>
         </div>
-        <div className="flex h-full w-1/2 p-4 flex-col justify-around items-center">
-          <div className="text-3xl tracking-wider text-center w-11/12 p-4 items-center bg-secondarycolor text-basecolor rounded-xl border-4 border-accentcolor">
+        <div className="flex h-full w-1/2 flex-col items-center justify-around p-4">
+          <div className="w-11/12 items-center rounded-xl border-4 border-accentcolor bg-secondarycolor p-4 text-center text-3xl tracking-wider text-basecolor">
             <div className=" p-4">
               <p>これからChatGPに出場する車を</p>
               <p>ChatGPTに作成してもらおう！</p>
@@ -83,27 +79,27 @@ export default function Home() {
               <p>君の言葉で決まるよ！</p>
             </div>
           </div>
-          <Card className="w-full p-4 bg-primarycolor border-4 border-secondarycolor">
+          <Card className="w-full border-4 border-secondarycolor bg-primarycolor p-4">
             <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
               <div className="p-1">
-                <div className="text-2xl tracking-widest bg-accentcolor text-basecolor inline-block p-2 rounded-xl">
+                <div className="inline-block rounded-xl bg-accentcolor p-2 text-2xl tracking-widest text-basecolor">
                   入力欄
                 </div>
               </div>
               <Textarea
-                className=" tracking-widest text-4xl text-center w-full border-4 border-accentcolor"
+                className=" w-full border-4 border-accentcolor text-center text-4xl tracking-widest"
                 {...register("text", { required: true, maxLength: 20 })}
               ></Textarea>
-              <div className="flex p-4 justify-end">
+              <div className="flex justify-end p-4">
                 <Button
                   disabled={submit}
-                  className=" bg-accentcolor hover:bg-secondarycolor text-basecolor w-24 h-12 text-xl text-center tracking-widest"
+                  className=" h-12 w-24 bg-accentcolor text-center text-xl tracking-widest text-basecolor hover:bg-secondarycolor"
                 >
                   送信
                 </Button>
               </div>
               {errors.text && (
-                <div className=" bg-basecolor border-secondarycolor border-4 text-2xl text-center text-accentcolor font-bold p-2">
+                <div className=" border-4 border-secondarycolor bg-basecolor p-2 text-center text-2xl font-bold text-accentcolor">
                   20文字以内で入力してください
                 </div>
               )}
