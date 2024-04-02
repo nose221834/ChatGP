@@ -31,9 +31,5 @@ jobs:
 
       - name: Docker Compose Build
         run: docker-compose -f docker-compose.prod.yml build
-      - name: Yarn Install 
-        run: docker compose -f docker-compose.prod.yml run --rm view yarn
-      - name: Yarn Build
-        run: docker compose -f docker-compose.prod.yml run --rm view yarn build
       - name: Docker Compose Up
         run: docker-compose -f docker-compose.prod.yml up -d view api
