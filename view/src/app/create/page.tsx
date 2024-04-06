@@ -6,16 +6,20 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Card } from "@/components/ui/card";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { getPlayerCarDataFromGpt } from "@/lib/create/actions";
 import { PlayerCarInput, PlayerCarRes } from "@/app/create/type";
 import { validatePlayerCarRes } from "@/lib/validator/carDataValidator";
 import { Loading } from "@/components/Loading";
 import { PLAYER_CAR } from "@/lib/const";
+import { Turnstile } from "@marsidev/react-turnstile";
+import readEnv from "@/lib/readEnv";
 
 export default function Home() {
-  const router = useRouter();
+  const [token, setToken] = useState<string | null>(null);
   const [submit, setSubmit] = useState<boolean>(false);
+  const router = useRouter();
+  const siteKey = readEnv().siteKey;
 
   const {
     register,
@@ -28,9 +32,12 @@ export default function Home() {
   });
 
   const onSubmit: SubmitHandler<PlayerCarInput> = async (data: PlayerCarInput) => {
+    console.log(data);
+    console.log(token);
     try {
       setSubmit(true);
-      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(data);
+      if (!token) throw new Error("tokenが取得できませんでした");
+      const responseJson: PlayerCarRes | false = await getPlayerCarDataFromGpt(data, token);
       if (responseJson) {
         await getResponseFromGpt(responseJson);
         router.push("/create/result");
@@ -90,9 +97,10 @@ export default function Home() {
                 className=" w-full border-4 border-accentcolor text-center text-4xl tracking-widest"
                 {...register("text", { required: true, maxLength: 20 })}
               ></Textarea>
+              <Turnstile className="hidden" siteKey={siteKey} onSuccess={setToken} />
               <div className="flex justify-end p-4">
                 <Button
-                  disabled={submit}
+                  disabled={submit || !token ? true : false}
                   className=" h-12 w-24 bg-accentcolor text-center text-xl tracking-widest text-basecolor hover:bg-secondarycolor"
                 >
                   送信
