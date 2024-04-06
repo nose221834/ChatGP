@@ -22,7 +22,8 @@
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.90.3"
+    "webpack": "^5.90.3",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/node": "^20",
