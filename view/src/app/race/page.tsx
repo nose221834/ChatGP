@@ -85,11 +85,11 @@ export default function Home() {
     setScene(scene + 1);
     setResponse(false);
     setSubmit(false);
+    setToken(null);
   }
 
   return (
     <main>
-      <Turnstile className="hidden" siteKey={env.siteKey} onSuccess={setToken} />
       {!response ? (
         <>
           <Interactive
@@ -99,6 +99,7 @@ export default function Home() {
             submit={onSubmit}
             token={token}
           />
+          <Turnstile className="hidden" siteKey={env.siteKey} onSuccess={setToken} />
           {submit && <Loading />}
         </>
       ) : (
