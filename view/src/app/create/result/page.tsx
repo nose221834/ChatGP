@@ -50,33 +50,33 @@ export default function Home() {
 
   return (
     <main>
-      <div className="flex flex-wrap justify-around items-center h-screen bg-basecolor">
-        <div className="flex h-full w-1/2 p-4 flex-col justify-around items-center">
-          <div className="text-3xl tracking-wider text-center w-11/12 p-4 items-center bg-secondarycolor text-basecolor rounded-xl border-4 border-accentcolor">
+      <div className="flex h-screen flex-wrap items-center justify-around bg-basecolor">
+        <div className="flex h-full w-1/2 flex-col items-center justify-around p-4">
+          <div className="w-11/12 items-center rounded-xl border-4 border-accentcolor bg-secondarycolor p-4 text-center text-3xl tracking-wider text-basecolor">
             <div className="p-4 text-left">
               <p>{carInstruction}</p>
             </div>
           </div>
-          <Card className="text-4xl tracking-wider text-center w-11/12 border-4 border-accentcolor p-8">
+          <Card className="w-11/12 border-4 border-accentcolor p-8 text-center text-4xl tracking-wider">
             <p>俺は、{carName}</p>
             <p>今日は、{carFortune}</p>
           </Card>
         </div>
 
-        <div className="flex h-full w-1/2 p-4 flex-col justify-around items-center">
-          <Card className="flex flex-col justify-around items-center h-4/5 w-full p-4 border-4 bg-primarycolor border-accentcolor">
-            <div className="overflow-hidden flex flex-col justify-around items-center h-full w-full bg-transparent border-transparent">
+        <div className="flex h-full w-1/2 flex-col items-center justify-around p-4">
+          <Card className="flex h-4/5 w-full flex-col items-center justify-around border-4 border-accentcolor bg-primarycolor p-4">
+            <div className="bg-transparent border-transparent flex h-full w-full flex-col items-center justify-around overflow-hidden">
               <Image
                 src={carImage}
                 width={2000}
                 height={2000}
                 alt={PLAYER_CAR_IMAGE}
-                className="object-center object-cover"
+                className="object-cover object-center"
               />
             </div>
-            <div className="flex justify-end p-4 w-full">
+            <div className="flex w-full justify-end p-4">
               <Button
-                className="w-44 h-16 text-3xl bg-accentcolor border-basecolor hover:bg-primarycolor border-4"
+                className="h-16 w-44 border-4 border-basecolor bg-accentcolor text-3xl hover:bg-primarycolor"
                 onClick={moveToRace}
               >
                 Next

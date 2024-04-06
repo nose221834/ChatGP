@@ -59,12 +59,7 @@ const getCarImage = (carName: string) => {
   const enemyCar0 = localStorage.getItem(ENEMY_CAR + "_0");
   const enemyCar1 = localStorage.getItem(ENEMY_CAR + "_1");
   const enemyCar2 = localStorage.getItem(ENEMY_CAR + "_2");
-  if (
-    playerCarName === null ||
-    enemyCar0 === null ||
-    enemyCar1 === null ||
-    enemyCar2 === null
-  ) {
+  if (playerCarName === null || enemyCar0 === null || enemyCar1 === null || enemyCar2 === null) {
     throw new Error("Player Car or Enemy Car Data is not found.");
   }
   const enemyCarName0: string = JSON.parse(enemyCar0)[ENEMY_CAR_NAME];
