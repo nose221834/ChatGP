@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { SubmitProps, InteProps } from "./type";
 import { Messages } from "./messages";
 
-export function Interactive({ order, scene, isSubmit, submit }: InteProps) {
+export function Interactive({ order, scene, isSubmit, submit, token }: InteProps) {
   const {
     register,
     handleSubmit,
@@ -52,7 +52,7 @@ export function Interactive({ order, scene, isSubmit, submit }: InteProps) {
             )}
             <div className="flex justify-end p-4">
               <Button
-                disabled={isSubmit}
+                disabled={isSubmit || !token ? true : false}
                 className=" h-12 w-24 bg-accentcolor text-center text-xl tracking-widest text-basecolor hover:bg-secondarycolor"
               >
                 送信

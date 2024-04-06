@@ -4,9 +4,8 @@ import { PlayerCarRes, PlayerCarInput, EnemyCarRes } from "@/app/create/type";
 import verifyToken from "../verifyToken";
 import readEnv from "../readEnv";
 
-const env = readEnv();
-
 export const getPlayerCarDataFromGpt = async (data: PlayerCarInput, token: string) => {
+  const env = readEnv();
   const isVerify = await verifyToken(token);
   if (!isVerify) {
     throw new Error("認証に失敗しました");
@@ -22,6 +21,7 @@ export const getPlayerCarDataFromGpt = async (data: PlayerCarInput, token: strin
 };
 
 export const getEnemyCarDataFromGpt = async () => {
+  const env = readEnv();
   const endPoint = `${env.apiUrl}/create/enemy`;
   console.log("Endpoint:", endPoint);
   const responseJson: EnemyCarRes = await fetch(endPoint, {
