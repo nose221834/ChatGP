@@ -1,10 +1,11 @@
 "use server";
 
 import type { TurnstileServerValidationResponse } from "@marsidev/react-turnstile";
+import readEnv from "./readEnv";
 
 const verifyEndpoint = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 // envから読み込むように修正
-const secret = "1x0000000000000000000000000000000AA";
+const secret = readEnv().secretKey;
 
 export default async function verifyToken(token: string) {
   // tokenを検証
