@@ -4,6 +4,8 @@
 
 【技育 CAMP2024】ハッカソン Vol.1 に参加して作成したアプリ
 
+発表資料 : [発表スライド](https://docs.google.com/presentation/d/1xWmDItT0jOEOp13j9ZnmyHCe4zPmFZkuKAW2I8yk8VM/edit?usp=sharing)
+
 こちらからアクセス ⇒ [ChatGP（チャットグランプリ）](https://chatgp.nosse.net/)
 
 ## Description
