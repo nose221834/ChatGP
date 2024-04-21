@@ -355,6 +355,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@marsidev/react-turnstile@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "@marsidev/react-turnstile@npm:0.5.3"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 10c0/4fc1cbb36059b76f91eec9f266fc0c3027f1257c18c1530ad1e4e1ef9c03e20cd494939e4b9e29e18f2a80d270a2ff4b05fb4cf7216ad788da79844c2939d390
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:14.1.0":
   version: 14.1.0
   resolution: "@next/env@npm:14.1.0"
@@ -4870,6 +4880,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "view@workspace:."
   dependencies:
+    "@marsidev/react-turnstile": "npm:^0.5.3"
     "@radix-ui/react-slot": "npm:^1.0.2"
     "@types/node": "npm:^20"
     "@types/react": "npm:^18"
@@ -4895,6 +4906,7 @@ __metadata:
     terser-webpack-plugin: "npm:^5.3.10"
     typescript: "npm:^5"
     webpack: "npm:^5.90.3"
+    zod: "npm:^3.22.4"
   languageName: unknown
   linkType: soft
 
@@ -5081,5 +5093,12 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10c0/dceb44c28578b31641e13695d200d34ec4ab3966a5729814d5445b194933c096b7ced71494ce53a0e8820685d1d010df8b2422e5bf2cdea7e469d97ffbea306f
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.22.4":
+  version: 3.22.4
+  resolution: "zod@npm:3.22.4"
+  checksum: 10c0/7578ab283dac0eee66a0ad0fc4a7f28c43e6745aadb3a529f59a4b851aa10872b3890398b3160f257f4b6817b4ce643debdda4fb21a2c040adda7862cab0a587
   languageName: node
   linkType: hard

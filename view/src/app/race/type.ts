@@ -27,6 +27,7 @@ export type InteProps = {
   order: number;
   scene: number;
   isSubmit: boolean;
+  token: string | null;
   submit: SubmitHandler<SubmitProps>;
 };
 

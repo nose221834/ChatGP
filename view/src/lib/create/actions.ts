@@ -1,30 +1,32 @@
 "use server";
 
 import { PlayerCarRes, PlayerCarInput, EnemyCarRes } from "@/app/create/type";
+import verifyToken from "../verifyToken";
+import readEnv from "../readEnv";
 
-const apiId = process.env.NEXT_PUBLIC_API_ACCESS_ID;
-const apiKey = process.env.NEXT_PUBLIC_API_ACCESS_KEY;
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-export const getPlayerCarDataFromGpt = async (data: PlayerCarInput) => {
-  if (!apiId || !apiKey || !apiUrl) return false;
-  const endPoint = `${apiUrl}/car/create?text_inputted_by_user=${data.text}`;
+export const getPlayerCarDataFromGpt = async (data: PlayerCarInput, token: string) => {
+  const env = readEnv();
+  const isVerify = await verifyToken(token);
+  if (!isVerify) {
+    throw new Error("認証に失敗しました");
+  }
+  const endPoint = `${env.apiUrl}/car/create?text_inputted_by_user=${data.text}`;
   console.log("Endpoint:", endPoint);
   const responseJson: PlayerCarRes = await fetch(endPoint, {
     headers: {
-      [apiId]: apiKey,
+      [env.apiId]: env.apiKey,
     },
   }).then((response) => response.json());
   return responseJson;
 };
 
 export const getEnemyCarDataFromGpt = async () => {
-  if (!apiId || !apiKey || !apiUrl) return false;
-  const endPoint = `${apiUrl}/create/enemy`;
+  const env = readEnv();
+  const endPoint = `${env.apiUrl}/create/enemy`;
   console.log("Endpoint:", endPoint);
   const responseJson: EnemyCarRes = await fetch(endPoint, {
     headers: {
-      [apiId]: apiKey,
+      [env.apiId]: env.apiKey,
     },
   }).then((response) => response.json());
   return responseJson;
