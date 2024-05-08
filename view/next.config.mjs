@@ -14,6 +14,7 @@ const nextConfig = (phase, { defaultConfig }) => {
   }
 
   return {
+    output: "standalone",
     /* 開発フェーズを除く全てのフェーズで有効なオプションを設定 */
     webpack: (config, options) => {
       // ----- ここから本番環境で、console.log を出力しない系の設定 -----

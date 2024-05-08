@@ -11,11 +11,7 @@ services:
     container_name: "view"
     build:
       context: ./view
-      dockerfile: view.Dockerfile
-    volumes:
-      - ./view:/view
-      - ./view/node_modules:/view/node_modules
-    command: sh -c "yarn start"
+      dockerfile: view.prod.Dockerfile
     ports:
       - "3000:3000"
     stdin_open: true
