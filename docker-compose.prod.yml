@@ -6,7 +6,7 @@ services:
     volumes: ["./web/prod:/home/nonroot/.cloudflared"]
     ports:
       - 60123:60123
-    command: tunnel --metrics localhost:60123 run
+    command: tunnel --metrics 0.0.0.0:60123 run
 
   # Next.jsの環境
   view:
