@@ -4,7 +4,7 @@ services:
     image: "cloudflare/cloudflared:latest"
     container_name: "cloudflare"
     volumes: ["./web/prod:/home/nonroot/.cloudflared"]
-    command: tunnel --metrics 192.168.11.27:60123 run
+    command: tunnel --metrics localhost:60123 run
 
   # Next.jsの環境
   view:
