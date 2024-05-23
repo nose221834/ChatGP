@@ -4,6 +4,8 @@ services:
     image: "cloudflare/cloudflared:latest"
     container_name: "cloudflare"
     volumes: ["./web/prod:/home/nonroot/.cloudflared"]
+    ports:
+      - 60123:60123
     command: tunnel --metrics localhost:60123 run
 
   # Next.jsの環境
